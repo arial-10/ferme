@@ -1,5 +1,13 @@
 from django.db import models
 
+class Cliente(models.Model):
+		nombre = models.CharField(max_length=50)
+
+class Empleado(models.Model):
+		nombre = models.CharField(max_length=50)
+
+class Compra(models.Model):
+		nombre = models.CharField(max_length=50)
 
 class Actividad(models.Model):
     fecha_hora = models.DateField()
@@ -68,7 +76,7 @@ class Proveedor(models.Model):
 
 class OrdenDeCompra(models.Model):
 	fecha_recepcion = models.DateField()
-	estado = models.CharField(20)
+	estado = models.CharField(max_length=20)
 	proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
 
 class ProductoOc(models.Model):
@@ -101,7 +109,7 @@ class Boleta(models.Model):
 	terminal = models.IntegerField()
 	tipo_pago = models.IntegerField()
 	anulada = models.CharField(max_length=1)
-	compra = models.ForeignKey()
+	compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
 	rut_persona = models.CharField(max_length=12)
 
 class Factura(models.Model):
@@ -112,7 +120,7 @@ class Factura(models.Model):
 	terminal = models.IntegerField()
 	tipo_pago = models.IntegerField()
 	anulada = models.CharField(max_length=1)
-	compra = models.ForeignKey()
+	compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
 	rut_empresa = models.CharField(max_length=12)
 	iva = models.IntegerField()
 
@@ -124,8 +132,8 @@ class NotaCredito(models.Model):
 	terminal = models.IntegerField()
 	tipo_pago = models.IntegerField()
 	anulada = models.CharField(max_length=1)
-	compra = models.ForeignKey()
-	empleado = models.ForeignKey()
+	compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
+	empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
 	fecha_anulacion = models.DateField()
 	doc_asociado = models.CharField(max_length=10)
 	desc_motivo = models.CharField(max_length=255)
