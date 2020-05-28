@@ -1,13 +1,90 @@
 from django.db import models
+from django.utils import timezone
 
-class Cliente(models.Model):
-		nombre = models.CharField(max_length=50)
+class Administrador(models.Model):
+    usuario_id = models.IntegerField()
+	run = models.CharField(max_length=12)
+    nombres = models.CharField(max_length=50)
+    appaterno = models.CharField(max_length=50)
+	apmaterno = models.CharField(max_length=50)
+	fecha_nacimiento = models.DateField()
+    genero = models.CharField(max_length=6)
+	email = models.CharField(max_length=50)
+	telefono = models.IntegerField()
+	nombre_usuario = models.CharField(max_length=40)
+	contrasena = models.CharField(max_length=50)
+	cod_admin = models.CharField(max_length=6)
+
+    def __str__(self):
+        return self.nombre
+
 
 class Empleado(models.Model):
-		nombre = models.CharField(max_length=50)
+    usuario_id = models.IntegerField()
+	run = models.CharField(max_length=12)
+    nombres = models.CharField(max_length=50)
+    appaterno = models.CharField(max_length=50)
+	apmaterno = models.CharField(max_length=50)
+	fecha_nacimiento = models.DateField()
+    genero = models.CharField(max_length=6)
+	email = models.CharField(max_length=50)
+	telefono = models.IntegerField()
+	nombre_usuario = models.CharField(max_length=40)
+	contrasena = models.CharField(max_length=50)
+	cod_empleado = models.CharField(max_length=6)
+	sucursal = models.CharField(max_length=55)
+	fecha_contrato = models.DateField()
+	area = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.nombre
+
+
+class Cliente(models.Model):
+    usuario_id = models.IntegerField()
+	run = models.CharField(max_length=12)
+    nombres = models.CharField(max_length=50)
+    appaterno = models.CharField(max_length=50)
+	apmaterno = models.CharField(max_length=50)
+	fecha_nacimiento = models.DateField()
+    genero = models.CharField(max_length=6)
+	email = models.CharField(max_length=50)
+	telefono = models.IntegerField()
+	nombre_usuario = models.CharField(max_length=40)
+	contrasena = models.CharField(max_length=50)
+	direccion = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
+
+
+class Vendedor(models.Model):
+    usuario_id = models.IntegerField()
+	run = models.CharField(max_length=12)
+    nombres = models.CharField(max_length=50)
+    appaterno = models.CharField(max_length=50)
+	apmaterno = models.CharField(max_length=50)
+	fecha_nacimiento = models.DateField()
+    genero = models.CharField(max_length=6)
+	email = models.CharField(max_length=50)
+	telefono = models.IntegerField()
+	nombre_usuario = models.CharField(max_length=40)
+	contrasena = models.CharField(max_length=50)
+	cod_vendedor = models.CharField(max_length=6)
+	sucursal = models.CharField(max_length=55)
+	fecha_contrato = models.DateField()
+
+    def __str__(self):
+        return self.nombre
+
 
 class Compra(models.Model):
-		nombre = models.CharField(max_length=50)
+    vendedor_cod_vendedor = models.CharField(max_length=6)
+	id_compra = models.IntegerField()
+	monto_total = models.IntegerField()
+	cliente_usuario_id = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+	despacho_id = models.ForeignKey(DespachoDomicilios, on_delete=models.SET_NULL,
+								null=True)
 
 class Actividad(models.Model):
     fecha_hora = models.DateField()
