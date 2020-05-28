@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Hepta+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
+
+/* Global*/
+html, body {
+    height: 100%;
+}
+
+/* Colores */
+:root {
+    --light: #b9546d;
+    --dark: #193944;
+    --light_white: #ecebe4;
+    --light_white_bright: #f4f4f0;
+    --accent_1: #ed6a5a;
+    --accent_2: #25ced1;
+}
+
+
+/* Fuentes */
+
+.hepta {
+    font-family: 'Hepta Slab', serif;
+}
+
+.hepta-bold {
+    font-family: 'Hepta Slab', serif;
+    font-weight: bold;
+}
+
+.nunito {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+}
+
+.nunito-bold {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.changa-bold{
+    font-family: 'Changa One', cursive;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.logo-type{
+    color: #1F50A5;
+    font-family: 'Changa One', cursive;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+/* Header */
