@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'ferme.wsgi.application'
 DATABASES = {
     'default': {
     'ENGINE':   'django.db.backends.oracle',
-    'NAME':     'localhost/orcl',
-    'USER':     'pythonhol',
-    'PASSWORD': 'welcome',
+    'NAME':     'localhost/xe',
+    'USER':     'FERME',
+    'PASSWORD': 'FERMEDUOC',
   }
 }
 
