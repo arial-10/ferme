@@ -41,15 +41,14 @@ class Empleado(models.Model):
 
 
 class Cliente(models.Model):
-	usuario_id = models.IntegerField()
 	run = models.CharField(max_length=12)
 	nombres = models.CharField(max_length=50)
 	appaterno = models.CharField(max_length=50)
 	apmaterno = models.CharField(max_length=50)
-	fecha_nacimiento = models.DateField()
+	fecha_nacimiento = models.DateField(auto_now=True)
 	genero = models.CharField(max_length=6)
 	email = models.CharField(max_length=50)
-	telefono = models.IntegerField()
+	telefono = models.IntegerField(default=0)
 	nombre_usuario = models.CharField(max_length=40)
 	contrasena = models.CharField(max_length=50)
 	direccion = models.CharField(max_length=50)
@@ -79,8 +78,7 @@ class Vendedor(models.Model):
 
 
 class Compra(models.Model):
-	vendedor_cod_vendedor = models.CharField(max_length=6)
-	id_compra = models.IntegerField()
+	vendedor_cod_vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
 	monto_total = models.IntegerField()
 	cliente_usuario_id = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
