@@ -83,8 +83,6 @@ class Compra(models.Model):
 	id_compra = models.IntegerField()
 	monto_total = models.IntegerField()
 	cliente_usuario_id = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-	despacho_id = models.ForeignKey(DespachoDomicilios, on_delete=models.SET_NULL,
-								null=True)
 
 class Actividad(models.Model):
 	fecha_hora = models.DateField()
