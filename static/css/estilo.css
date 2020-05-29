@@ -9,11 +9,11 @@ html, body {
 
 /* Colores */
 :root {
-    --light: #b9546d;
-    --dark: #193944;
-    --light_white: #ecebe4;
-    --light_white_bright: #f4f4f0;
-    --accent_1: #ed6a5a;
+    --blue: #1f50a5;
+    --yellow: #ffd800;
+    --dark: #4c5b5c;
+    --light: #f2f4f7;
+    --accent_1: #ff5964;
     --accent_2: #25ced1;
 }
 
