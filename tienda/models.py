@@ -174,6 +174,7 @@ class CarroProducto(models.Model):
     class Meta:
         db_table = 'CarroProducto'
 
+
 class Proveedor(models.Model):
     razon_social = models.CharField(max_length=55)
     sector_comercial = models.CharField(max_length=55)
