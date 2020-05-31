@@ -2,13 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
 
-/* Global*/
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
 /* Colores */
 :root {
     --blue: #1f50a5;
@@ -18,6 +11,15 @@ html, body {
     --accent_1: #ff5964;
     --accent_2: #25ced1;
 }
+
+/* Global*/
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--light);
+}
+
 
 
 /* Fuentes */
@@ -125,7 +127,25 @@ footer {
     background-color: var(--yellow);
 }
 
+.footer-item {
+    color: var(--blue);
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+}
+
+.footer-item p {
+    font-size: 12pt;
+    line-height: 1;
+}
+
+.footer-item a {
+    text-decoration: none;
+    color: var(--blue);
+}
+
+#suscribte-btn {
+    background-color: var(--blue);
+}
+
 .redes {
     display: inline-block;
-    float: right;
-}
