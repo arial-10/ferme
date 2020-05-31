@@ -4,6 +4,8 @@
 
 /* Global*/
 html, body {
+    margin: 0;
+    padding: 0;
     height: 100%;
 }
 
@@ -47,10 +49,83 @@ html, body {
 }
 
 .logo-type{
-    color: #1F50A5;
+    display: flex;
+    align-items: center;
+    color: var(--blue);
     font-family: 'Changa One', cursive;
     font-size: 60px;
     font-weight: bold;
 }
 
-/* Header */
+/* ============================ Header ==================================== */
+.header {
+    background-color: var(--light);
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+.barra-busqueda {
+    display: flex;
+    align-content: center;
+}
+
+.botones-header {
+    color: var(--yellow);
+    display: inline-flex;
+    align-items: center;
+    text-align: left;
+    margin-top: 0.5rem;
+}
+
+.texto-boton {
+    color: var(--blue);
+    font-size: 13px;
+    margin-left: 0.5rem;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+.link-header {
+    color: var(--yellow);
+    margin-left: 1rem;
+}
+
+.link-header:focus, .link-header:active, .link-header:hover {
+    color: var(--blue);
+}
+
+.icon-header {
+    font-size: xx-large;
+}
+
+/* ==================== Navbar =========================*/
+.nav{
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-top-color: var(--yellow);
+    border-bottom-color: var(--yellow);
+}
+
+.nav>li>a {
+    color: var(--blue);
+    font-size: 16px;
+}
+
+.nav-item {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/* ==================== Footer ============================ */
+footer {
+    background-color: var(--yellow);
+}
+
+.redes {
+    display: inline-block;
+    float: right;
+}
