@@ -1,0 +1,23 @@
+{% extends 'tienda/admin/base.html' %}
+{% load static %}
+{% block productos_active %} active {% endblock productos_active %}
+{% block content %}
+<div class="sub-contenedor d-flex justify-content-center">
+    <!-- Acordion -->
+    <div id="accordion" role="tablist" class="col-md-7">
+        <div class="card tarjeta">
+            <div class="card-header tarjeta-header d-flex justify-content-between" role="tab" id="headingOne">
+                <h4><strong>Gestión de Productos</strong></h4>
+                <a class="collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    <i class="icon fas fa-chevron-down"></i>
+                </a>
+            </div>
+            <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

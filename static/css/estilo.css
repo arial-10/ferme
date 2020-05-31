@@ -152,6 +152,9 @@ footer {
 }
 
 /* =================== Admin ================================ */
+.sub-contenedor {
+    margin-top: 2rem;
+}
 
 .logo-admin {
     color: var(--yellow);
@@ -176,4 +179,22 @@ footer {
 
 .icon-admin:hover {
     color: var(--yellow);
+}
+
+.icon {
+    font-size: x-large;
+    color: var(--light);
+}
+
+.tarjeta {
+    background-color: var(--yellow);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+}
+
+.tarjeta-header {
+    background-color: var(--blue);
+    color: var(--light);
+    font-weight: bold;
+    align-items: center;
 }

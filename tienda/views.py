@@ -10,3 +10,7 @@ def home(request):
 
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')
+
+
+def productos_admin(request):
+    return render(request, 'tienda/admin/productos.html')
