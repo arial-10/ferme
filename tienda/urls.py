@@ -7,4 +7,5 @@ from . import views
 urlpatterns = static(settings.STATIC_URL,
                      document_root=settings.STATIC_ROOT) + [
     path('', views.home, name='home'),
+    path('ferme-admin/', views.home_admin, name='admin'),
 ]

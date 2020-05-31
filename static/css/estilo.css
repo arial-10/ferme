@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
 
-/* Colores */
+/* ========================== Colores ======================== */
 :root {
     --blue: #1f50a5;
     --yellow: #ffd800;
@@ -12,7 +12,7 @@
     --accent_2: #25ced1;
 }
 
-/* Global*/
+/* =========================== Global ========================*/
 html, body {
     margin: 0;
     padding: 0;
@@ -22,7 +22,7 @@ html, body {
 
 
 
-/* Fuentes */
+/* ========================== Fuentes ======================= */
 
 .hepta {
     font-family: 'Hepta Slab', serif;
@@ -59,7 +59,7 @@ html, body {
     font-weight: bold;
 }
 
-/* ============================ Header ==================================== */
+/* ============================ Header ================================ */
 .header {
     background-color: var(--light);
     margin-top: 0;
@@ -149,3 +149,31 @@ footer {
 
 .redes {
     display: inline-block;
+}
+
+/* =================== Admin ================================ */
+
+.logo-admin {
+    color: var(--yellow);
+    font-family: 'Changa One', cursive;
+    font-size: 30pt;
+    font-weight: bold;
+}
+
+.logo-admin:hover {
+    text-decoration: none;
+    color: var(--light);
+}
+
+.logo-admin:visited {
+    text-decoration: none;
+}
+
+.icon-admin {
+    font-size: xx-large;
+    color: var(--light);
+}
+
+.icon-admin:hover {
+    color: var(--yellow);
+}

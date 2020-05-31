@@ -14,18 +14,27 @@
     </div>
     <!-- Botones Acciones -->
     <div class="botones-header">
-        <a class="link-header" href="#">
-            <div style="display: inline-flex;">
-                <i class="icon-header fas fa-user"></i>
-                <div class="texto-boton nunito-bold">Inicia <br> Sesión</div>
-            </div>
-        </a>
-        <a class="link-header" href="#">
-            <div style="display: inline-flex;">
-                <i class="icon-header fas fa-shopping-bag"></i>
-                <span class="texto-boton nunito-bold">Mis <br> Ordenes</span>
-            </div>
-        </a>
+        {% if user.is_authenticated %}
+            <a class="link-header" href="#">
+                <div style="display: inline-flex;">
+                    <i class="icon-header fas fa-sign-out-alt"></i>
+                    <div class="texto-boton nunito-bold">Cerrar <br> Sesión</div>
+                </div>
+            </a>
+            <a class="link-header" href="#">
+                <div style="display: inline-flex;">
+                    <i class="icon-header fas fa-shopping-bag"></i>
+                    <span class="texto-boton nunito-bold">Mis <br> Ordenes</span>
+                </div>
+            </a>
+        {% else %}
+            <a class="link-header" href="#">
+                <div style="display: inline-flex;">
+                    <i class="icon-header fas fa-user"></i>
+                    <div class="texto-boton nunito-bold">Inicia <br> Sesión</div>
+                </div>
+            </a>
+        {% endif %}
         <a class="link-header" href="#">
             <div style="display: inline-flex;">
                 <i class="icon-header fas fa-shopping-cart"></i>
