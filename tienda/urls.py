@@ -9,6 +9,10 @@ urlpatterns = static(settings.STATIC_URL,
     path('', views.home, name='home'),
     # Rutas modulos de Ferme Admin
     path('ferme-admin/', views.home_admin, name='admin'),
-    path('ferme-admin/productos/', views.productos_admin,
+    path('ferme-admin/productos/', views.ver_productos_admin,
          name='productos_admin'),
+    path('ferme-admin/obtener-productos/',
+         views.obtener_productos_admin, name='obtener_productos'),
+    path('ferme-admin/productos/abrir-form/', views.abrir_form_producto,
+         name='abrir_form')
 ]

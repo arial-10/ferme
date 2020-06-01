@@ -4,20 +4,103 @@
 {% block content %}
 <div class="sub-contenedor d-flex justify-content-center">
     <!-- Acordion -->
-    <div id="accordion" role="tablist" class="col-md-7">
+    <div id="accordion" role="tablist" class="col-lg-7">
         <div class="card tarjeta">
             <div class="card-header tarjeta-header d-flex justify-content-between" role="tab" id="headingOne">
                 <h4><strong>Gestión de Productos</strong></h4>
-                <a class="collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <a class="collapsed" data-toggle="collapse" href="#productos" aria-expanded="true" aria-controls="productos">
                     <i class="icon fas fa-chevron-down"></i>
                 </a>
             </div>
-            <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div id="productos" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-body">
+                    <!-- ====== CONTENIDO ====== -->
 
+                    <!-- Filtros -->
+                    <form action="{% url 'obtener_productos' %}" method="GET" class="form-inline" style="display: inline-flex; align-items: flex-end;">
+                        <div class="filtro-producto-admin mb-2">
+                            <h6>Nombre:</h6>
+                            <input type="text" class="form-control" name="nombre">
+                        </div>
+
+                        <!-- <div class="filtro-producto-admin mb-2 ml-3">
+                            <h6>Marca:</h6>
+                            <select name="marca" class="form-control" >
+                            </select>
+                        </div> -->
+
+                        <div class="filtro-producto-admin mb-2 ml-3">
+                            <h6>SKU:</h6>
+                            <input type="text" class="form-control" name="sku">
+                        </div>
+
+                        <button type="submit" class="btn tarjeta-boton mb-2 ml-3" >Buscar</button>
+                    </form>
+
+                    <!-- Tabla -->
+                    <table id="productosAdmin" class="table table-responsive table-hover table-bordered my-3">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="header-tabla">Id</th>
+                                <th class="header-tabla">SKU</th>
+                                <th class="header-tabla">Nombre</th>
+                                <th class="header-tabla">Marca</th>
+                                <th class="header-tabla">Stock</th>
+                                <th class="header-tabla">Stock Crítico</th>
+                                <th class="header-tabla">Disponibilidad</th>
+                                <th class="header-tabla">Precio Normal</th>
+                                <th class="header-tabla">Precio Oferta</th>
+                                <th class="header-tabla">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in productos %}
+                            <tr>
+                                <th scope="row">{{ producto.id }}</th>
+                                <td>{{ producto.sku }}</td>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.marca }}</td>
+                                <td>{{ producto.stock }}</td>
+                                <td>{{ producto.stock_critico }}</td>
+                                <td>{{ producto.disponibilidad }}</td>
+                                <td>{{ producto.precio_normal }}</td>
+                                <td>{{ producto.precio_oferta }}</td>
+                                <td>
+                                    <div class="d-flex flex-row">
+                                        <a href="#" class="btn btn-warning"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Modificar producto">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-danger ml-2"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Eliminar producto">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!-- Agregar producto -->
+                    <div class="d-flex float-right mb-3">
+                        <a href="{% url 'abrir_form' %}" class="btn btn-success">
+                            <i class="fas fa-plus mr-2"></i>
+                            <span>Agregar nuevo producto</span>
+                        </a>
+                    </div>
+
+                    {% if abrir_form %}
+                        <span>muestra form</span>
+                    {% else %}
+                        <span>no muestra form</span>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock content %}

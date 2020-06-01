@@ -7,6 +7,7 @@
     --blue: #1f50a5;
     --yellow: #ffd800;
     --dark: #4c5b5c;
+    --gray: #c8cfcf;
     --light: #f2f4f7;
     --accent_1: #ff5964;
     --accent_2: #25ced1;
@@ -152,6 +153,10 @@ footer {
 }
 
 /* =================== Admin ================================ */
+#admin-body {
+    background-color: var(--gray);
+}
+
 .sub-contenedor {
     margin-top: 2rem;
 }
@@ -187,7 +192,7 @@ footer {
 }
 
 .tarjeta {
-    background-color: var(--yellow);
+    background-color: var(--light);
     color: var(--dark);
     font-family: 'Nunito', sans-serif;
 }
@@ -197,4 +202,13 @@ footer {
     color: var(--light);
     font-weight: bold;
     align-items: center;
+}
+
+.tarjeta-boton {
+    background-color: var(--blue);
+    color: var(--light);
+}
+
+.filtro-producto-admin {
+    display: block;
 }
