@@ -15,6 +15,29 @@
             <div id="productos" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-body">
                     <!-- ====== CONTENIDO ====== -->
+                    <!-- MENSAJES -->
+                    {% if messages %}
+                        <div>
+                            {% for message in messages %}
+                                {% if message.tags == 'success' %}
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% elif message.tags == 'danger' %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <br>
+                    {% endif %}
 
                     <div class="d-flex justify-content-between">
                         <!-- Filtros -->
@@ -24,18 +47,24 @@
                                 <input type="text" class="form-control" name="nombre">
                             </div>
 
-                            <!-- <div class="filtro-producto-admin mb-2 ml-3">
+                            <div class="filtro-producto-admin mb-2 ml-3">
                                 <h6>Marca:</h6>
                                 <select name="marca" class="form-control" >
+                                    <option value="0">----------------</option>
+                                    {% for marca in marcas %}
+                                        <option value="{{ marca.id }}">
+                                            {{ marca.nombre }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
-                            </div> -->
+                            </div>
 
                             <div class="filtro-producto-admin mb-2 ml-3">
                                 <h6>SKU:</h6>
                                 <input type="text" class="form-control" name="sku">
                             </div>
 
-                            <button type="submit" class="btn boton-buscar mb-2 ml-3" >Buscar</button>
+                            <button type="submit" class="btn boton-admin-primary mb-2 ml-3" >Buscar</button>
                         </form>
                         <!-- Agregar producto -->
                         <div class="mb-2" style="display: inline-flex; align-items: flex-end;">
@@ -75,12 +104,12 @@
                                 <td>{{ producto.precio_oferta }}</td>
                                 <td>
                                     <div class="d-flex flex-row">
-                                        <a href="#" class="btn btn-warning"
+                                        <a href="{% url 'actualizar_producto' producto.producto_id %}" class="btn btn-warning"
                                             data-toggle="tooltip"
                                             data-placement="top" title="Modificar producto">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a href="#" class="btn btn-danger ml-2"
+                                        <a href="{% url 'eliminar_producto' producto.producto_id %}" class="btn btn-danger ml-2"
                                             data-toggle="tooltip"
                                             data-placement="top" title="Eliminar producto">
                                             <i class="fas fa-trash"></i>

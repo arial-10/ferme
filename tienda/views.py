@@ -16,7 +16,12 @@ def home_admin(request):
 
 # =============== Seccion Producto ======================================
 def ver_productos_admin(request):
-    return render(request, 'tienda/admin/productos/productos.html')
+    marcas = Marca.objects.all();
+
+    return render(request, 'tienda/admin/productos/productos.html',
+                  {
+                    'marcas': marcas
+                  })
 
 
 def obtener_productos_admin(request):
@@ -49,7 +54,7 @@ def agregar_producto(request):
             model_instance = form.save(commit=False)
             model_instance.url_img = 'img/producto/' + model_instance.producto_id + '.jpg'
             model_instance.save()
-
+            messages.success(request, 'Producto agregado exitosamente.')
             return redirect('productos_admin')
     else:
         form = ProductoForm()
@@ -59,3 +64,35 @@ def agregar_producto(request):
                       })
 
 
+def actualizar_producto(request, id):
+    producto = Producto.objects.get(producto_id=id)
+    if request.method == "POST":
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Producto actualizado exitosamente.')
+            return redirect('productos_admin')
+    else:
+        form = ProductoForm(instance=producto)
+        return render(request, 'tienda/admin/productos/producto_form.html',
+                      {
+                          'form': form
+                      })
+
+
+def eliminar_producto(request, id):
+    producto = Producto.objects.get(producto_id=id)
+
+    if request.method == 'POST':
+        producto.delete()
+        messages.success(request, 'Producto eliminado exitosamente.')
+        return redirect('productos_admin')
+
+    return render(request, 'tienda/admin/productos/eliminar_producto.html',
+                  {
+                      'producto': producto
+                  })
+
+
+def cancelar_producto(request):
+    return redirect(reverse('productos_admin'))

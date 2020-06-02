@@ -7,7 +7,7 @@
     --blue: #1f50a5;
     --yellow: #ffd800;
     --dark: #4c5b5c;
-    --gray: #c8cfcf;
+    --gray: #e8eded;
     --light: #f2f4f7;
     --accent_1: #ff5964;
     --accent_2: #25ced1;
@@ -122,13 +122,22 @@ html, body {
     align-items: center;
 }
 
-.boton-buscar {
+.boton-admin-primary {
     background-color: var(--blue);
     color: var(--light);
 }
 
-.boton-buscar:hover {
+.boton-admin-primary:hover {
     color: var(--yellow);
+}
+
+.boton-admin-cancelar {
+     background-color: var(--dark);
+     color: var(--light);
+}
+
+.boton-admin-cancelar:hover {
+    color: var(--accent_1);
 }
 
 .filtro-producto-admin {
@@ -138,3 +147,4 @@ html, body {
 .fila-form {
     display: inline-flex;
 }
+

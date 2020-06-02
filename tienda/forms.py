@@ -38,7 +38,7 @@ class ProductoForm(ModelForm):
                     }),
                     'sku': forms.TextInput(attrs={
                         'class': 'form-control',
-                        'max-length': 20
+                        'max-length': 12
                     }),
                     'nombre': forms.TextInput(attrs={
                         'class': 'form-control',
