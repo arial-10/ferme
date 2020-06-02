@@ -13,9 +13,9 @@ def home(request):
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')
 
-
+# =============== Seccion Producto ======================================
 def ver_productos_admin(request):
-    return render(request, 'tienda/admin/productos.html')
+    return render(request, 'tienda/admin/productos/productos.html')
 
 
 def obtener_productos_admin(request):
@@ -32,7 +32,7 @@ def obtener_productos_admin(request):
     if nombre != '' and sku != '':
         productos = Producto.objects.filter(nombre__icontains=nombre, sku__contains=sku)
 
-    return render(request, 'tienda/admin/productos.html',
+    return render(request, 'tienda/admin/productos/productos.html',
                   {
                     'productos': productos
                   })
@@ -41,7 +41,7 @@ def obtener_productos_admin(request):
 def abrir_form_producto(request):
     abrir_form = True
 
-    return render(request, 'tienda/admin/productos.html',
+    return render(request, 'tienda/admin/productos/productos.html',
             {
                 'abrir_form': abrir_form
             })

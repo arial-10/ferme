@@ -95,6 +95,7 @@ class Compra(models.Model):
     class Meta:
         db_table = 'Compra'
 
+
 class Actividad(models.Model):
     fecha_hora = models.DateField()
     usuario = models.ForeignKey('auth.User', on_delete=models.SET_NULL,
