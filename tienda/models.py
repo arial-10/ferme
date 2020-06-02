@@ -125,6 +125,7 @@ class Marca(models.Model):
 
 
 class Producto(models.Model):
+    producto_id = models.CharField(max_length=17, primary_key=True)
     sku = models.CharField(max_length=100)
     nombre = models.CharField(max_length=100)
     color = models.CharField(max_length=20)
