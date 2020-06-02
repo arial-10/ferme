@@ -16,27 +16,35 @@
                 <div class="card-body">
                     <!-- ====== CONTENIDO ====== -->
 
-                    <!-- Filtros -->
-                    <form action="{% url 'obtener_productos' %}" method="GET" class="form-inline" style="display: inline-flex; align-items: flex-end;">
-                        <div class="filtro-producto-admin mb-2">
-                            <h6>Nombre:</h6>
-                            <input type="text" class="form-control" name="nombre">
+                    <div class="d-flex justify-content-between">
+                        <!-- Filtros -->
+                        <form action="{% url 'obtener_productos' %}" method="GET" class="form-inline" style="display: inline-flex; align-items: flex-end;">
+                            <div class="filtro-producto-admin mb-2">
+                                <h6>Nombre:</h6>
+                                <input type="text" class="form-control" name="nombre">
+                            </div>
+
+                            <!-- <div class="filtro-producto-admin mb-2 ml-3">
+                                <h6>Marca:</h6>
+                                <select name="marca" class="form-control" >
+                                </select>
+                            </div> -->
+
+                            <div class="filtro-producto-admin mb-2 ml-3">
+                                <h6>SKU:</h6>
+                                <input type="text" class="form-control" name="sku">
+                            </div>
+
+                            <button type="submit" class="btn boton-buscar mb-2 ml-3" >Buscar</button>
+                        </form>
+                        <!-- Agregar producto -->
+                        <div class="mb-2" style="display: inline-flex; align-items: flex-end;">
+                            <a href="{% url 'agregar_producto' %}" class="btn btn-success">
+                                <i class="fas fa-plus mr-2"></i>
+                                <span>Agregar nuevo producto</span>
+                            </a>
                         </div>
-
-                        <!-- <div class="filtro-producto-admin mb-2 ml-3">
-                            <h6>Marca:</h6>
-                            <select name="marca" class="form-control" >
-                            </select>
-                        </div> -->
-
-                        <div class="filtro-producto-admin mb-2 ml-3">
-                            <h6>SKU:</h6>
-                            <input type="text" class="form-control" name="sku">
-                        </div>
-
-                        <button type="submit" class="btn tarjeta-boton mb-2 ml-3" >Buscar</button>
-                    </form>
-
+                    </div>
                     <!-- Tabla -->
                     <table id="productosAdmin" class="table table-responsive table-hover table-bordered my-3">
                         <thead class="thead-light">
@@ -84,19 +92,7 @@
                         </tbody>
                     </table>
 
-                    <!-- Agregar producto -->
-                    <div class="d-flex float-right mb-3">
-                        <a href="{% url 'abrir_form' %}" class="btn btn-success">
-                            <i class="fas fa-plus mr-2"></i>
-                            <span>Agregar nuevo producto</span>
-                        </a>
-                    </div>
 
-                    {% if abrir_form %}
-                        <span>muestra form</span>
-                    {% else %}
-                        <span>no muestra form</span>
-                    {% endif %}
                 </div>
             </div>
         </div>

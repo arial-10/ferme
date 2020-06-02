@@ -13,6 +13,6 @@ urlpatterns = static(settings.STATIC_URL,
          name='productos_admin'),
     path('ferme-admin/obtener-productos/',
          views.obtener_productos_admin, name='obtener_productos'),
-    path('ferme-admin/productos/abrir-form/', views.abrir_form_producto,
-         name='abrir_form')
+    path('ferme-admin/productos/agregar-producto/', views.agregar_producto,
+         name='agregar_producto')
 ]

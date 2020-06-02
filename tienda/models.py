@@ -137,6 +137,7 @@ class Producto(models.Model):
     precio_normal = models.IntegerField()
     precio_oferta = models.IntegerField()
     marca = models.ForeignKey(Marca, on_delete=models.SET_NULL, null=True)
+    url_img = models.CharField(max_length=200)
 
     class Meta:
         db_table = 'Producto'

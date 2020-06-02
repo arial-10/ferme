@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
+from .forms import *
 
 
 def home(request):
@@ -38,10 +39,23 @@ def obtener_productos_admin(request):
                   })
 
 
-def abrir_form_producto(request):
-    abrir_form = True
+def agregar_producto(request):
 
-    return render(request, 'tienda/admin/productos/productos.html',
-            {
-                'abrir_form': abrir_form
-            })
+    if request.method == 'POST':
+
+        form = ProductoForm(request.POST)
+        if form.is_valid():
+
+            model_instance = form.save(commit=False)
+            model_instance.url_img = 'img/producto/' + model_instance.producto_id + '.jpg'
+            model_instance.save()
+
+            return redirect('productos_admin')
+    else:
+        form = ProductoForm()
+        return render(request, 'tienda/admin/productos/producto_form.html',
+                      {
+                        'form': form
+                      })
+
+
