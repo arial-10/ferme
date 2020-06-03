@@ -15,29 +15,7 @@
             <div id="productos" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-body">
                     <!-- ====== CONTENIDO ====== -->
-                    <!-- MENSAJES -->
-                    {% if messages %}
-                        <div>
-                            {% for message in messages %}
-                                {% if message.tags == 'success' %}
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        {{ message }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                {% elif message.tags == 'danger' %}
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        {{ message }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        <br>
-                    {% endif %}
+                    {% include "tienda/components/messages.html" %}
 
                     <div class="d-flex justify-content-between">
                         <!-- Filtros -->
