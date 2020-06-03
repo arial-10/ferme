@@ -21,5 +21,6 @@ urlpatterns = static(settings.STATIC_URL,
     path('ferme-admin/productos/actualizar/<str:id>', views.actualizar_producto,
          name='actualizar_producto'),
     path('ferme-admin/productos/eliminar/<str:id>', views.eliminar_producto,
-         name='eliminar_producto')
+         name='eliminar_producto'),
+    path('ferme-empleado/', views.home_empleado, name='empleado')
 ]

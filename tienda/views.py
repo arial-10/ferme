@@ -96,3 +96,8 @@ def eliminar_producto(request, id):
 
 def cancelar_producto(request):
     return redirect(reverse('productos_admin'))
+
+# ================ Vistas Empleado ====================================
+
+def home_empleado(request):
+    return render(request, 'tienda/empleado/home.html')
