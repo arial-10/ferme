@@ -107,6 +107,8 @@ class Actividad(models.Model):
 class Categoria(models.Model):
     nombre = models.CharField(max_length=50)
 
+    class Meta:
+        db_table = 'Categoria'
 
 
 class Marca(models.Model):
@@ -152,6 +154,9 @@ class CategoriaProducto(models.Model):
 class Carro(models.Model):
     carro_id = models.CharField(max_length=8, primary_key=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'Carro'
 
 
 
