@@ -1,0 +1,64 @@
+<header class="header d-flex justify-content-between">
+    <div class="logo-type">
+        <span>FERME</span>
+    </div>
+    <!-- Buscador -->
+    <div class="input-group barra-busqueda col-lg-6">
+        <div class="input-group-prepend">
+            <button class="btn btn-warning" type="button">
+            <span class="fas fa-search"></span>
+            </button>
+        </div>
+        <input type="text" class="form-control border border-warning"
+        placeholder="¿Qué buscas?" aria-label="" aria-describedby="basic-addon1">
+    </div>
+    <!-- Botones Acciones -->
+    <div class="botones-header">
+        {% if user.is_authenticated %}
+            <a class="link-header" href="#">
+                <div style="display: inline-flex;">
+                    <i class="icon-header fas fa-sign-out-alt"></i>
+                    <div class="texto-boton nunito-bold">Cerrar <br> Sesión</div>
+                </div>
+            </a>
+            <a class="link-header" href="#">
+                <div style="display: inline-flex;">
+                    <i class="icon-header fas fa-shopping-bag"></i>
+                    <span class="texto-boton nunito-bold">Mis <br> Ordenes</span>
+                </div>
+            </a>
+        {% else %}
+            <a class="link-header" href="#">
+                <div style="display: inline-flex;">
+                    <i class="icon-header fas fa-user"></i>
+                    <div class="texto-boton nunito-bold">Inicia <br> Sesión</div>
+                </div>
+            </a>
+        {% endif %}
+        <a class="link-header" href="#">
+            <div style="display: inline-flex;">
+                <i class="icon-header fas fa-shopping-cart"></i>
+                <span class="texto-boton nunito-bold">Carro de <br> Compras</span>
+            </div>
+        </a>
+    </div>
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-user"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-shopping-bag"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </li>
+        </ul>
+    </nav> -->
+</header>

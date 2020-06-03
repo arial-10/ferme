@@ -2,208 +2,271 @@ from django.db import models
 from django.utils import timezone
 
 class Administrador(models.Model):
-	run = models.CharField(max_length=12, default='NA')
-	nombres = models.CharField(max_length=50, default='NA')
-	appaterno = models.CharField(max_length=50, default='NA')
-	apmaterno = models.CharField(max_length=50, default='NA')
-	fecha_nacimiento = models.DateField(default=0)
-	genero = models.CharField(max_length=6, default='NA')
-	email = models.CharField(max_length=50, default='NA')
-	telefono = models.IntegerField(default=0)
-	nombre_usuario = models.CharField(max_length=40, default='NA')
-	contrasena = models.CharField(max_length=50, default='NA')
-	cod_admin = models.CharField(max_length=6, default='NA')
+    run = models.CharField(max_length=12)
+    nombres = models.CharField(max_length=50)
+    appaterno = models.CharField(max_length=50)
+    apmaterno = models.CharField(max_length=50)
+    fecha_nacimiento = models.DateField()
+    genero = models.CharField(max_length=6)
+    email = models.CharField(max_length=50)
+    telefono = models.IntegerField()
+    nombre_usuario = models.CharField(max_length=40)
+    contrasena = models.CharField(max_length=50)
+    cod_admin = models.CharField(max_length=6)
 
-	def __str__(self):
-		return self.nombre
+    class Meta:
+        db_table = 'Administrador'
+
+    def __str__(self):
+        return self.nombres + ' ' + self.appaterno
 
 
 class Empleado(models.Model):
-	run = models.CharField(max_length=12, default='NA')
-	nombres = models.CharField(max_length=50, default='NA')
-	appaterno = models.CharField(max_length=50, default='NA')
-	apmaterno = models.CharField(max_length=50, default='NA')
-	fecha_nacimiento = models.DateField(default=0)
-	genero = models.CharField(max_length=6, default='NA')
-	email = models.CharField(max_length=50, default='NA')
-	telefono = models.IntegerField(default=0)
-	nombre_usuario = models.CharField(max_length=40, default='NA')
-	contrasena = models.CharField(max_length=50, default='NA')
-	cod_empleado = models.CharField(max_length=6, default='NA')
-	sucursal = models.CharField(max_length=55, default='NA')
-	fecha_contrato = models.DateField(default=0)
-	area = models.CharField(max_length=20, default='NA')
+    run = models.CharField(max_length=12)
+    nombres = models.CharField(max_length=50)
+    appaterno = models.CharField(max_length=50)
+    apmaterno = models.CharField(max_length=50)
+    fecha_nacimiento = models.DateField()
+    genero = models.CharField(max_length=6)
+    email = models.CharField(max_length=50)
+    telefono = models.IntegerField()
+    nombre_usuario = models.CharField(max_length=40)
+    contrasena = models.CharField(max_length=50)
+    cod_empleado = models.CharField(max_length=6)
+    sucursal = models.CharField(max_length=55)
+    fecha_contrato = models.DateField()
+    area = models.CharField(max_length=20)
 
-	def __str__(self):
-		return self.nombre
+    class Meta:
+        db_table = 'Empleado'
+
+    def __str__(self):
+        return self.nombres + ' ' + self.appaterno
 
 
 class Cliente(models.Model):
-	run = models.CharField(max_length=12, default='NA')
-	nombres = models.CharField(max_length=50, default='NA')
-	appaterno = models.CharField(max_length=50, default='NA')
-	apmaterno = models.CharField(max_length=50, default='NA')
-	fecha_nacimiento = models.DateField(default=0)
-	genero = models.CharField(max_length=6, default='NA')
-	email = models.CharField(max_length=50, default='NA')
-	telefono = models.IntegerField(default=0)
-	nombre_usuario = models.CharField(max_length=40, default='NA')
-	contrasena = models.CharField(max_length=50, default='NA')
-	direccion = models.CharField(max_length=50, default='NA')
+    run = models.CharField(max_length=12)
+    nombres = models.CharField(max_length=50)
+    appaterno = models.CharField(max_length=50)
+    apmaterno = models.CharField(max_length=50)
+    fecha_nacimiento = models.DateField(auto_now=True)
+    genero = models.CharField(max_length=6)
+    email = models.CharField(max_length=50)
+    telefono = models.IntegerField(default=0)
+    nombre_usuario = models.CharField(max_length=40)
+    contrasena = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=50)
 
-	def __str__(self):
-		return self.nombre
+    class Meta:
+        db_table = 'Cliente'
+
+    def __str__(self):
+        return self.nombres + ' ' + self.appaterno
 
 
 class Vendedor(models.Model):
-	run = models.CharField(max_length=12, default='NA')
-	nombres = models.CharField(max_length=50, default='NA')
-	appaterno = models.CharField(max_length=50, default='NA')
-	apmaterno = models.CharField(max_length=50, default='NA')
-	fecha_nacimiento = models.DateField(default=0)
-	genero = models.CharField(max_length=6, default='NA')
-	email = models.CharField(max_length=50, default='NA')
-	telefono = models.IntegerField(default=0)
-	nombre_usuario = models.CharField(max_length=40, default='NA')
-	contrasena = models.CharField(max_length=50, default='NA')
-	cod_vendedor = models.CharField(max_length=6, default='NA')
-	sucursal = models.CharField(max_length=55, default='NA')
-	fecha_contrato = models.DateField(default=0)
+    run = models.CharField(max_length=12)
+    nombres = models.CharField(max_length=50)
+    appaterno = models.CharField(max_length=50)
+    apmaterno = models.CharField(max_length=50)
+    fecha_nacimiento = models.DateField()
+    genero = models.CharField(max_length=6)
+    email = models.CharField(max_length=50)
+    telefono = models.IntegerField()
+    nombre_usuario = models.CharField(max_length=40)
+    contrasena = models.CharField(max_length=50)
+    cod_vendedor = models.CharField(max_length=6)
+    sucursal = models.CharField(max_length=55)
+    fecha_contrato = models.DateField()
 
-	def __str__(self):
-		return self.nombre
+    class Meta:
+        db_table = 'Vendedor'
+
+    def __str__(self):
+        return self.nombres + ' ' + self.appaterno
 
 
 class Compra(models.Model):
-	vendedor_cod_vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE, default=0)
-	monto_total = models.IntegerField(default=0)
-	cliente_usuario_id = models.ForeignKey(Cliente, on_delete=models.CASCADE, default=0)
+    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
+    monto_total = models.IntegerField()
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'Compra'
+
 
 class Actividad(models.Model):
-	fecha_hora = models.DateField(default=0)
-	usuario = models.ForeignKey('auth.User', on_delete=models.SET_NULL, default=0,
-								null=True)
+    fecha_hora = models.DateField()
+    usuario = models.ForeignKey('auth.User', on_delete=models.SET_NULL,
+                                null=True)
+
+    class Meta:
+        db_table = 'Actividad'
 
 
 class Categoria(models.Model):
-	nombre = models.CharField(max_length=50, default='NA')
+    nombre = models.CharField(max_length=50)
 
-	def __str__(self):
-		return self.nombre
 
 
 class Marca(models.Model):
-	nombre = models.CharField(max_length=50, default='NA')
+    nombre = models.CharField(max_length=50)
 
-	def __str__(self):
-		return self.nombre
+    class Meta:
+        db_table = 'Marca'
+
+    def __str__(self):
+        return self.nombre
 
 
 class Producto(models.Model):
-	sku = models.CharField(max_length=100, default='NA')
-	nombre = models.CharField(max_length=100, default='NA')
-	color = models.CharField(max_length=20, default='NA')
-	descripcion = models.CharField(max_length=100, default='NA')
-	stock = models.IntegerField(default=0)
-	stock_critico = models.IntegerField(default=0)
-	disponibilidad = models.CharField(max_length=1, default='NA')
-	precio_normal = models.IntegerField(default=0)
-	precio_oferta = models.IntegerField(default=0)
-	marca = models.ForeignKey(Marca, on_delete=models.SET_NULL, null=True, default=0)
+    producto_id = models.CharField(max_length=17, primary_key=True)
+    sku = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
+    color = models.CharField(max_length=20)
+    descripcion = models.CharField(max_length=100)
+    stock = models.IntegerField()
+    stock_critico = models.IntegerField()
+    disponibilidad = models.CharField(max_length=1)
+    precio_normal = models.IntegerField()
+    precio_oferta = models.IntegerField()
+    marca = models.ForeignKey(Marca, on_delete=models.SET_NULL, null=True)
+    url_img = models.CharField(max_length=200)
 
-	def __str__(self):
-		return self.nombre
+    class Meta:
+        db_table = 'Producto'
+
+    def __str__(self):
+        return self.nombre
 
 
 class CategoriaProducto(models.Model):
-	producto = models.ForeignKey(Producto, on_delete=models.CASCADE, default=0)
-	categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, default=0)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
-	def __str__(self):
-		return self.producto + ' - ' + self.categoria
+    class Meta:
+        db_table = 'CategoriaProducto'
+
 
 
 class Carro(models.Model):
-	carro_id = models.CharField(max_length=8, primary_key=True, default='NA')
-	cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, default=0)
+    carro_id = models.CharField(max_length=8, primary_key=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
-	def __str__(self):
-		return self.carro_id
 
 
 class CarroProducto(models.Model):
-	cantidad = models.IntegerField(default=0)
-	producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, default=0,
-								 null=True)
-	carro = models.ForeignKey(Carro, on_delete=models.CASCADE, default=0)
+    cantidad = models.IntegerField()
+    producto = models.ForeignKey(Producto, on_delete=models.SET_NULL,
+                                 null=True)
+    carro = models.ForeignKey(Carro, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'CarroProducto'
+
 
 class Proveedor(models.Model):
-	razon_social = models.CharField(max_length=55, default='NA')
-	sector_comercial = models.CharField(max_length=55, default='NA')
-	direccion = models.CharField(max_length=55, default='NA')
-	email = models.CharField(max_length=55, default='NA')
-	fono = models.CharField(max_length=55, default='NA')
+    razon_social = models.CharField(max_length=55)
+    sector_comercial = models.CharField(max_length=55)
+    direccion = models.CharField(max_length=55)
+    email = models.CharField(max_length=55)
+    fono = models.CharField(max_length=55)
+
+    class Meta:
+        db_table = 'Proveedor'
+
+    def __str__(self):
+        return self.razon_social
+
 
 class OrdenDeCompra(models.Model):
-	fecha_recepcion = models.DateField(default=0)
-	estado = models.CharField(max_length=20, default='NA')
-	proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, default=0)
+    fecha_recepcion = models.DateField()
+    estado = models.CharField(max_length=20)
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'OrdenDeCompra'
+
 
 class ProductoOc(models.Model):
-	producto = models.ForeignKey(Producto, on_delete=models.CASCADE, default=0)
-	orden_de_compra = models.ForeignKey(OrdenDeCompra, on_delete=models.CASCADE, default=0)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    orden_de_compra = models.ForeignKey(OrdenDeCompra,
+                                        on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'ProductoOc'
+
 
 class RetiroTienda(models.Model):
-	fecha_entrega = models.DateField(default=0)
-	rut_receptor = models.CharField(max_length=12, default='NA')
-	estado = models.CharField(max_length=20, default='NA')
-	sucursal = models.CharField(max_length=20, default='NA')
-	empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, default=0)
-	compra = models.ForeignKey(Compra, on_delete=models.CASCADE, default=0)
+    fecha_entrega = models.DateField()
+    rut_receptor = models.CharField(max_length=12)
+    estado = models.CharField(max_length=20)
+    sucursal = models.CharField(max_length=20)
+    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'RetiroTienda'
+
 
 class DespachoDomicilio(models.Model):
-	fecha_entrega = models.DateField(default=0)
-	rut_receptor = models.CharField(max_length=12, default='NA')
-	estado = models.CharField(max_length=20, default='NA')
-	direccion = models.CharField(max_length=60, default='NA')
-	telefono_contacto = models.CharField(max_length=12, default='NA')
-	comuna = models.CharField(max_length=20, default='NA')
-	descripcion = models.CharField(max_length=20, default='NA')
-	compra = models.ForeignKey(Compra, on_delete=models.CASCADE, default=0)
+    fecha_entrega = models.DateField()
+    rut_receptor = models.CharField(max_length=12)
+    estado = models.CharField(max_length=20)
+    direccion = models.CharField(max_length=60)
+    telefono_contacto = models.CharField(max_length=12)
+    comuna = models.CharField(max_length=20)
+    descripcion = models.CharField(max_length=20)
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'DespachoDomicilio'
+
 
 class Boleta(models.Model):
-	sucursal = models.CharField(max_length=100, default='NA')
-	direccion = models.CharField(max_length=100, default='NA')
-	comuna = models.CharField(max_length=45, default='NA')
-	fecha_compra = models.DateField(default=0)
-	terminal = models.IntegerField(default=0)
-	tipo_pago = models.IntegerField(default=0)
-	anulada = models.CharField(max_length=1, default='NA')
-	compra = models.ForeignKey(Compra, on_delete=models.CASCADE, default=0)
-	rut_persona = models.CharField(max_length=12, default='NA')
+    sucursal = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=100)
+    comuna = models.CharField(max_length=45)
+    fecha_compra = models.DateField()
+    terminal = models.IntegerField()
+    tipo_pago = models.IntegerField()
+    anulada = models.CharField(max_length=1)
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
+    rut_persona = models.CharField(max_length=12)
+
+    class Meta:
+        db_table = 'Boleta'
+
 
 class Factura(models.Model):
-	sucursal = models.CharField(max_length=100, default='NA')
-	direccion = models.CharField(max_length=100, default='NA')
-	comuna = models.CharField(max_length=45, default='NA')
-	fecha_compra = models.DateField(default=0)
-	terminal = models.IntegerField(default=0)
-	tipo_pago = models.IntegerField(default=0)
-	anulada = models.CharField(max_length=1, default='NA')
-	compra = models.ForeignKey(Compra, on_delete=models.CASCADE, default=0)
-	rut_empresa = models.CharField(max_length=12, default='NA')
-	iva = models.IntegerField(default=0)
+    sucursal = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=100)
+    comuna = models.CharField(max_length=45)
+    fecha_compra = models.DateField()
+    terminal = models.IntegerField()
+    tipo_pago = models.IntegerField()
+    anulada = models.CharField(max_length=1)
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
+    rut_empresa = models.CharField(max_length=12)
+    iva = models.IntegerField()
+
+    class Meta:
+        db_table = 'Factura'
+
 
 class NotaCredito(models.Model):
-	sucursal = models.CharField(max_length=100, default='NA')
-	direccion = models.CharField(max_length=100, default='NA')
-	comuna = models.CharField(max_length=45, default='NA')
-	fecha_compra = models.DateField(default=0)
-	terminal = models.IntegerField(default=0)
-	tipo_pago = models.IntegerField(default=0)
-	anulada = models.CharField(max_length=1, default='NA')
-	compra = models.ForeignKey(Compra, on_delete=models.CASCADE, default=0)
-	empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, default=0)
-	fecha_anulacion = models.DateField(default=0)
-	doc_asociado = models.CharField(max_length=10, default='NA')
-	desc_motivo = models.CharField(max_length=255, default='NA')
+    sucursal = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=100)
+    comuna = models.CharField(max_length=45)
+    fecha_compra = models.DateField()
+    terminal = models.IntegerField()
+    tipo_pago = models.IntegerField()
+    anulada = models.CharField(max_length=1)
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
+    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    fecha_anulacion = models.DateField()
+    doc_asociado = models.CharField(max_length=10)
+    desc_motivo = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'NotaCredito'

@@ -1,0 +1,76 @@
+{% extends 'tienda/admin/base.html' %}
+
+{% block productos_active %} active {% endblock %}
+
+{% block content %}
+    <div class="sub-contenedor d-flex justify-content-center">
+        <div class="card" >
+            <div class="card-title">
+            </div>
+            <div class="card-body">
+                <form class="d-flex flex-column" action="" method="POST">
+                    {% csrf_token %}
+                    <h4 class="subtitulo ml-3 mb-4" class="nunito-bold">Agregar producto:</h4>
+                    <div class="fila-form">
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>ID:</label>
+                            {{ form.producto_id }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">SKU:</label>
+                            {{ form.sku }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Nombre:</label>
+                            {{ form.nombre }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Color:</label>
+                            {{ form.color }}
+                        </div>
+                    </div>
+
+                    <div class="fila-form">
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Descripción:</label>
+                            {{ form.descripcion }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Stock:</label>
+                            {{ form.stock }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Stock Crítico:</label>
+                            {{ form.stock_critico }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Disponibilidad:</label>
+                            {{ form.disponibilidad }}
+                        </div>
+                    </div>
+
+                    <div class="fila-form">
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Precio Normal:</label>
+                            {{ form.precio_normal }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Precio Oferta:</label>
+                            {{ form.precio_oferta }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Marca:</label>
+                            {{ form.marca }}
+                        </div>
+                    </div>
+                    <p style='font-size:11pt; text-align:justify; color: var(--accent_1)' class="ml-3">(*) Campos obligatorios.</p>
+                    <div class="fila-form justify-content-end mr-3 mt-2">
+                        <a href="{% url 'cancelar_producto' %}" class="btn boton-admin-cancelar">Cancelar</a>
+                        <button type="submit" class="btn boton-admin-primary ml-3">Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

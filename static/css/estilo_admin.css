@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css?family=Hepta+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
+
+/* ========================== Colores ======================== */
+:root {
+    --blue: #1f50a5;
+    --yellow: #ffd800;
+    --dark: #4c5b5c;
+    --gray: #e8eded;
+    --light: #f2f4f7;
+    --accent_1: #ff5964;
+    --accent_2: #25ced1;
+}
+
+/* ========================== Fuentes ======================= */
+
+.hepta {
+    font-family: 'Hepta Slab', serif;
+}
+
+.hepta-bold {
+    font-family: 'Hepta Slab', serif;
+    font-weight: bold;
+}
+
+.nunito {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+}
+
+.nunito-bold {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.changa-bold{
+    font-family: 'Changa One', cursive;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.logo-type{
+    display: flex;
+    align-items: center;
+    color: var(--blue);
+    font-family: 'Changa One', cursive;
+    font-size: 60px;
+    font-weight: bold;
+}
+/* =========================== Global ========================*/
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--light);
+}
+
+/* =================== Admin ================================ */
+
+.subtitulo {
+    color: var(--blue);
+    font-family: 'Nunito', sans-serif;
+}
+
+#admin-body {
+    background-color: var(--gray);
+}
+
+.sub-contenedor {
+    margin-top: 2rem;
+}
+
+.logo-admin {
+    color: var(--yellow);
+    font-family: 'Changa One', cursive;
+    font-size: 30pt;
+    font-weight: bold;
+}
+
+.nav-item {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.logo-admin:hover {
+    text-decoration: none;
+    color: var(--light);
+}
+
+.logo-admin:visited {
+    text-decoration: none;
+}
+
+.icon-admin {
+    font-size: xx-large;
+    color: var(--light);
+}
+
+.icon-admin:hover {
+    color: var(--yellow);
+}
+
+.icon {
+    font-size: x-large;
+    color: var(--light);
+}
+
+.tarjeta {
+    background-color: var(--light);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+}
+
+.tarjeta-header {
+    background-color: var(--blue);
+    color: var(--light);
+    font-weight: bold;
+    align-items: center;
+}
+
+.boton-admin-primary {
+    background-color: var(--blue);
+    color: var(--light);
+}
+
+.boton-admin-primary:hover {
+    color: var(--yellow);
+}
+
+.boton-admin-cancelar {
+     background-color: var(--dark);
+     color: var(--light);
+}
+
+.boton-admin-cancelar:hover {
+    color: var(--accent_1);
+}
+
+.filtro-producto-admin {
+    display: block;
+}
+
+.fila-form {
+    display: inline-flex;
+}
+

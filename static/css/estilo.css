@@ -2,23 +2,28 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
 
-/* Global*/
-html, body {
-    height: 100%;
-}
-
-/* Colores */
+/* ========================== Colores ======================== */
 :root {
-    --light: #b9546d;
-    --dark: #193944;
-    --light_white: #ecebe4;
-    --light_white_bright: #f4f4f0;
-    --accent_1: #ed6a5a;
+    --blue: #1f50a5;
+    --yellow: #ffd800;
+    --dark: #4c5b5c;
+    --gray: #c8cfcf;
+    --light: #f2f4f7;
+    --accent_1: #ff5964;
     --accent_2: #25ced1;
 }
 
+/* =========================== Global ========================*/
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--light);
+}
 
-/* Fuentes */
+
+
+/* ========================== Fuentes ======================= */
 
 .hepta {
     font-family: 'Hepta Slab', serif;
@@ -47,10 +52,163 @@ html, body {
 }
 
 .logo-type{
-    color: #1F50A5;
+    display: flex;
+    align-items: center;
+    color: var(--blue);
     font-family: 'Changa One', cursive;
     font-size: 60px;
     font-weight: bold;
 }
 
-/* Header */
+/* ============================ Header ================================ */
+.header {
+    background-color: var(--light);
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+.barra-busqueda {
+    display: flex;
+    align-content: center;
+}
+
+.botones-header {
+    color: var(--yellow);
+    display: inline-flex;
+    align-items: center;
+    text-align: left;
+    margin-top: 0.5rem;
+}
+
+.texto-boton {
+    color: var(--blue);
+    font-size: 13px;
+    margin-left: 0.5rem;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+.link-header {
+    color: var(--yellow);
+    margin-left: 1rem;
+}
+
+.link-header:focus, .link-header:active, .link-header:hover {
+    color: var(--blue);
+}
+
+.icon-header {
+    font-size: xx-large;
+}
+
+/* ==================== Navbar =========================*/
+.nav{
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-top-color: var(--yellow);
+    border-bottom-color: var(--yellow);
+}
+
+.nav>li>a {
+    color: var(--blue);
+    font-size: 16px;
+}
+
+.nav-item {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/* ==================== Footer ============================ */
+footer {
+    background-color: var(--yellow);
+}
+
+.footer-item {
+    color: var(--blue);
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+}
+
+.footer-item p {
+    font-size: 12pt;
+    line-height: 1;
+}
+
+.footer-item a {
+    text-decoration: none;
+    color: var(--blue);
+}
+
+#suscribte-btn {
+    background-color: var(--blue);
+}
+
+.redes {
+    display: inline-block;
+}
+
+/* =================== Admin ================================ */
+#admin-body {
+    background-color: var(--gray);
+}
+
+.sub-contenedor {
+    margin-top: 2rem;
+}
+
+.logo-admin {
+    color: var(--yellow);
+    font-family: 'Changa One', cursive;
+    font-size: 30pt;
+    font-weight: bold;
+}
+
+.logo-admin:hover {
+    text-decoration: none;
+    color: var(--light);
+}
+
+.logo-admin:visited {
+    text-decoration: none;
+}
+
+.icon-admin {
+    font-size: xx-large;
+    color: var(--light);
+}
+
+.icon-admin:hover {
+    color: var(--yellow);
+}
+
+.icon {
+    font-size: x-large;
+    color: var(--light);
+}
+
+.tarjeta {
+    background-color: var(--light);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+}
+
+.tarjeta-header {
+    background-color: var(--blue);
+    color: var(--light);
+    font-weight: bold;
+    align-items: center;
+}
+
+.tarjeta-boton {
+    background-color: var(--blue);
+    color: var(--light);
+}
+
+.filtro-producto-admin {
+    display: block;
+}

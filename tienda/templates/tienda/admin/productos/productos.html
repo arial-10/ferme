@@ -1,0 +1,131 @@
+{% extends 'tienda/admin/base.html' %}
+{% load static %}
+{% block productos_active %} active {% endblock productos_active %}
+{% block content %}
+<div class="sub-contenedor d-flex justify-content-center">
+    <!-- Acordion -->
+    <div id="accordion" role="tablist" class="col-lg-7">
+        <div class="card tarjeta">
+            <div class="card-header tarjeta-header d-flex justify-content-between" role="tab" id="headingOne">
+                <h4><strong>Gestión de Productos</strong></h4>
+                <a class="collapsed" data-toggle="collapse" href="#productos" aria-expanded="true" aria-controls="productos">
+                    <i class="icon fas fa-chevron-down"></i>
+                </a>
+            </div>
+            <div id="productos" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                    <!-- ====== CONTENIDO ====== -->
+                    <!-- MENSAJES -->
+                    {% if messages %}
+                        <div>
+                            {% for message in messages %}
+                                {% if message.tags == 'success' %}
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% elif message.tags == 'danger' %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <br>
+                    {% endif %}
+
+                    <div class="d-flex justify-content-between">
+                        <!-- Filtros -->
+                        <form action="{% url 'obtener_productos' %}" method="GET" class="form-inline" style="display: inline-flex; align-items: flex-end;">
+                            <div class="filtro-producto-admin mb-2">
+                                <h6>Nombre:</h6>
+                                <input type="text" class="form-control" name="nombre">
+                            </div>
+
+                            <div class="filtro-producto-admin mb-2 ml-3">
+                                <h6>Marca:</h6>
+                                <select name="marca" class="form-control" >
+                                    <option value="0">----------------</option>
+                                    {% for marca in marcas %}
+                                        <option value="{{ marca.id }}">
+                                            {{ marca.nombre }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="filtro-producto-admin mb-2 ml-3">
+                                <h6>SKU:</h6>
+                                <input type="text" class="form-control" name="sku">
+                            </div>
+
+                            <button type="submit" class="btn boton-admin-primary mb-2 ml-3" >Buscar</button>
+                        </form>
+                        <!-- Agregar producto -->
+                        <div class="mb-2" style="display: inline-flex; align-items: flex-end;">
+                            <a href="{% url 'agregar_producto' %}" class="btn btn-success">
+                                <i class="fas fa-plus mr-2"></i>
+                                <span>Agregar nuevo producto</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Tabla -->
+                    <table id="productosAdmin" class="table table-responsive table-hover table-bordered my-3">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="header-tabla">Id</th>
+                                <th class="header-tabla">SKU</th>
+                                <th class="header-tabla">Nombre</th>
+                                <th class="header-tabla">Marca</th>
+                                <th class="header-tabla">Stock</th>
+                                <th class="header-tabla">Stock Crítico</th>
+                                <th class="header-tabla">Disponibilidad</th>
+                                <th class="header-tabla">Precio Normal</th>
+                                <th class="header-tabla">Precio Oferta</th>
+                                <th class="header-tabla">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in productos %}
+                            <tr>
+                                <th scope="row">{{ producto.producto_id }}</th>
+                                <td>{{ producto.sku }}</td>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.marca }}</td>
+                                <td>{{ producto.stock }}</td>
+                                <td>{{ producto.stock_critico }}</td>
+                                <td>{{ producto.disponibilidad }}</td>
+                                <td>{{ producto.precio_normal }}</td>
+                                <td>{{ producto.precio_oferta }}</td>
+                                <td>
+                                    <div class="d-flex flex-row">
+                                        <a href="{% url 'actualizar_producto' producto.producto_id %}" class="btn btn-warning"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Modificar producto">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a href="{% url 'eliminar_producto' producto.producto_id %}" class="btn btn-danger ml-2"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Eliminar producto">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
