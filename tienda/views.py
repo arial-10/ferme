@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
 from .forms import *
+from querybuilder.query import Query
 
 
 def home(request):
@@ -16,11 +17,10 @@ def home_admin(request):
 
 # =============== Seccion Producto ======================================
 def ver_productos_admin(request):
-    marcas = Marca.objects.all();
 
     return render(request, 'tienda/admin/productos/productos.html',
                   {
-                    'marcas': marcas
+                    'marcas': obtener_marcas()
                   })
 
 
@@ -31,16 +31,28 @@ def obtener_productos_admin(request):
     sku = request.GET.get('sku')
     productos = Producto.objects.all();
 
-    if nombre != '' and sku == '':
+
+    if nombre != '' and sku == '' and id_marca == '0':
         productos = Producto.objects.filter(nombre__icontains=nombre)
-    if nombre == '' and sku != '':
+    if nombre == '' and sku != '' and id_marca == '0':
         productos = Producto.objects.filter(sku__contains=sku)
-    if nombre != '' and sku != '':
+    if nombre == '' and sku == '' and id_marca != '0':
+        productos = Producto.objects.filter(marca=id_marca)
+
+    if nombre != '' and sku != '' and id_marca == '0':
         productos = Producto.objects.filter(nombre__icontains=nombre, sku__contains=sku)
+    if nombre != '' and sku == '' and id_marca != '0':
+        productos = Producto.objects.filter(nombre__icontains=nombre, marca=id_marca)
+    if nombre == '' and sku != '' and id_marca != '0':
+        productos = Producto.objects.filter(sku__contains=sku, marca=id_marca)
+
+    if nombre != '' and sku != '' and id_marca != '0':
+        productos = Producto.objects.filter(nombre__icontains=nombre, sku__contains=sku, marca=id_marca)
 
     return render(request, 'tienda/admin/productos/productos.html',
                   {
-                    'productos': productos
+                    'productos': productos,
+                    'marcas': obtener_marcas()
                   })
 
 
@@ -55,6 +67,7 @@ def agregar_producto(request):
             model_instance.url_img = 'img/producto/' + model_instance.producto_id + '.jpg'
             model_instance.save()
             messages.success(request, 'Producto agregado exitosamente.')
+
             return redirect('productos_admin')
     else:
         form = ProductoForm()
@@ -92,6 +105,12 @@ def eliminar_producto(request, id):
                   {
                       'producto': producto
                   })
+
+
+def obtener_marcas():
+    marcas = Marca.objects.all()
+
+    return marcas
 
 
 def cancelar_producto(request):
