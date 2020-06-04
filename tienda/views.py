@@ -6,17 +6,23 @@ from .models import *
 from .forms import *
 from querybuilder.query import Query
 
-
+# ======================== FERME TIENDA ========================
 def home(request):
     return render(request, 'tienda/home.html')
 
-
-
+# ======================== FERME ADMIN ========================
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')
 
-
+# ------------ PRODUCTOS ------------
 def ver_productos_admin(request):
+    """Muestra la página de gestión de Productos.
+
+    Args:
+
+    Returns:
+        Una página
+    """
 
     return render(request, 'tienda/admin/productos/productos.html',
                   {
@@ -24,11 +30,31 @@ def ver_productos_admin(request):
                   })
 
 def obtener_productos_admin(request):
+    """Retorna una lista de productos dependiendo de los filtros
+    ingresados
+
+    Args:
+
+    Returns:
+        Una página
+        productos: Queryset con los productos
+    """
 
     nombre = request.GET.get('nombre')
     id_marca = request.GET.get('marca')
     sku = request.GET.get('sku')
     productos = Producto.objects.all()
+
+    # query = Query().from_table(Producto)
+
+    # if nombre != '':
+    #     query = query.where(nombre__contains=nombre)
+    # if sku != '':
+    #     query = query.where(sku__contains=sku)
+    # if id_marca != '0':
+    #     query = query.where(marca_id=id_marca)
+
+    # productos = query.select()
 
     if nombre != '' and sku == '' and id_marca == '0':
         productos = Producto.objects.filter(nombre__icontains=nombre)
@@ -60,6 +86,13 @@ def obtener_productos_admin(request):
 
 
 def agregar_producto(request):
+    """Agrega un producto a la base de datos
+
+    Args:
+
+    Returns:
+        Una página
+    """
 
     if request.method == 'POST':
 
@@ -83,11 +116,11 @@ def actualizar_producto(request, id):
     """Actualiza un producto segun su id
 
     Args:
-        request: esto no es necesario pero lo puse pa que se entienda
         id (int): id del producto a modificar
     Returns:
         Una página
     """
+
     producto = Producto.objects.get(producto_id=id)
     if request.method == "POST":
         form = ProductoForm(request.POST, instance=producto)
@@ -104,6 +137,14 @@ def actualizar_producto(request, id):
 
 
 def eliminar_producto(request, id):
+    """Actualiza un producto segun su id
+
+    Args:
+        id (int): id del producto a eliminar
+    Returns:
+        Una página
+    """
+
     producto = Producto.objects.get(producto_id=id)
 
     if request.method == 'POST':
@@ -118,12 +159,28 @@ def eliminar_producto(request, id):
 
 
 def obtener_marcas():
+    """Obtiene todos los registros de la tabla Marca
+
+    Args:
+
+    Returns:
+        marcas: Queryset con las marcas
+    """
+
     marcas = Marca.objects.all()
 
     return marcas
 
 
 def cancelar_producto(request):
+    """Redirige a la página principal del módulo Productos.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
     return redirect(reverse('productos_admin'))
 
 
