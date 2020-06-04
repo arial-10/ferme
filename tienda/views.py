@@ -11,18 +11,17 @@ def home(request):
     return render(request, 'tienda/home.html')
 
 
-# ================ Metodos Ferme Admin ====================================
+
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')
 
-# =============== Seccion Producto ======================================
+
 def ver_productos_admin(request):
 
     return render(request, 'tienda/admin/productos/productos.html',
                   {
                     'marcas': obtener_marcas()
                   })
-
 
 def obtener_productos_admin(request):
 
@@ -80,8 +79,15 @@ def agregar_producto(request):
                         'form': form
                       })
 
-
 def actualizar_producto(request, id):
+    """Actualiza un producto segun su id
+
+    Args:
+        request: esto no es necesario pero lo puse pa que se entienda
+        id (int): id del producto a modificar
+    Returns:
+        Una página
+    """
     producto = Producto.objects.get(producto_id=id)
     if request.method == "POST":
         form = ProductoForm(request.POST, instance=producto)
@@ -120,7 +126,7 @@ def obtener_marcas():
 def cancelar_producto(request):
     return redirect(reverse('productos_admin'))
 
-# ================ Vistas Empleado ====================================
+
 
 def home_empleado(request):
     return render(request, 'tienda/empleado/home.html')
