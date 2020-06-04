@@ -27,10 +27,9 @@ def ver_productos_admin(request):
 def obtener_productos_admin(request):
 
     nombre = request.GET.get('nombre')
-    id_marca= request.GET.get('marca')
+    id_marca = request.GET.get('marca')
     sku = request.GET.get('sku')
-    productos = Producto.objects.all();
-
+    productos = Producto.objects.all()
 
     if nombre != '' and sku == '' and id_marca == '0':
         productos = Producto.objects.filter(nombre__icontains=nombre)
@@ -40,14 +39,19 @@ def obtener_productos_admin(request):
         productos = Producto.objects.filter(marca=id_marca)
 
     if nombre != '' and sku != '' and id_marca == '0':
-        productos = Producto.objects.filter(nombre__icontains=nombre, sku__contains=sku)
+        productos = Producto.objects.filter(nombre__icontains=nombre,
+                                            sku__contains=sku)
     if nombre != '' and sku == '' and id_marca != '0':
-        productos = Producto.objects.filter(nombre__icontains=nombre, marca=id_marca)
+        productos = Producto.objects.filter(nombre__icontains=nombre,
+                                            marca=id_marca)
     if nombre == '' and sku != '' and id_marca != '0':
-        productos = Producto.objects.filter(sku__contains=sku, marca=id_marca)
+        productos = Producto.objects.filter(sku__contains=sku,
+                                            marca=id_marca)
 
     if nombre != '' and sku != '' and id_marca != '0':
-        productos = Producto.objects.filter(nombre__icontains=nombre, sku__contains=sku, marca=id_marca)
+        productos = Producto.objects.filter(nombre__icontains=nombre,
+                                            sku__contains=sku,
+                                            marca=id_marca)
 
     return render(request, 'tienda/admin/productos/productos.html',
                   {
