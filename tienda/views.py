@@ -43,40 +43,54 @@ def obtener_productos_admin(request):
     nombre = request.GET.get('nombre')
     id_marca = request.GET.get('marca')
     sku = request.GET.get('sku')
-    productos = Producto.objects.all()
+    # productos = Producto.objects.all()
+    nombre_marca = []
 
-    # query = Query().from_table(Producto)
+    query = Query().from_table(Producto)
 
-    # if nombre != '':
-    #     query = query.where(nombre__contains=nombre)
-    # if sku != '':
-    #     query = query.where(sku__contains=sku)
-    # if id_marca != '0':
-    #     query = query.where(marca_id=id_marca)
+    if nombre != '':
+        query = query.where(nombre__contains=nombre)
+    if sku != '':
+        query = query.where(sku__contains=sku)
+    if id_marca != '0':
+        # Traemos los registros
+        query = query.where(marca_id=id_marca)
+        # Luego, buscamos el nombre de la marca
+        query2 = Query().from_table(Marca, ['NOMBRE']).where(id=id_marca)
+        # Guardamos el nombre
+        nombre_marca = query2.select()
 
-    # productos = query.select()
 
-    if nombre != '' and sku == '' and id_marca == '0':
-        productos = Producto.objects.filter(nombre__icontains=nombre)
-    if nombre == '' and sku != '' and id_marca == '0':
-        productos = Producto.objects.filter(sku__contains=sku)
-    if nombre == '' and sku == '' and id_marca != '0':
-        productos = Producto.objects.filter(marca=id_marca)
+    productos = query.select()
 
-    if nombre != '' and sku != '' and id_marca == '0':
-        productos = Producto.objects.filter(nombre__icontains=nombre,
-                                            sku__contains=sku)
-    if nombre != '' and sku == '' and id_marca != '0':
-        productos = Producto.objects.filter(nombre__icontains=nombre,
-                                            marca=id_marca)
-    if nombre == '' and sku != '' and id_marca != '0':
-        productos = Producto.objects.filter(sku__contains=sku,
-                                            marca=id_marca)
+    # Si encontro el nombre
+    if len(nombre_marca) > 0:
+        # Le pasamos a todos los productos(diccionarios) el nombre de la marca
+        for producto in productos:
+            producto['NOMBRE_MARCA'] = nombre_marca[0]['NOMBRE']
 
-    if nombre != '' and sku != '' and id_marca != '0':
-        productos = Producto.objects.filter(nombre__icontains=nombre,
-                                            sku__contains=sku,
-                                            marca=id_marca)
+
+    # if nombre != '' and sku == '' and id_marca == '0':
+    #     productos = Producto.objects.filter(nombre__icontains=nombre)
+    # if nombre == '' and sku != '' and id_marca == '0':
+    #     productos = Producto.objects.filter(sku__contains=sku)
+    # if nombre == '' and sku == '' and id_marca != '0':
+    #     productos = Producto.objects.filter(marca=id_marca)
+
+    # if nombre != '' and sku != '' and id_marca == '0':
+    #     productos = Producto.objects.filter(nombre__icontains=nombre,
+    #                                         sku__contains=sku)
+    # if nombre != '' and sku == '' and id_marca != '0':
+    #     productos = Producto.objects.filter(nombre__icontains=nombre,
+    #                                         marca=id_marca)
+    # if nombre == '' and sku != '' and id_marca != '0':
+    #     productos = Producto.objects.filter(sku__contains=sku,
+    #                                         marca=id_marca)
+
+    # if nombre != '' and sku != '' and id_marca != '0':
+    #     productos = Producto.objects.filter(nombre__icontains=nombre,
+    #                                         sku__contains=sku,
+    #                                         marca=id_marca)
 
     return render(request, 'tienda/admin/productos/productos.html',
                   {

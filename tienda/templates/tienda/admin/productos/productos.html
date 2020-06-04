@@ -71,23 +71,23 @@
                         <tbody>
                             {% for producto in productos %}
                             <tr>
-                                <th scope="row">{{ producto.producto_id }}</th>
-                                <td>{{ producto.sku }}</td>
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.marca }}</td>
-                                <td>{{ producto.stock }}</td>
-                                <td>{{ producto.stock_critico }}</td>
-                                <td>{{ producto.disponibilidad }}</td>
-                                <td>{{ producto.precio_normal }}</td>
-                                <td>{{ producto.precio_oferta }}</td>
+                                <th scope="row">{{ producto.PRODUCTO_ID }}</th>
+                                <td>{{ producto.SKU }}</td>
+                                <td>{{ producto.NOMBRE }}</td>
+                                <td>{{ producto.NOMBRE_MARCA }}</td>
+                                <td>{{ producto.STOCK }}</td>
+                                <td>{{ producto.STOCK_CRITICO }}</td>
+                                <td>{{ producto.DISPONIBILIDAD }}</td>
+                                <td>{{ producto.PRECIO_NORMAL }}</td>
+                                <td>{{ producto.PRECIO_OFERTA }}</td>
                                 <td>
                                     <div class="d-flex flex-row">
-                                        <a href="{% url 'actualizar_producto' producto.producto_id %}" class="btn btn-warning"
+                                        <a href="{% url 'actualizar_producto' producto.PRODUCTO_ID %}" class="btn btn-warning"
                                             data-toggle="tooltip"
                                             data-placement="top" title="Modificar producto">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a href="{% url 'eliminar_producto' producto.producto_id %}" class="btn btn-danger ml-2"
+                                        <a href="{% url 'eliminar_producto' producto.PRODUCTO_ID %}" class="btn btn-danger ml-2"
                                             data-toggle="tooltip"
                                             data-placement="top" title="Eliminar producto">
                                             <i class="fas fa-trash"></i>
