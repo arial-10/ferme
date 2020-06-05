@@ -1,0 +1,87 @@
+{% extends 'tienda/admin/base.html' %}
+
+{% block vendedor_active %} active {% endblock %}
+
+{% block content %}
+    <div class="sub-contenedor d-flex justify-content-center">
+        <div class="card" >
+            <div class="card-title">
+            </div>
+            <div class="card-body">
+                <form class="d-flex flex-column" action="" method="POST">
+                    {% csrf_token %}
+                    <h4 class="subtitulo ml-3 mb-4" class="nunito-bold">Agregar Vendedor:</h4>
+                    <div class="fila-form">
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>ID:</label>
+                            {{ form.usuario_id }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Run:</label>
+                            {{ form.run }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Nombres:</label>
+                            {{ form.nombres }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Paterno:</label>
+                            {{ form.appaterno }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Materno:</label>
+                            {{ form.apmaterno }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Fecha nacimiento:</label>
+                            {{ form.fecha_nacimiento }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Genero:</label>
+                            {{ form.genero }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Email:</label>
+                            {{ form.email }}
+                        </div>
+                    </div>
+
+                    <div class="fila-form">
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Telefono:</label>
+                            {{ form.telefono }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Nombre usuario:</label>
+                            {{ form.nombre_usuario }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Contraseña:</label>
+                            {{ form.contrasena }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for="">Codigo vendedor:</label>
+                            {{ form.cod_vendedor }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Sucursal:</label>
+                            {{ form.sucursal }}
+                        </div>
+                        <div class="form-group d-flex flex-column ml-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Fecha contrato:</label>
+                            {{ form.fecha_contrato }}
+                        </div>
+                    </div>
+
+                    
+                    <p style='font-size:11pt; text-align:justify; color: var(--accent_1)' class="ml-3">(*) Campos obligatorios.</p>
+                    <div class="fila-form justify-content-end mr-3 mt-2">
+                        <a href="{% url 'cancelar_producto' %}" class="btn boton-admin-cancelar">Cancelar</a>
+                        <button type="submit" class="btn boton-admin-primary ml-3">Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

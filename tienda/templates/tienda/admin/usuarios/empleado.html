@@ -1,0 +1,103 @@
+{% extends 'tienda/admin/base.html' %}
+{% load static %}
+{% block empleado_active %} active {% endblock empleado_active %}
+{% block content %}
+<div class="sub-contenedor d-flex justify-content-center">
+    <!-- Acordion -->
+    <div id="accordion" role="tablist" class="col-lg-7">
+        <div class="card tarjeta">
+            <div class="card-header tarjeta-header d-flex justify-content-between" role="tab" id="headingOne">
+                <h4><strong>Gestión de Empleados</strong></h4>
+                <a class="collapsed" data-toggle="collapse" href="#empleado" aria-expanded="true" aria-controls="empleado">
+                    <i class="icon fas fa-chevron-down"></i>
+                </a>
+            </div>
+            <div id="productos" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                    <!-- ====== CONTENIDO ====== -->
+                    {% include "tienda/components/messages.html" %}
+
+                    <div class="d-flex justify-content-between">
+                        <!-- Filtros -->
+                        <form action="{% url 'obtener_empleado_admin' %}" method="GET" class="form-inline" style="display: inline-flex; align-items: flex-end;">
+                            <div class="filtro-producto-admin mb-2">
+                                <h6>Run:</h6>
+                                <input type="text" class="form-control" name="run">
+                            </div>
+
+                            <div class="filtro-producto-admin mb-2">
+                                <h6>Apellido paterno:</h6>
+                                <input type="text" class="form-control" name="appaterno">
+                            </div>
+
+                            <div class="filtro-producto-admin mb-2 ml-3">
+                                <h6>Genero:</h6>
+                                <input type="text" class="form-control" name="genero">
+                            </div>
+
+
+                            <button type="submit" class="btn boton-admin-primary mb-2 ml-3" >Buscar</button>
+                        </form>
+                        <!-- Agregar producto -->
+                        <div class="mb-2" style="display: inline-flex; align-items: flex-end;">
+                            <a href="{% url 'agregar_empleado_admin' %}" class="btn btn-success">
+                                <i class="fas fa-plus mr-2"></i>
+                                <span>Agregar nuevo empleado</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Tabla -->
+                    <table id="clientesAdmin" class="table table-responsive table-hover table-bordered my-3">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="header-tabla">Id</th>
+                                <th class="header-tabla">Run</th>
+                                <th class="header-tabla">Nombres</th>
+                                <th class="header-tabla">Paterno</th>
+                                <th class="header-tabla">Materno</th>
+                                <th class="header-tabla">Fecha Nac</th>
+                                <th class="header-tabla">Genero</th>
+                                <th class="header-tabla">Email</th>
+                                <th class="header-tabla">Telefono</th>
+                                <th class="header-tabla">Nom Usuario</th>
+                                <th class="header-tabla">Contraseña</th>
+                                <th class="header-tabla">Codigo Empleado</th>
+                                <th class="header-tabla">Sucursal</th>
+                                <th class="header-tabla">Fecha Contrato</th>
+                                <th class="header-tabla">Área</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for empleado in empleado %}
+                            <tr>
+                                <th scope="row">{{ empleado.usuario_id }}</th>
+                                <td>{{ empleado.run }}</td>
+                                <td>{{ empleado.nombres }}</td>
+                                <td>{{ empleado.appaterno }}</td>
+                                <td>{{ empleado.apmaterno }}</td>
+                                <td>{{ empleado.fecha_nacimiento }}</td>
+                                <td>{{ empleado.genero }}</td>
+                                <td>{{ empleado.email }}</td>
+                                <td>{{ empleado.telefono }}</td>
+                                <td>{{ empleado.nombre_usuario }}</td>
+                                <td>{{ empleado.contrasena }}</td>
+                                <td>{{ empleado.cod_empleado }}</td>                                
+                                <td>{{ empleado.sucursal }}</td>
+                                <td>{{ empleado.fecha_contrato }}</td>
+                                <td>{{ empleado.area }}</td>
+                                <td>
+                                   
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
