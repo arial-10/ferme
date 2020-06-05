@@ -6,9 +6,11 @@
 :root {
     --blue: #1f50a5;
     --yellow: #ffd800;
+    --strong_yellow: #E0A800;
     --dark: #4c5b5c;
     --gray: #c8cfcf;
     --light: #f2f4f7;
+    --white: white;
     --accent_1: #ff5964;
     --accent_2: #25ced1;
 }
@@ -21,8 +23,17 @@ html, body {
     background-color: var(--light);
 }
 
+.sub-contenedor {
+    margin-top: 2rem;
+}
 
+.marginTop {
+    margin-top: 1rem;
+}
 
+.marginBottom {
+    margin-bottom: 1rem;
+}
 /* ========================== Fuentes ======================= */
 
 .hepta {
@@ -62,9 +73,14 @@ html, body {
 
 /* ============================ Header ================================ */
 .header {
-    background-color: var(--light);
+    background-color: var(--white);
     margin-top: 0;
     padding: 20px 20px 20px 40px;
+}
+
+.form-busqueda {
+    display: flex;
+    align-content: center;
 }
 
 .barra-busqueda {
@@ -105,6 +121,7 @@ html, body {
 
 /* ==================== Navbar =========================*/
 .nav{
+    background-color: var(--yellow);
     border-top-style: solid;
     border-bottom-style: solid;
     border-top-color: var(--yellow);
@@ -126,6 +143,7 @@ html, body {
 /* ==================== Footer ============================ */
 footer {
     background-color: var(--yellow);
+    margin-top: 4rem;
 }
 
 .footer-item {
@@ -152,63 +170,52 @@ footer {
     display: inline-block;
 }
 
-/* =================== Admin ================================ */
-#admin-body {
-    background-color: var(--gray);
+/* ================= Catalogo Productos ================ */
+
+.card {
+    background-color: var(--white);
+    border-color: var(--blue);
 }
 
-.sub-contenedor {
-    margin-top: 2rem;
+.producto {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
-.logo-admin {
-    color: var(--yellow);
-    font-family: 'Changa One', cursive;
-    font-size: 30pt;
-    font-weight: bold;
-}
-
-.logo-admin:hover {
-    text-decoration: none;
-    color: var(--light);
-}
-
-.logo-admin:visited {
-    text-decoration: none;
-}
-
-.icon-admin {
-    font-size: xx-large;
-    color: var(--light);
-}
-
-.icon-admin:hover {
-    color: var(--yellow);
-}
-
-.icon {
-    font-size: x-large;
-    color: var(--light);
-}
-
-.tarjeta {
-    background-color: var(--light);
-    color: var(--dark);
+.titulo-marca {
+    color: var(--strong_yellow);
     font-family: 'Nunito', sans-serif;
-}
-
-.tarjeta-header {
-    background-color: var(--blue);
-    color: var(--light);
+    font-size: 12pt;
     font-weight: bold;
-    align-items: center;
 }
 
-.tarjeta-boton {
-    background-color: var(--blue);
-    color: var(--light);
+.nombre-producto {
+    color: var(--blue);
+    font-family: 'Nunito', sans-serif;
+    font-size: 11pt;
+    font-weight: bold;
+    line-height: 0;
 }
 
-.filtro-producto-admin {
-    display: block;
+
+.precio-producto {
+    color: var(--blue);
+    font-family: 'Nunito', sans-serif;
+    font-size: 13pt;
+    font-weight: bold;
+}
+
+.disponible {
+    color: var(--blue);
+    font-family: 'Nunito', sans-serif;
+    font-size: 11pt;
+    line-height: 0;
+}
+
+.imagen-producto {
+    border-color: var(--blue);
+    border-style: solid;
+    border-width: 1px;
 }

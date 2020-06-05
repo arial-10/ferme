@@ -1,0 +1,33 @@
+{% extends 'tienda/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="sub-contenedor d-flex flex-wrap justify-content-start">
+        {% for producto in productos %}
+            <div class="producto">
+                <div class="card">
+                    <div class="card-body">
+                        <a class="" href="">
+                            <img class="imagen-producto img-fluid rounded m-2" src="{% static producto.url_img %}" alt="cover" width="240" height="330">
+                        </a>
+                        <p class="px-3 titulo-marca">{{ producto.marca }}</p>
+                        <a href=""><p class="px-3 nombre-producto">{{ producto.nombre }}</p></a>
+                        <br>
+                        <p class="px-3 precio-producto">${{ producto.precio_normal }} C/U</p>
+                        <br>
+                        <p class="disponible px-3">
+                            <span class="mr-2" style="color: var(--yellow);"><i class="fas fa-check"></i></span>
+                            Disponible para despacho
+                        </p>
+                        <p class="disponible px-3">
+                            <span class="mr-2" style="color: var(--yellow);"><i class="fas fa-check"></i></span>
+                            Disponible para retiro
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

@@ -1,17 +1,19 @@
-<header class="header d-flex justify-content-between">
+<header class="header d-flex flex-wrap justify-content-between">
     <div class="logo-type">
         <span>FERME</span>
     </div>
     <!-- Buscador -->
-    <div class="input-group barra-busqueda col-lg-6">
-        <div class="input-group-prepend">
-            <button class="btn btn-warning" type="button">
-            <span class="fas fa-search"></span>
-            </button>
+    <form class="form-busqueda col-lg-4" action="{% url 'catalogo' %}" method="GET">
+        <div class="input-group barra-busqueda">
+            <div class="input-group-prepend">
+                <button class="btn btn-warning" type="submit">
+                <span class="fas fa-search"></span>
+                </button>
+            </div>
+            <input name="busqueda" type="text" class="form-control border border-warning"
+            placeholder="¿Qué buscas?" aria-label="" aria-describedby="basic-addon1">
         </div>
-        <input type="text" class="form-control border border-warning"
-        placeholder="¿Qué buscas?" aria-label="" aria-describedby="basic-addon1">
-    </div>
+    </form>
     <!-- Botones Acciones -->
     <div class="botones-header">
         {% if user.is_authenticated %}
@@ -42,23 +44,4 @@
             </div>
         </a>
     </div>
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-user"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-shopping-bag"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-            </li>
-        </ul>
-    </nav> -->
 </header>

@@ -10,6 +10,30 @@ from querybuilder.query import Query
 def home(request):
     return render(request, 'tienda/home.html')
 
+
+def catalogo(request):
+    """Retorna una lista de productos dependiendo de los filtros
+    ingresados
+
+    Args:
+
+    Returns:
+        Una página
+        productos: Queryset con los productos
+    """
+    busqueda = request.GET.get('busqueda')
+
+    productos = Producto.objects.all()
+
+    if busqueda != '':
+        productos = Producto.objects.filter(nombre__icontains=busqueda)
+
+    return render(request, 'tienda/productos.html',
+                  {
+                    'productos': productos
+                  })
+
+
 # ======================== FERME ADMIN ========================
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')

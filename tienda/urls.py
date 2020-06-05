@@ -6,7 +6,10 @@ from . import views
 
 urlpatterns = static(settings.STATIC_URL,
                      document_root=settings.STATIC_ROOT) + [
+    # URLS Ferme Tiena
     path('', views.home, name='home'),
+    path('catalogo/', views.catalogo, name='catalogo'),
+    # URLS Ferme Admin
     path('ferme-admin/', views.home_admin, name='admin'),
     path('ferme-admin/productos/', views.ver_productos_admin,
          name='productos_admin'),
