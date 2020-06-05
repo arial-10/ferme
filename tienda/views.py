@@ -12,28 +12,28 @@ def home(request):
 
 # ----- Inicio de Sesion ----- #
 def ver_inicio_sesion(request):
-    return render(request, 'tienda/inicio_sesion.html')  
- 
+    return render(request, 'tienda/inicio_sesion.html')
+
 # ------ Metodo cliente/portal ------ #
 def agregar_cliente(request):
 
     if request.method == 'POST':
-        
+
         form = ClienteForm(request.POST)
         if form.is_valid():
 
             post = form.save(commit=False)
             post.save()
             messages.success(request, 'Cliente agregado exitosamente.')
-            return redirect('inicio_sesion') 
+            return redirect('inicio_sesion')
     else:
         form = ClienteForm()
         return render(request, 'tienda/cliente_form.html',
                       {
                         'form': form
-                      })     
+                      })
 
-    
+# ---------- Catalogo productos ---------------------
 def catalogo(request):
     """Retorna una lista de productos dependiendo de los filtros
     ingresados
@@ -263,20 +263,20 @@ def ver_clientes_admin(request):
 def agregar_clientes_admin(request):
 
     if request.method == 'POST':
-        
+
         form = ClienteForm(request.POST)
         if form.is_valid():
 
             post = form.save(commit=False)
             post.save()
             messages.success(request, 'Cliente agregado exitosamente.')
-            return redirect('clientes_admin') 
+            return redirect('clientes_admin')
     else:
         form = ClienteForm()
         return render(request, 'tienda/admin/usuarios/cliente_admin_form.html',
                       {
                         'form': form
-                      })     
+                      })
 
 
 def obtener_clientes_admin(request):
@@ -289,25 +289,25 @@ def obtener_clientes_admin(request):
     # Busca tres campos
     if run != '' and appaterno != '' and genero != '':
         cliente = Cliente.objects.filter(run__icontains=run, appaterno__icontains=appaterno, genero__icontains=genero)
-    # Busca solo dos campos    
+    # Busca solo dos campos
     elif run != '' and appaterno != '':
         cliente = Cliente.objects.filter(run__icontains=run, appaterno__icontains=appaterno)
     elif run != '' and genero != '':
-        cliente = Cliente.objects.filter(run__icontains=run, genero__icontains=genero) 
+        cliente = Cliente.objects.filter(run__icontains=run, genero__icontains=genero)
     elif appaterno != '' and genero != '':
-        cliente = Cliente.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)               
+        cliente = Cliente.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)
     # Busca solo un campo
     elif run != '':
         cliente = Cliente.objects.filter(run__icontains=run)
     elif appaterno != '':
-        cliente = Cliente.objects.filter(appaterno__icontains=appaterno)    
+        cliente = Cliente.objects.filter(appaterno__icontains=appaterno)
     elif genero != '':
-        cliente = Cliente.objects.filter(genero__icontains=genero)    
+        cliente = Cliente.objects.filter(genero__icontains=genero)
 
     return render(request, 'tienda/admin/usuarios/clientes.html',
                 {
                 'cliente': cliente
-                })      
+                })
 
 
 # ----- Administrador ------
@@ -323,20 +323,20 @@ def ver_administrador_admin(request):
 def agregar_administrador_admin(request):
 
     if request.method == 'POST':
-        
+
         form = AdministradorForm(request.POST)
         if form.is_valid():
 
             post = form.save(commit=False)
             post.save()
             messages.success(request, 'Administrador agregado exitosamente.')
-            return redirect('administrador_admin') 
+            return redirect('administrador_admin')
     else:
         form = AdministradorForm()
         return render(request, 'tienda/admin/usuarios/administrador_admin_form.html',
                       {
                         'form': form
-                      })     
+                      })
 
 
 def obtener_administrador_admin(request):
@@ -349,26 +349,26 @@ def obtener_administrador_admin(request):
     # Busca tres campos
     if run != '' and appaterno != '' and genero != '':
         administrador = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno, genero__icontains=genero)
-    # Busca solo dos campos    
+    # Busca solo dos campos
     elif run != '' and appaterno != '':
         administrador = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno)
     elif run != '' and genero != '':
-        administrador = Administrador.objects.filter(run__icontains=run, genero__icontains=genero) 
+        administrador = Administrador.objects.filter(run__icontains=run, genero__icontains=genero)
     elif appaterno != '' and genero != '':
-        administrador = Administrador.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)               
+        administrador = Administrador.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)
     # Busca solo un campo
     elif run != '':
         administrador = Administrador.objects.filter(run__icontains=run)
     elif appaterno != '':
-        administrador = Administrador.objects.filter(appaterno__icontains=appaterno)    
+        administrador = Administrador.objects.filter(appaterno__icontains=appaterno)
     elif genero != '':
-        administrador = Administrador.objects.filter(genero__icontains=genero)    
+        administrador = Administrador.objects.filter(genero__icontains=genero)
 
 
     return render(request, 'tienda/admin/usuarios/administrador.html',
                 {
                 'administrador': administrador
-                })                                      
+                })
 
 
 # ----- Empleado ------
@@ -384,20 +384,20 @@ def ver_empleado_admin(request):
 def agregar_empleado_admin(request):
 
     if request.method == 'POST':
-        
+
         form = EmpleadoForm(request.POST)
         if form.is_valid():
 
             post = form.save(commit=False)
             post.save()
             messages.success(request, 'Empleado agregado exitosamente.')
-            return redirect('empleado_admin') 
+            return redirect('empleado_admin')
     else:
         form = EmpleadoForm()
         return render(request, 'tienda/admin/usuarios/empleado_admin_form.html',
                       {
                         'form': form
-                      })     
+                      })
 
 
 def obtener_empleado_admin(request):
@@ -410,26 +410,26 @@ def obtener_empleado_admin(request):
     # Busca tres campos
     if run != '' and appaterno != '' and genero != '':
         empleado = Empleado.objects.filter(run__icontains=run, appaterno__icontains=appaterno, genero__icontains=genero)
-    # Busca solo dos campos    
+    # Busca solo dos campos
     elif run != '' and appaterno != '':
         empleado = Empleado.objects.filter(run__icontains=run, appaterno__icontains=appaterno)
     elif run != '' and genero != '':
-        empleado = Empleado.objects.filter(run__icontains=run, genero__icontains=genero) 
+        empleado = Empleado.objects.filter(run__icontains=run, genero__icontains=genero)
     elif appaterno != '' and genero != '':
-        empleado = Empleado.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)               
+        empleado = Empleado.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)
     # Busca solo un campo
     elif run != '':
         empleado = Empleado.objects.filter(run__icontains=run)
     elif appaterno != '':
-        empleado = Empleado.objects.filter(appaterno__icontains=appaterno)    
+        empleado = Empleado.objects.filter(appaterno__icontains=appaterno)
     elif genero != '':
-        empleado = Empleado.objects.filter(genero__icontains=genero)    
+        empleado = Empleado.objects.filter(genero__icontains=genero)
 
 
     return render(request, 'tienda/admin/usuarios/empleado.html',
                 {
                 'empleado': empleado
-                })                                      
+                })
 
 
 
@@ -446,20 +446,20 @@ def ver_vendedor_admin(request):
 def agregar_vendedor_admin(request):
 
     if request.method == 'POST':
-        
+
         form = VendedorForm(request.POST)
         if form.is_valid():
 
             post = form.save(commit=False)
             post.save()
             messages.success(request, 'Vendedor agregado exitosamente.')
-            return redirect('vendedor_admin') 
+            return redirect('vendedor_admin')
     else:
         form = VendedorForm()
         return render(request, 'tienda/admin/usuarios/vendedor_admin_form.html',
                       {
                         'form': form
-                      })     
+                      })
 
 
 def obtener_vendedor_admin(request):
@@ -472,26 +472,26 @@ def obtener_vendedor_admin(request):
     # Busca tres campos
     if run != '' and appaterno != '' and genero != '':
         vendedor = Vendedor.objects.filter(run__icontains=run, appaterno__icontains=appaterno, genero__icontains=genero)
-    # Busca solo dos campos    
+    # Busca solo dos campos
     elif run != '' and appaterno != '':
         vendedor = Vendedor.objects.filter(run__icontains=run, appaterno__icontains=appaterno)
     elif run != '' and genero != '':
-        vendedor = Vendedor.objects.filter(run__icontains=run, genero__icontains=genero) 
+        vendedor = Vendedor.objects.filter(run__icontains=run, genero__icontains=genero)
     elif appaterno != '' and genero != '':
-        vendedor = Vendedor.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)               
+        vendedor = Vendedor.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)
     # Busca solo un campo
     elif run != '':
         vendedor = Vendedor.objects.filter(run__icontains=run)
     elif appaterno != '':
-        vendedor = Vendedor.objects.filter(appaterno__icontains=appaterno)    
+        vendedor = Vendedor.objects.filter(appaterno__icontains=appaterno)
     elif genero != '':
-        vendedor = Vendedor.objects.filter(genero__icontains=genero)    
+        vendedor = Vendedor.objects.filter(genero__icontains=genero)
 
 
     return render(request, 'tienda/admin/usuarios/vendedor.html',
                 {
                 'vendedor': vendedor
-                })                                      
+                })
 
 
 

@@ -11,7 +11,7 @@
         <script src="{% static 'js/popper.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <!--CSS propio-->
-        <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+        <link rel="stylesheet" href="{% static 'css/estilo_autenticacion.css' %}">
         <title>FERME</title>
         <!-- Font awesome -->
         <script src="{% static 'fontawesome/js/all.js' %}"></script>
@@ -21,11 +21,11 @@
             $(function(){
               $('[data-toggle="tooltip"]').tooltip();
             });
-        </script> 
+        </script>
     <body>
         <!-- Header -->
         {% include "tienda/components/header.html" %}
-        
+
         <div id="contenedor">
             <div id="main">
                 {% block content %}
@@ -34,10 +34,10 @@
             </div>
         </div>
 
-  
+
         <div class="modal-dialog modal-login">
             <div class="modal-content">
-                <div class="modal-header">				
+                <div class="modal-header">
                     <h4 class="modal-title">Inicie Sesión</h4>
                 </div>
                 <div class="modal-body">
@@ -59,14 +59,14 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block btn-lg">INICIAR SESIÓN</button>
                         </div>
-                        
+
                     </form>
-                    
+
                 </div>
                 <div class="modal-footer">¿No tiene cuenta? &nbsp; <a href="{% url 'registro_usuario' %}">REGÍSTRESE</a></div>
-                
+
             </div>
-             
+
         </div>
         <!---{% include "tienda/components/footer.html" %}--->
     </body>

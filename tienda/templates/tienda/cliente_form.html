@@ -12,7 +12,7 @@
         <script src="{% static 'js/popper.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <!--CSS propio-->
-        <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+        <link rel="stylesheet" href="{% static 'css/estilo_autenticacion.css' %}">
         <title>FERME</title>
         <!-- Font awesome -->
         <script src="{% static 'fontawesome/js/all.js' %}"></script>
@@ -22,16 +22,16 @@
             $(function(){
               $('[data-toggle="tooltip"]').tooltip();
             });
-        </script> 
+        </script>
     <body>
         <!-- Header -->
         {% include "tienda/components/header.html" %}
-                
+
         {% block content %}
         <div class="container" id="advanced-search-form">
             <h2>Formulario de Registro</h2>
             <form action="" method="POST">
-                {% csrf_token %} 
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="">Usuario Id</label>
                     {{ form.usuario_id }}
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label for="">Run</label>
                     {{ form.run }}
-                </div>   
+                </div>
                 <div class="form-group">
                     <label for="">Nombres</label>
                     {{ form.nombres }}
@@ -80,14 +80,14 @@
                     <label for="">Dirección</label>
                     {{ form.direccion }}
                 </div>
-                
+
 
                 <div class="clearfix"></div>
                 <button type="submit" class="btn btn-info btn-lg btn-responsive" id="search"> <span class="glyphicon glyphicon-search"></span> GUARDAR</button>
             </form>
         </div>
-        {% endblock content %}     
-        
+        {% endblock content %}
+
         <!---{% include "tienda/components/footer.html" %}--->
     </body>
 </html>

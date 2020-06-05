@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css?family=Hepta+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
+
+/* ========================== Colores ======================== */
+:root {
+    --blue: #1f50a5;
+    --yellow: #ffd800;
+    --strong_yellow: #E0A800;
+    --dark: #4c5b5c;
+    --gray: #c8cfcf;
+    --light: #f2f4f7;
+    --white: white;
+    --accent_1: #ff5964;
+    --accent_2: #25ced1;
+}
+
+/* =========================== Global ========================*/
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--light);
+}
+
+.sub-contenedor {
+    margin-top: 2rem;
+}
+
+.marginTop {
+    margin-top: 1rem;
+}
+
+.marginBottom {
+    margin-bottom: 1rem;
+}
+
+/* ============================ Header ================================ */
+.header {
+    background-color: var(--white);
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+.form-busqueda {
+    display: flex;
+    align-content: center;
+}
+
+.barra-busqueda {
+    display: flex;
+    align-content: center;
+}
+
+.botones-header {
+    color: var(--yellow);
+    display: inline-flex;
+    align-items: center;
+    text-align: left;
+    margin-top: 0.5rem;
+}
+
+.texto-boton {
+    color: var(--blue);
+    font-size: 13px;
+    margin-left: 0.5rem;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+.link-header {
+    color: var(--yellow);
+    margin-left: 1rem;
+}
+
+.link-header:focus, .link-header:active, .link-header:hover {
+    color: var(--blue);
+}
+
+.icon-header {
+    font-size: xx-large;
+}
+
+/* ==================== Navbar =========================*/
+.nav{
+    background-color: var(--yellow);
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-top-color: var(--yellow);
+    border-bottom-color: var(--yellow);
+}
+
+.nav>li>a {
+    color: var(--blue);
+    font-size: 16px;
+}
+
+.nav-item {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/* ========================== Fuentes ======================= */
+
+.hepta {
+    font-family: 'Hepta Slab', serif;
+}
+
+.hepta-bold {
+    font-family: 'Hepta Slab', serif;
+    font-weight: bold;
+}
+
+.nunito {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+}
+
+.nunito-bold {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.changa-bold{
+    font-family: 'Changa One', cursive;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.logo-type{
+    display: flex;
+    align-items: center;
+    color: var(--blue);
+    font-family: 'Changa One', cursive;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+/*--- Inicio Sesión ---*/
+
+.modal-login .modal-content {
+    color: #999;
+    border-radius: 1px;
+    margin-bottom: 15px;
+    background: #fff;
+    border: 1px solid #f3f3f3;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 25px;
+    width: 350px;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+    box-shadow: 0 3px 9px rgba(0,0,0,.5);
+}
+
+.modal-login .modal-header {
+    border-bottom: none;
+    position: relative;
+    justify-content: center;
+}
+
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-body {
+    position: relative;
+    padding: 15px;
+}
+
+.modal-login .form-control {
+    min-height: 38px;
+    padding-left: 5px;
+    box-shadow: none !important;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+}
+
+.input-group .form-control, .input-group-addon, .input-group-btn {
+    display: table-cell;
+}
+
+.input-group .form-control {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
