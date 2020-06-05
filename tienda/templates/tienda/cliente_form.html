@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!--Bootstrap con Jquery -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <!--CSS propio-->
+        <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+        <title>FERME</title>
+        <!-- Font awesome -->
+        <script src="{% static 'fontawesome/js/all.js' %}"></script>
+    </head>
+
+         <script>
+            $(function(){
+              $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script> 
+    <body>
+        <!-- Header -->
+        {% include "tienda/components/header.html" %}
+                
+        {% block content %}
+        <div class="container" id="advanced-search-form">
+            <h2>Formulario de Registro</h2>
+            <form action="" method="POST">
+                {% csrf_token %} 
+                <div class="form-group">
+                    <label for="">Usuario Id</label>
+                    {{ form.usuario_id }}
+                </div>
+                <div class="form-group">
+                    <label for="">Run</label>
+                    {{ form.run }}
+                </div>   
+                <div class="form-group">
+                    <label for="">Nombres</label>
+                    {{ form.nombres }}
+                </div>
+                <div class="form-group">
+                    <label for="">Apellido paterno</label>
+                    {{ form.appaterno }}
+                </div>
+                <div class="form-group">
+                    <label for="">Apellido materno</label>
+                    {{ form.apmaterno }}
+                </div>
+                <div class="form-group">
+                    <label for="">Fecha nacimiento</label>
+                    {{ form.fecha_nacimiento }}
+                </div>
+                <div class="form-group">
+                    <label for="">Genero</label>
+                    {{ form.genero }}
+                </div>
+                <div class="form-group">
+                    <label for="">E-mail</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="">Celular (+56 9)</label>
+                    {{ form.telefono }}
+                </div>
+                <div class="form-group">
+                    <label for="">Nombre usuario</label>
+                    {{ form.nombre_usuario }}
+                </div>
+                <div class="form-group">
+                    <label for="">Contraseña</label>
+                    {{ form.contrasena }}
+                </div>
+                <div class="form-group">
+                    <label for="">Dirección</label>
+                    {{ form.direccion }}
+                </div>
+                
+
+                <div class="clearfix"></div>
+                <button type="submit" class="btn btn-info btn-lg btn-responsive" id="search"> <span class="glyphicon glyphicon-search"></span> GUARDAR</button>
+            </form>
+        </div>
+        {% endblock content %}     
+        
+        <!---{% include "tienda/components/footer.html" %}--->
+    </body>
+</html>
