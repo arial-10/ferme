@@ -42,7 +42,16 @@
                     style="font-size: 14pt;" href="#">Boletas y Facturas</a>
 
                     <a class="nav-item nav-link nunito-bold {% block clientes_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="#">Clientes</a>
+                    style="font-size: 14pt;" href="{% url 'clientes_admin' %}">Clientes</a>
+
+                    <a class="nav-item nav-link nunito-bold {% block administrador_active %} {% endblock %}"
+                    style="font-size: 14pt;" href="{% url 'administrador_admin' %}">Administradores</a>
+
+                    <a class="nav-item nav-link nunito-bold {% block empleado_active %} {% endblock %}"
+                    style="font-size: 14pt;" href="{% url 'empleado_admin' %}">Empleados</a>
+
+                    <a class="nav-item nav-link nunito-bold {% block vendedor_active %} {% endblock %}"
+                    style="font-size: 14pt;" href="{% url 'vendedor_admin' %}">Vendedor</a>
                 </div>
                 <div>
                     {% if user.is_authenticated %}
