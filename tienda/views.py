@@ -318,6 +318,22 @@ def obtener_clientes_admin(request):
                 })
 
 
+def actualizar_clientes_admin(request, id):
+    #logger.info('AAA')
+    cliente = Cliente.objects.get(usuario_id=id)
+    if request.method == "POST":
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Cliente actualizado exitosamente.')
+            return redirect('clientes_admin')
+    else:
+        form = ClienteForm(instance=cliente)
+        return render(request, 'tienda/admin/usuarios/cliente_admin_form.html',
+                      {
+                          'form': form
+                      })
+
 # ----- Administrador ------
 def ver_administrador_admin(request):
     run = Administrador.objects.all()
@@ -379,18 +395,36 @@ def obtener_administrador_admin(request):
                 })
 
 
-def eliminar_empleado_admin(request, id):
-    empleado = Empleado.objects.get(usuario_id=id)
+def actualizar_administrador_admin(request, id):
+
+    administrador = Administrador.objects.get(usuario_id=id)
+    if request.method == "POST":
+        form = AdministradorForm(request.POST, instance=administrador)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Administrador actualizado exitosamente.')
+            return redirect('administrador_admin')
+    else:
+        form = AdministradorForm(instance=administrador)
+        return render(request, 'tienda/admin/usuarios/administrador_admin_form.html',
+                      {
+                          'form': form
+                      })                                                 
+
+
+def eliminar_administrador_admin(request, id):
+    administrador = Administrador.objects.get(usuario_id=id)
 
     if request.method == 'POST':
-        empleado.delete()
-        messages.success(request, 'Empleado eliminado exitosamente.')
-        return redirect('empleado_admin')
+        administrador.delete()
+        messages.success(request, 'Administrador eliminado exitosamente.')
+        return redirect('administrador_admin')
 
-    return render(request, 'tienda/admin/usuarios/eliminar_empleado.html',
+    return render(request, 'tienda/admin/usuarios/eliminar_administrador.html',
                   {
-                      'empleado': empleado
+                      'administrador': administrador
                   })
+
 
 # ----- Empleado ------
 def ver_empleado_admin(request):
@@ -451,6 +485,24 @@ def obtener_empleado_admin(request):
                 {
                 'empleado': empleado
                 })
+
+
+def actualizar_empleado_admin(request, id):
+
+    empleado = Empleado.objects.get(usuario_id=id)
+    if request.method == "POST":
+        form = EmpleadoForm(request.POST, instance=empleado)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Empleado actualizado exitosamente.')
+            return redirect('empleado_admin')
+    else:
+        form = EmpleadoForm(instance=empleado)
+        return render(request, 'tienda/admin/usuarios/empleado_admin_form.html',
+                      {
+                          'form': form
+                      })                                                 
+
 
 
 
@@ -514,6 +566,22 @@ def obtener_vendedor_admin(request):
                 'vendedor': vendedor
                 })
 
+
+def actualizar_vendedor_admin(request, id):
+
+    vendedor = Vendedor.objects.get(usuario_id=id)
+    if request.method == "POST":
+        form = VendedorForm(request.POST, instance=vendedor)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Vendedor actualizado exitosamente.')
+            return redirect('vendedor_admin')
+    else:
+        form = VendedorForm(instance=vendedor)
+        return render(request, 'tienda/admin/usuarios/vendedor_admin_form.html',
+                      {
+                          'form': form
+                      })     
 
 
 
