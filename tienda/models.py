@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 class Administrador(models.Model):
+    usuario_id = models.IntegerField(max_length=38, primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -22,6 +23,7 @@ class Administrador(models.Model):
 
 
 class Empleado(models.Model):
+    usuario_id = models.IntegerField(max_length=38, primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -45,6 +47,7 @@ class Empleado(models.Model):
 
 
 class Cliente(models.Model):
+    usuario_id = models.IntegerField(max_length=38, primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -65,6 +68,7 @@ class Cliente(models.Model):
 
 
 class Vendedor(models.Model):
+    usuario_id = models.IntegerField(max_length=38, primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -88,6 +92,7 @@ class Vendedor(models.Model):
 
 class Compra(models.Model):
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
+    id_compra = models.IntegerField(max_length=38, primary_key=True)
     monto_total = models.IntegerField()
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 

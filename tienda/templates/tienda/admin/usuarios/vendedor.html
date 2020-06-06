@@ -83,9 +83,14 @@
                                 <td>{{ vendedor.cod_vendedor }}</td>                                
                                 <td>{{ vendedor.sucursal }}</td>
                                 <td>{{ vendedor.fecha_contrato }}</td>
-
                                 <td>
-                                   
+                                    <div class="d-flex flex-row">
+                                        <a href="{% url 'actualizar_vendedor_admin' vendedor.usuario_id %}" class="btn btn-warning"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Modificar vendedor">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}
