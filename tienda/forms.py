@@ -6,20 +6,21 @@ from django import forms
 
 
 class ProductoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ProductoForm, self).__init__(*args, **kwargs)
+
+        self.fields['sku'].required = False
+        self.fields['nombre'].required = False
+        self.fields['color'].required = False
+        self.fields['descripcion'].required = False
+        self.fields['disponibilidad'].required = False
 
     class Meta:
         model = Producto
         fields = ['producto_id', 'sku', 'nombre', 'color', 'descripcion',
                     'stock', 'stock_critico', 'disponibilidad',
                     'precio_normal', 'precio_oferta', 'marca']
-        required = [
-                    'producto_id',
-                    'stock',
-                    'stock_critico',
-                    'precio_normal',
-                    'precio_oferta',
-                    'marca'
-        ]
+
         labels = {'producto_id': 'ID',
                     'sku': 'SKU',
                     'nombre': 'Nombre',

@@ -48,7 +48,7 @@ def catalogo(request):
 
     productos = Producto.objects.all()
 
-    if busqueda != '':
+    if busqueda != '' and busqueda is not None:
         productos = Producto.objects.filter(nombre__icontains=busqueda)
 
     return render(request, 'tienda/productos.html',
@@ -166,6 +166,7 @@ def agregar_producto(request):
     if request.method == 'POST':
 
         form = ProductoForm(request.POST)
+
         if form.is_valid():
 
             model_instance = form.save(commit=False)
@@ -189,6 +190,7 @@ def actualizar_producto(request, id):
     Returns:
         Una página
     """
+    edita_producto = True
 
     producto = Producto.objects.get(producto_id=id)
     if request.method == "POST":
@@ -201,7 +203,8 @@ def actualizar_producto(request, id):
         form = ProductoForm(instance=producto)
         return render(request, 'tienda/admin/productos/producto_form.html',
                       {
-                          'form': form
+                          'form': form,
+                          'edita': edita_producto
                       })
 
 

@@ -20,7 +20,7 @@
                     <div class="d-flex justify-content-between">
                         <!-- Filtros -->
                         <form action="{% url 'obtener_productos' %}" method="GET" class="form-inline" style="display: inline-flex; align-items: flex-end;">
-                            <div class="filtro-producto-admin mb-2">
+                            <div class="filtro-producto-admin mb-2 ml-3">
                                 <h6>Nombre:</h6>
                                 <input type="text" class="form-control" name="nombre">
                             </div>
@@ -42,13 +42,16 @@
                                 <input type="text" class="form-control" name="sku">
                             </div>
 
-                            <button type="submit" class="btn boton-admin-primary mb-2 ml-3" >Buscar</button>
+                            <button type="submit" class="btn boton-admin-primary mb-2 ml-3" >
+                                <span><i class="fas fa-search"></i></span>
+                                Buscar
+                            </button>
                         </form>
                         <!-- Agregar producto -->
                         <div class="mb-2" style="display: inline-flex; align-items: flex-end;">
                             <a href="{% url 'agregar_producto' %}" class="btn btn-success">
-                                <i class="fas fa-plus mr-2"></i>
-                                <span>Agregar nuevo producto</span>
+                                <span class="mr-1"><i class="fas fa-plus-circle"></i></i></span>
+                                Agregar nuevo producto
                             </a>
                         </div>
                     </div>

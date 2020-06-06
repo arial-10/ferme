@@ -14,7 +14,7 @@ urlpatterns = static(settings.STATIC_URL,
     path('registro-usuario/', views.agregar_cliente, name='registro_usuario'),
 
     path('catalogo/', views.catalogo, name='catalogo'),
-    path('catalogo/detalle/<str:id>', views.detalle_producto, name='detalle_producto'),
+    path('catalogo/<str:id>', views.detalle_producto, name='detalle_producto'),
     # ================== URLS Ferme Admin ==============================
 
     # Seccion Productos
