@@ -80,7 +80,14 @@
                                 <td>{{ cliente.contrasena }}</td>
                                 <td>{{ cliente.direccion }}</td>
                                 <td>
-                                   
+                                    <div class="d-flex flex-row">
+                                        <a href="{% url 'actualizar_clientes_admin' cliente.usuario_id %}" class="btn btn-warning"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Modificar cliente">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}
