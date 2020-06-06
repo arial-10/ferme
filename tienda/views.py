@@ -379,6 +379,19 @@ def obtener_administrador_admin(request):
                 })
 
 
+def eliminar_empleado_admin(request, id):
+    empleado = Empleado.objects.get(usuario_id=id)
+
+    if request.method == 'POST':
+        empleado.delete()
+        messages.success(request, 'Empleado eliminado exitosamente.')
+        return redirect('empleado_admin')
+
+    return render(request, 'tienda/admin/usuarios/eliminar_empleado.html',
+                  {
+                      'empleado': empleado
+                  })
+
 # ----- Empleado ------
 def ver_empleado_admin(request):
     run = Empleado.objects.all()
