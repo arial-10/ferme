@@ -80,7 +80,18 @@
                                 <td>{{ administrador.contrasena }}</td>
                                 <td>{{ administrador.cod_admin }}</td>
                                 <td>
-                                   
+                                    <div class="d-flex flex-row">
+                                        <a href="{% url 'actualizar_administrador_admin' administrador.usuario_id %}" class="btn btn-warning"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Modificar admin">
+                                        <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a href="{% url 'eliminar_administrador_admin' administrador.usuario_id %}" class="btn btn-danger ml-2"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Eliminar administrador">
+                                        <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}
