@@ -124,29 +124,6 @@ def obtener_productos_admin(request):
         for producto in productos:
             producto['NOMBRE_MARCA'] = nombre_marca[0]['NOMBRE']
 
-
-    # if nombre != '' and sku == '' and id_marca == '0':
-    #     productos = Producto.objects.filter(nombre__icontains=nombre)
-    # if nombre == '' and sku != '' and id_marca == '0':
-    #     productos = Producto.objects.filter(sku__contains=sku)
-    # if nombre == '' and sku == '' and id_marca != '0':
-    #     productos = Producto.objects.filter(marca=id_marca)
-
-    # if nombre != '' and sku != '' and id_marca == '0':
-    #     productos = Producto.objects.filter(nombre__icontains=nombre,
-    #                                         sku__contains=sku)
-    # if nombre != '' and sku == '' and id_marca != '0':
-    #     productos = Producto.objects.filter(nombre__icontains=nombre,
-    #                                         marca=id_marca)
-    # if nombre == '' and sku != '' and id_marca != '0':
-    #     productos = Producto.objects.filter(sku__contains=sku,
-    #                                         marca=id_marca)
-
-    # if nombre != '' and sku != '' and id_marca != '0':
-    #     productos = Producto.objects.filter(nombre__icontains=nombre,
-    #                                         sku__contains=sku,
-    #                                         marca=id_marca)
-
     return render(request, 'tienda/admin/productos/productos.html',
                   {
                     'productos': productos,
@@ -412,7 +389,7 @@ def actualizar_administrador_admin(request, id):
         return render(request, 'tienda/admin/usuarios/administrador_admin_form.html',
                       {
                           'form': form
-                      })                                                 
+                      })
 
 
 def eliminar_administrador_admin(request, id):
@@ -504,7 +481,7 @@ def actualizar_empleado_admin(request, id):
         return render(request, 'tienda/admin/usuarios/empleado_admin_form.html',
                       {
                           'form': form
-                      })                                                 
+                      })
 
 
 
@@ -584,7 +561,7 @@ def actualizar_vendedor_admin(request, id):
         return render(request, 'tienda/admin/usuarios/vendedor_admin_form.html',
                       {
                           'form': form
-                      })     
+                      })
 
 
 
