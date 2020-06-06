@@ -24,13 +24,10 @@
                             <p class="ml-3">{{ producto.sku }}</p>
                         </div>
                         <div class="p-detalle ml-3 d-flex d-inline-block">
-                            <label><strong>Color:</strong></label>
-                            {% if producto.color %}
-                                <p class="ml-3">{{ producto.color }}</p>
-                            {% else %}
-                                <p class="ml-3">N/A</p>
-                            {% endif %}
+                            <label><strong>Precio:</strong></label>
+                            <p class="ml-3">${{ producto.precio_front }}</p>
                         </div>
+
                         <div class="p-detalle ml-3 mt-3 d-flex d-inline-block" style="color: red;">
                             <label><strong>Stock:</strong></label>
                             <p class="ml-3"><strong>{{ producto.stock }}</strong></p>
@@ -55,7 +52,15 @@
     <div class="d-flex mx-3 justify-content-center">
         <div class="card ml-4" style="border-style: solid; border-width: 1px; border-color: var(--yellow);">
             <div class="card-body">
-                <div class="p-detalle m-3 d-flex d-inline-block">
+                <div class="p-detalle mx-3 my-3 d-flex d-inline-block">
+                    <label><strong>Color:</strong></label>
+                    {% if producto.color %}
+                        <p class="ml-3">{{ producto.color }}</p>
+                    {% else %}
+                        <p class="ml-3">N/A</p>
+                    {% endif %}
+                </div>
+                <div class="p-detalle mx-3 d-flex d-inline-block">
                         <label><strong>Descripción:</strong></label>
                         <p class="ml-3">{{ producto.descripcion }}</p>
                  </div>

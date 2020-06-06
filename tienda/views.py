@@ -51,6 +51,10 @@ def catalogo(request):
     if busqueda != '' and busqueda is not None:
         productos = Producto.objects.filter(nombre__icontains=busqueda)
 
+    for producto in productos:
+        producto.precio_front = formatear_numero(producto.precio_normal)
+        producto.poferta_front = formatear_numero(producto.precio_oferta)
+
     return render(request, 'tienda/productos.html',
                   {
                     'productos': productos
@@ -61,10 +65,23 @@ def detalle_producto(request, id):
 
     producto = Producto.objects.get(producto_id=id)
 
+    producto.precio_front = formatear_numero(producto.precio_normal)
+    producto.poferta_front = formatear_numero(producto.precio_oferta)
+
     return render(request, 'tienda/detalle_producto.html',
                   {
                     'producto': producto
                   })
+
+
+def formatear_numero(entero):
+    numero_formateado = f"{entero:,}"
+
+    resultado = format(numero_formateado).replace(',', '.')
+
+    return resultado
+
+
 # ======================== FERME ADMIN ========================
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')

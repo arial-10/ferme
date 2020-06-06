@@ -14,7 +14,7 @@
                         <p class="px-3 titulo-marca">{{ producto.marca }}</p>
                         <a href="{% url 'detalle_producto' producto.producto_id %}"><p class="px-3 nombre-producto">{{ producto.nombre }}</p></a>
                         <br>
-                        <p class="px-3 precio-producto">${{ producto.precio_normal }} C/U</p>
+                        <p class="px-3 precio-producto">${{ producto.precio_front }} C/U</p>
                         <br>
                         <p class="disponible px-3">
                             <span class="mr-2" style="color: var(--yellow);"><i class="fas fa-check"></i></span>
