@@ -173,6 +173,10 @@ def filtrar_catalogo(request):
                 else:
                     productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt= precios_seleccionados[0], precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
 
+    # Si no se selecciona ninguno, se muestran todos
+    if len(precios_seleccionados) == 0 and len(marcas_seleccionadas) == 0:
+        productos = Producto.objects.all()
+
     # Formateamos los valores de precios
     for producto in productos:
         producto.precio_front = utils.formatear_numero_miles(producto.precio_normal)
