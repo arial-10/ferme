@@ -6,13 +6,13 @@
     <div class="sub-contenedor d-flex flex-wrap justify-content-start">
         {% for producto in productos %}
             <div class="producto">
-                <div class="card">
+                <div id="producto" class="card">
                     <div class="card-body">
-                        <a class="" href="">
+                        <a href="{% url 'detalle_producto' producto.producto_id %}">
                             <img class="imagen-producto img-fluid rounded m-2" src="{% static producto.url_img %}" alt="cover" width="240" height="330">
                         </a>
                         <p class="px-3 titulo-marca">{{ producto.marca }}</p>
-                        <a href=""><p class="px-3 nombre-producto">{{ producto.nombre }}</p></a>
+                        <a href="{% url 'detalle_producto' producto.producto_id %}"><p class="px-3 nombre-producto">{{ producto.nombre }}</p></a>
                         <br>
                         <p class="px-3 precio-producto">${{ producto.precio_normal }} C/U</p>
                         <br>

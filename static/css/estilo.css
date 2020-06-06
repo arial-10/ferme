@@ -172,7 +172,7 @@ footer {
 
 /* ================= Catalogo Productos ================ */
 
-.card {
+#producto {
     background-color: var(--white);
     border-color: var(--blue);
 }
@@ -219,3 +219,22 @@ footer {
     border-style: solid;
     border-width: 1px;
 }
+
+/* ================= Detalle Producto ================ */
+
+#detalle-producto {
+    border-width: 10px;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+.titulo-detalle {
+    font-family: 'Changa One', sans-serif;
+    color: var(--blue);
+}
+
+.p-detalle {
+    color: black;
+    font-family: 'Nunito', sans-serif;
+}
+

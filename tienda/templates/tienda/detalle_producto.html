@@ -1,0 +1,66 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="sub-contenedor d-flex flex-wrap justify-content-center">
+        <div id="detalle-producto" class="d-flex flex-wrap justify-content-center">
+            <div class="card ml-4 mt-3" style="border-style: solid; border-width: 1px; border-color: var(--yellow);">
+                <div class="card-body">
+                    <div class="">
+                        <img class="img-fluid rounded m-2" src="{% static producto.url_img %}" alt="cover" width="240" height="330">
+                    </div>
+                </div>
+            </div>
+            <div class="card ml-4 mt-3 " style="border-style: solid; border-width: 1px; border-color: var(--yellow);">
+                <div class="card-body d-flex flex-column m-3">
+                    <div class="">
+                        <h4 class="titulo-detalle ml-3 mb-3"><strong>{{ producto.nombre }}</strong></h4>
+                        <div class="p-detalle ml-3 d-flex d-inline-block">
+                            <label><strong>Marca:</strong></label>
+                            <p class="ml-3">{{ producto.marca }}</p>
+                        </div>
+                        <div class="p-detalle ml-3 d-flex d-inline-block">
+                            <label><strong>SKU:</strong></label>
+                            <p class="ml-3">{{ producto.sku }}</p>
+                        </div>
+                        <div class="p-detalle ml-3 d-flex d-inline-block">
+                            <label><strong>Color:</strong></label>
+                            {% if producto.color %}
+                                <p class="ml-3">{{ producto.color }}</p>
+                            {% else %}
+                                <p class="ml-3">N/A</p>
+                            {% endif %}
+                        </div>
+                        <div class="p-detalle ml-3 mt-3 d-flex d-inline-block" style="color: red;">
+                            <label><strong>Stock:</strong></label>
+                            <p class="ml-3"><strong>{{ producto.stock }}</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <form class="form-inline" action="" >
+                            <div class="form-group">
+                                <input type="number" value="1" class="form-control mt-2 ml-3">
+                                <button type="submit" class="btn btn-danger mt-2 ml-3">
+                                    <span class="mr-2"><i class="fas fa-cart-plus"></i></span>
+                                    Agregar al carro de compras
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex mx-3 justify-content-center">
+        <div class="card ml-4" style="border-style: solid; border-width: 1px; border-color: var(--yellow);">
+            <div class="card-body">
+                <div class="p-detalle m-3 d-flex d-inline-block">
+                        <label><strong>Descripción:</strong></label>
+                        <p class="ml-3">{{ producto.descripcion }}</p>
+                 </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

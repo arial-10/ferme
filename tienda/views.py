@@ -57,6 +57,14 @@ def catalogo(request):
                   })
 
 
+def detalle_producto(request, id):
+
+    producto = Producto.objects.get(producto_id=id)
+
+    return render(request, 'tienda/detalle_producto.html',
+                  {
+                    'producto': producto
+                  })
 # ======================== FERME ADMIN ========================
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')
