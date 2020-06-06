@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
 from .forms import *
 from querybuilder.query import Query
+from . import utils
 
 # ======================== FERME TIENDA ========================
 def home(request):
@@ -33,6 +34,7 @@ def agregar_cliente(request):
                         'form': form
                       })
 
+
 # ---------- Catalogo productos ---------------------
 def catalogo(request):
     """Retorna una lista de productos dependiendo de los filtros
@@ -45,28 +47,41 @@ def catalogo(request):
         productos: Queryset con los productos
     """
     busqueda = request.GET.get('busqueda')
+    cantidad_productos = 0
 
+    marcas = Marca.objects.all()
     productos = Producto.objects.all()
 
     if busqueda != '' and busqueda is not None:
         productos = Producto.objects.filter(nombre__icontains=busqueda)
 
     for producto in productos:
-        producto.precio_front = formatear_numero(producto.precio_normal)
-        producto.poferta_front = formatear_numero(producto.precio_oferta)
+        producto.precio_front = utils.formatear_numero_miles(producto.precio_normal)
+        producto.poferta_front = utils.formatear_numero_miles(producto.precio_oferta)
+
+    cantidad_productos = len(productos)
 
     return render(request, 'tienda/productos.html',
                   {
-                    'productos': productos
+                    'productos': productos,
+                    'marcas': marcas,
+                    'cantidad': cantidad_productos
                   })
 
 
 def detalle_producto(request, id):
+    """Retorna un producto que coincida con el id ingresado
 
+    Args:
+
+    Returns:
+        Una página
+        producto: Queryset del producto
+    """
     producto = Producto.objects.get(producto_id=id)
 
-    producto.precio_front = formatear_numero(producto.precio_normal)
-    producto.poferta_front = formatear_numero(producto.precio_oferta)
+    producto.precio_front = utils.formatear_numero_miles(producto.precio_normal)
+    producto.poferta_front = utils.formatear_numero_miles(producto.precio_oferta)
 
     return render(request, 'tienda/detalle_producto.html',
                   {
@@ -74,12 +89,105 @@ def detalle_producto(request, id):
                   })
 
 
-def formatear_numero(entero):
-    numero_formateado = f"{entero:,}"
+def filtrar_catalogo(request):
+    """Retorna una lista de productos dependiendo de los filtros
+    ingresados
 
-    resultado = format(numero_formateado).replace(',', '.')
+    Args:
 
-    return resultado
+    Returns:
+        Una página
+        productos: Queryset con los productos
+    """
+    productos = []
+    marcas = Marca.objects.all()
+    marcas_seleccionadas = []
+    precios = [
+        {'precio': '5000'},
+        {'precio': '25000'},
+        {'precio': '50000'},
+        {'precio': '100000'},
+        {'precio': '200000'},
+    ]
+    precios_seleccionados = []
+    cantidad_productos = 0
+
+    # Validamos las marcas que se seleccionaron en el front
+    for marca in marcas:
+        # Validamos que el parametro por GET exista
+        if request.GET.get(marca.nombre) is not None:
+            marca_id = int(request.GET.get(marca.nombre))
+            if marca.id == marca_id:
+                marcas_seleccionadas.append(Marca.objects.get(id=marca.id))
+
+    # Validamos los precios que se seleccionaron en el front
+    for precio in precios:
+        # Validamos que el parametro por GET exista
+        if request.GET.get(precio['precio']) is not None:
+            precio_int = int(precio['precio'])
+            precios_seleccionados.append(precio_int)
+
+    # Ordenamos ascendentemente los precios seleccionados
+    precios_seleccionados.sort()
+
+    # Distintos escenarios
+    # Se selecciona solo marcas
+    if len(marcas_seleccionadas) > 0 and len(precios_seleccionados) == 0:
+        for marca_seleccionada in marcas_seleccionadas:
+            productos += Producto.objects.filter(marca=marca_seleccionada.id)
+    # Se selecciona solo precios
+    if len(precios_seleccionados) > 0 and len(marcas_seleccionadas) == 0:
+        if len(precios_seleccionados) == 1:
+            if precios_seleccionados[0] == 5000:
+                productos = Producto.objects.filter(precio_normal__lt=5000)
+            if precios_seleccionados[0] == 25000:
+                productos = Producto.objects.filter(precio_normal__gt=5000, precio_normal__lt=25000)
+            if precios_seleccionados[0] == 50000:
+                productos = Producto.objects.filter(precio_normal__gt=25000, precio_normal__lt=50000)
+            if precios_seleccionados[0] == 100000:
+                productos = Producto.objects.filter(precio_normal__gt=50000, precio_normal__lt=100000)
+            if precios_seleccionados[0] == 200000:
+                productos = Producto.objects.filter(precio_normal__gt=100000, precio_normal__lt=200000)
+        else:
+            if precios_seleccionados[0] == 5000:
+                productos = Producto.objects.filter(precio_normal__gt=0, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+            else:
+                productos = Producto.objects.filter(precio_normal__gt= precios_seleccionados[0], precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+    # Se seleccionan ambos
+    if len(precios_seleccionados) > 0 and len(marcas_seleccionadas) > 0:
+        for marca_seleccionada in marcas_seleccionadas:
+            if len(precios_seleccionados) == 1:
+                if precios_seleccionados[0]  == 5000:
+                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__lt=5000)
+                if precios_seleccionados[0] == 25000:
+                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=5000, precio_normal__lt=25000)
+                if precios_seleccionados[0] == 50000:
+                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=25000, precio_normal__lt=50000)
+                if precios_seleccionados[0] == 100000:
+                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=50000, precio_normal__lt=100000)
+                if precios_seleccionados[0] == 200000:
+                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=100000, precio_normal__lt=200000)
+            else:
+                if precios_seleccionados[0] == 5000:
+                    productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=0, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                else:
+                    productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt= precios_seleccionados[0], precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+
+    # Formateamos los valores de precios
+    for producto in productos:
+        producto.precio_front = utils.formatear_numero_miles(producto.precio_normal)
+        producto.poferta_front = utils.formatear_numero_miles(producto.precio_oferta)
+
+    # Obtenemos la cantidad total de productos que seran enviados al front
+    cantidad_productos = len(productos)
+
+    return render(request, 'tienda/productos.html',
+                  {
+                    'productos': productos,
+                    'marcas': marcas,
+                    'marcas_selecc': marcas_seleccionadas,
+                    'cantidad': cantidad_productos
+                  })
 
 
 # ======================== FERME ADMIN ========================
@@ -115,7 +223,6 @@ def obtener_productos_admin(request):
     nombre = request.GET.get('nombre')
     id_marca = request.GET.get('marca')
     sku = request.GET.get('sku')
-    # productos = Producto.objects.all()
     nombre_marca = []
 
     query = Query().from_table(Producto)

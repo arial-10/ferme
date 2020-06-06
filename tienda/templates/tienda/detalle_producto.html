@@ -24,14 +24,18 @@
                             <p class="ml-3">{{ producto.sku }}</p>
                         </div>
                         <div class="p-detalle ml-3 d-flex d-inline-block">
-                            <label><strong>Precio:</strong></label>
-                            <p class="ml-3">${{ producto.precio_front }}</p>
+                            <p style="color: var(--blue); font-size: 16pt; font-weight: bold;">${{ producto.precio_front }} C/U</p>
                         </div>
 
-                        <div class="p-detalle ml-3 mt-3 d-flex d-inline-block" style="color: red;">
-                            <label><strong>Stock:</strong></label>
-                            <p class="ml-3"><strong>{{ producto.stock }}</strong></p>
-                        </div>
+                        {% if producto.stock > producto.stock_critico %}
+                            <span class="ml-3 badge badge-info">Muchas unidades en stock</span>
+                        {% elif producto.stock == producto.stock_critico %}
+                            <span class="ml-3 badge badge-warning">Pocas unidades en stock</span>
+                        {% elif producto.stock < producto.stock_critico and producto.stock != 0 %}
+                            <span class="ml-3 badge badge-danger">Confirmar stock en tienda</span>
+                        {% elif producto.stock == 0 %}
+                            <span class="ml-3 badge badge-secondary">Producto agotado</span>
+                        {% endif %}
                     </div>
 
                     <div class="mt-4">

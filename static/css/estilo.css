@@ -24,7 +24,7 @@ html, body {
 }
 
 .sub-contenedor {
-    margin-top: 2rem;
+    margin-top: 4rem;
 }
 
 .marginTop {
@@ -180,8 +180,7 @@ footer {
 .producto {
     margin-left: 3rem;
     margin-right: 3rem;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    padding-bottom: 2rem;
 }
 
 .titulo-marca {
@@ -194,9 +193,7 @@ footer {
 .nombre-producto {
     color: var(--blue);
     font-family: 'Nunito', sans-serif;
-    font-size: 11pt;
     font-weight: bold;
-    line-height: 0;
 }
 
 
@@ -218,6 +215,43 @@ footer {
     border-color: var(--blue);
     border-style: solid;
     border-width: 1px;
+}
+
+.contenedor-catalogo {
+    margin-top: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.catalogo {
+}
+
+.filtros-catalogo {
+    margin-left: 4rem;
+    margin-bottom: 3rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+.subtitulo-filtrado {
+    color: var(--blue);
+    font-family: 'Nunito', sans-serif;
+    font-size: 13pt;
+    font-weight: bold;
+}
+
+.boton-filtrado {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.boton-filtrado:hover {
+    background-color: var(--blue);
+    color: var(--yellow);
+}
+
+.sin-productos {
+    font-family: 'Nunito', sans-serif;
+    color: var(--blue);
 }
 
 /* ================= Detalle Producto ================ */
