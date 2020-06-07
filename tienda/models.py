@@ -90,32 +90,6 @@ class Vendedor(models.Model):
         return self.nombres + ' ' + self.appaterno
 
 
-class Compra(models.Model):
-    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
-    id_compra = models.IntegerField(max_length=38, primary_key=True)
-    monto_total = models.IntegerField()
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'Compra'
-
-
-class Actividad(models.Model):
-    fecha_hora = models.DateField()
-    usuario = models.ForeignKey('auth.User', on_delete=models.SET_NULL,
-                                null=True)
-
-    class Meta:
-        db_table = 'Actividad'
-
-
-class Categoria(models.Model):
-    nombre = models.CharField(max_length=50)
-
-    class Meta:
-        db_table = 'Categoria'
-
-
 class Marca(models.Model):
     nombre = models.CharField(max_length=50)
 
@@ -124,7 +98,6 @@ class Marca(models.Model):
 
     def __str__(self):
         return self.nombre
-
 
 class Producto(models.Model):
     producto_id = models.CharField(max_length=17, primary_key=True)
@@ -145,6 +118,35 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class Compra(models.Model):
+    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
+    id_compra = models.IntegerField(max_length=38, primary_key=True)
+    monto_total = models.IntegerField()
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'Compra'
+
+class ProductoCompra(models.Model):
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
+
+class Actividad(models.Model):
+    fecha_hora = models.DateField()
+    usuario = models.ForeignKey('auth.User', on_delete=models.SET_NULL,
+                                null=True)
+
+    class Meta:
+        db_table = 'Actividad'
+
+
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'Categoria'
 
 
 class CategoriaProducto(models.Model):
@@ -202,6 +204,7 @@ class ProductoOc(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     orden_de_compra = models.ForeignKey(OrdenDeCompra,
                                         on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
 
     class Meta:
         db_table = 'ProductoOc'
@@ -239,8 +242,8 @@ class Boleta(models.Model):
     comuna = models.CharField(max_length=45)
     fecha_compra = models.DateField()
     terminal = models.IntegerField()
-    tipo_pago = models.IntegerField()
-    anulada = models.CharField(max_length=1)
+    tipo_pago = models.CharField(max_length=11)
+    estado = models.CharField(max_length=20)
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
     rut_persona = models.CharField(max_length=12)
 
@@ -254,8 +257,8 @@ class Factura(models.Model):
     comuna = models.CharField(max_length=45)
     fecha_compra = models.DateField()
     terminal = models.IntegerField()
-    tipo_pago = models.IntegerField()
-    anulada = models.CharField(max_length=1)
+    tipo_pago = models.CharField(max_length=11)
+    estado = models.CharField(max_length=20)
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
     rut_empresa = models.CharField(max_length=12)
     iva = models.IntegerField()
@@ -270,8 +273,8 @@ class NotaCredito(models.Model):
     comuna = models.CharField(max_length=45)
     fecha_compra = models.DateField()
     terminal = models.IntegerField()
-    tipo_pago = models.IntegerField()
-    anulada = models.CharField(max_length=1)
+    tipo_pago = models.CharField(max_length=11)
+    estado = models.CharField(max_length=20)
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     fecha_anulacion = models.DateField()
