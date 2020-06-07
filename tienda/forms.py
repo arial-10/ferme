@@ -422,7 +422,59 @@ class ProductoForm(ModelForm):
 #                         'class': 'form-control'
 #                     }),
 
-
-
 #     }
 
+class OrdenForm(ModelForm):
+    class Meta:
+        model = Producto
+        fields = ['ID' ,'FECHA_RECEPCION' ,'ESTADO' ,'PROVEEDOR_ID']
+
+        labels = {'producto_id': 'ID',
+                    'sku': 'SKU',
+                    'nombre': 'Nombre',
+                    'color': 'Color',
+                    'descripcion': 'Descripción',
+                    'stock': 'Stock',
+                    'stock_critico': 'Stock Crítico',
+                    'disponibilidad': 'Disponibilidad',
+                    'precio_normal': 'Precio Normal',
+                    'precio_oferta': 'Precio Oferta',
+                    'marca': 'Marca'}
+        widgets = {
+                    'producto_id': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 17
+                    }),
+                    'sku': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 12
+                    }),
+                    'nombre': forms.TextInput(attrs={
+                        'class': 'form-control',
+                    }),
+                    'color': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'descripcion': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'stock': forms.NumberInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'stock_critico': forms.NumberInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'disponibilidad': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 1
+                    }),
+                    'precio_normal': forms.NumberInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'precio_oferta': forms.NumberInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'marca': forms.Select(attrs={
+                        'class': 'form-control'
+                    }),
+        }
