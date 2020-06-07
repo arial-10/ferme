@@ -280,3 +280,11 @@ class NotaCredito(models.Model):
 
     class Meta:
         db_table = 'NotaCredito'
+
+class ProductoCompra(models.Model):
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
+
+    class Meta:
+        db_table = 'ProductoCompra'

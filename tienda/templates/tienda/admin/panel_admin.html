@@ -18,39 +18,19 @@
 
                         <div class="d-flex justify-content-between">
                             <!-- Filtros -->
-                            <form action="{% url 'obtener_productos' %}" method="GET" class="form-inline" style="display: inline-flex; align-items: flex-end;">
-                                <div class="filtro-producto-admin mb-2 ml-3">
-                                    <h6>Nombre:</h6>
-                                    <input type="text" class="form-control" name="nombre">
-                                </div>
-
-                                <div class="filtro-producto-admin mb-2 ml-3">
-                                    <h6>Marca:</h6>
-                                    <select name="marca" class="form-control" >
-                                        <option value="0">----------------</option>
-                                        {% for marca in marcas %}
-                                            <option value="{{ marca.id }}">
-                                                {{ marca.nombre }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-                                <div class="filtro-producto-admin mb-2 ml-3">
-                                    <h6>SKU:</h6>
-                                    <input type="text" class="form-control" name="sku">
-                                </div>
-
-                                <button type="submit" class="btn boton-admin-primary mb-2 ml-3" >
-                                    <span><i class="fas fa-search"></i></span>
-                                    Buscar
-                                </button>
+                            <form action="{% url url_busqueda %}" method="GET" class="form-inline" style="display: inline-flex; align-items: flex-end;">
+                                {% block filtro_1 %}
+                                {% endblock %}
+                                {% block filtro_2 %}
+                                {% endblock %}
+                                {% block filtro_3 %}
+                                {% endblock %}
                             </form>
                             <!-- Agregar producto -->
                             <div class="mb-2" style="display: inline-flex; align-items: flex-end;">
-                                <a href="{% url 'agregar_producto' %}" class="btn btn-success">
+                                <a href="{% url url_agregar %}" class="btn btn-success">
                                     <span class="mr-1"><i class="fas fa-plus-circle"></i></i></span>
-                                    Agregar nuevo producto
+                                    Agregar {{ nombre_clase }}
                                 </a>
                             </div>
                         </div>
