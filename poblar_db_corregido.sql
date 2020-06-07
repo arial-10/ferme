@@ -55,9 +55,9 @@ INSERT INTO carro VALUES (2, 3);
 INSERT INTO carro VALUES (3, 2);
 
 --CARRO PRODUCTO
-INSERT INTO carroproducto VALUES (1, 2, 1, 1);
-INSERT INTO carroproducto VALUES (2, 4, 2, 3);
-INSERT INTO carroproducto VALUES (3, 1, 3, 1);
+INSERT INTO carroproducto VALUES (1, 2, 1, '2984646413121');
+INSERT INTO carroproducto VALUES (2, 4, 2, '2984646234234');
+INSERT INTO carroproducto VALUES (3, 1, 3, '2984646645334');
 
 --PRODUCTO COMPRA
 INSERT INTO productocompra VALUES (1, 4, 101, 1);
