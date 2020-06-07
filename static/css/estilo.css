@@ -70,7 +70,13 @@ html, body {
     font-size: 60px;
     font-weight: bold;
 }
-
+.logo-type a{
+    color: var(--blue);
+}
+.logo-type:hover{
+    text-decoration: none;
+    color: var(--blue);
+}
 /* ============================ Header ================================ */
 .header {
     background-color: var(--white);

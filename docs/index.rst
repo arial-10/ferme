@@ -10,7 +10,8 @@ Welcome to Ferme's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-    modules
+    
+    tienda.rst
 
 Indices and tables
 ==================
