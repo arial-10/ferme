@@ -711,10 +711,10 @@ def administrar_oc(request):
 
 
 def actualizar_orden(request, id):
-    """Actualiza un orden segun su id
+    """Actualiza una orden segun su id
 
     Args:
-        id (int): id del orden a modificar
+        id (int): id de la orden a modificar
     Returns:
         Una página
     """
