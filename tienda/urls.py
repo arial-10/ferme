@@ -14,7 +14,8 @@ urlpatterns = static(settings.STATIC_URL,
     path('registro-usuario/', views.agregar_cliente, name='registro_usuario'),
 
     path('catalogo/', views.catalogo, name='catalogo'),
-    path('catalogo/<str:id>', views.detalle_producto, name='detalle_producto'),
+    path('catalogo/detalle/<str:id>', views.detalle_producto, name='detalle_producto'),
+    path('catalogo/filtrado', views.filtrar_catalogo, name='filtrado'),
     # ================== URLS Ferme Admin ==============================
 
     # Seccion Productos
@@ -40,7 +41,7 @@ urlpatterns = static(settings.STATIC_URL,
     path('ferme-admin/obtener-clientes/', views.obtener_clientes_admin,
          name='obtener_clientes_admin'),
     path('ferme-admin/usuarios/actualizar-clientes/<str:id>', views.actualizar_clientes_admin,
-         name='actualizar_clientes_admin'),  
+         name='actualizar_clientes_admin'),
 
     # Seccion Administrador
     path('ferme-admin/usuarios/administrador.html', views.ver_administrador_admin,
@@ -50,9 +51,9 @@ urlpatterns = static(settings.STATIC_URL,
     path('ferme-admin/obtener-administrador/', views.obtener_administrador_admin,
          name='obtener_administrador_admin'),
     path('ferme-admin/usuarios/actualizar-admin/<str:id>', views.actualizar_administrador_admin,
-         name='actualizar_administrador_admin'), 
+         name='actualizar_administrador_admin'),
     path('ferme-admin/usuarios/eliminar-admin/<str:id>', views.eliminar_administrador_admin,
-         name='eliminar_administrador_admin'),      
+         name='eliminar_administrador_admin'),
 
     # Seccion Empleado
     path('ferme-admin/usuarios/empleado.html', views.ver_empleado_admin,

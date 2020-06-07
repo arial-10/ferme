@@ -3,31 +3,97 @@
 {% load static %}
 
 {% block content %}
-    <div class="sub-contenedor d-flex flex-wrap justify-content-start">
-        {% for producto in productos %}
-            <div class="producto">
-                <div id="producto" class="card">
-                    <div class="card-body">
-                        <a href="{% url 'detalle_producto' producto.producto_id %}">
-                            <img class="imagen-producto img-fluid rounded m-2" src="{% static producto.url_img %}" alt="cover" width="240" height="330">
-                        </a>
-                        <p class="px-3 titulo-marca">{{ producto.marca }}</p>
-                        <a href="{% url 'detalle_producto' producto.producto_id %}"><p class="px-3 nombre-producto">{{ producto.nombre }}</p></a>
-                        <br>
-                        <p class="px-3 precio-producto">${{ producto.precio_front }} C/U</p>
-                        <br>
-                        <p class="disponible px-3">
-                            <span class="mr-2" style="color: var(--yellow);"><i class="fas fa-check"></i></span>
-                            Disponible para despacho
-                        </p>
-                        <p class="disponible px-3">
-                            <span class="mr-2" style="color: var(--yellow);"><i class="fas fa-check"></i></span>
-                            Disponible para retiro
-                        </p>
-                    </div>
+    <div class="contenedor-catalogo">
+        <div class="filtros-catalogo">
+            <div class="card">
+                <div class="card-body">
+                    <form class="py-3 pr-3 mx-3" action="{% url 'filtrado' %}" method="GET">
+                        <h5 class="subtitulo-filtrado mb-3">Marca</h5>
+                        {% for marca in marcas %}
+                            <div class="form-check mb-2">
+                                <input name="{{marca.nombre}}" class="form-check-input" type="checkbox" value="{{ marca.id }}" id="{{ marca.nombre }}">
+                                <label class="form-check-label ml-2" for="{{ marca.nombre }}" style="color :black; font-weight: bold; font-size: 11pt;">
+                                    {{ marca.nombre }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                        <h5 class="subtitulo-filtrado mb-3 mt-4">Precio</h5>
+                        <div class="form-check mb-2">
+                            <input name="5000" class="form-check-input" type="checkbox" value="precio" id="precio1">
+                            <label class="form-check-label ml-2" for="5000" style="color :black; font-weight: bold; font-size: 11pt;">
+                                $0 - $5.000
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input name="25000" class="form-check-input" type="checkbox" value="precio" id="precio2">
+                            <label class="form-check-label ml-2" for="25000" style="color :black; font-weight: bold; font-size: 11pt;">
+                                $5.000 - $25.000
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input name="50000" class="form-check-input" type="checkbox" value="precio" id="precio3">
+                            <label class="form-check-label ml-2" for="50000" style="color :black; font-weight: bold; font-size: 11pt;">
+                                $25.000 - $50.000
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input name="100000" class="form-check-input" type="checkbox" value="precio" id="precio4">
+                            <label class="form-check-label ml-2" for="100000" style="color :black; font-weight: bold; font-size: 11pt;">
+                                $50.000 - $100.000
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input name="200000" class="form-check-input" type="checkbox" value="precio" id="precio5">
+                            <label class="form-check-label ml-2" for="200000" style="color :black; font-weight: bold; font-size: 11pt;">
+                                $100.000 - $200.000
+                            </label>
+                        </div>
+                        <div class="float-right mt-4">
+                            <button type="submit" class="btn boton-filtrado">Filtrar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        {% endfor %}
+        </div>
+        {% if cantidad > 0 %}
+            <div class="catalogo col-9 d-flex flex-wrap justify-content-center">
+                {% for producto in productos %}
+                    <div class="producto">
+                        <div id="producto" class="card">
+                            <div class="card-body">
+                                <a href="{% url 'detalle_producto' producto.producto_id %}">
+                                    <img class="imagen-producto img-fluid rounded m-2" src="{% static producto.url_img %}" alt="cover" width="240" height="330">
+                                </a>
+                                <p class="px-3 titulo-marca">{{ producto.marca }}</p>
+                                <div class="px-3 text-wrap" style="width: 15rem;">
+                                    <a class="nombre-producto" href="{% url 'detalle_producto' producto.producto_id %}">
+                                        {{ producto.nombre }}
+                                    </a>
+                                </div>
+                                <br>
+                                <p class="px-3 precio-producto">${{ producto.precio_front }} C/U</p>
+                                <br>
+                                <p class="disponible px-3">
+                                    <span class="mr-2" style="color: var(--yellow);"><i class="fas fa-check"></i></span>
+                                    Disponible para despacho
+                                </p>
+                                <p class="disponible px-3">
+                                    <span class="mr-2" style="color: var(--yellow);"><i class="fas fa-check"></i></span>
+                                    Disponible para retiro
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="catalogo col-9 d-flex flex-wrap justify-content-center">
+                <div class="card sin-productos text-center">
+                    <h1 class="p-4" >Lo sentimos, no existen productos para esta búsqueda.</h1>
+                    <span style="font-size: 150pt"><i class="far fa-dizzy"></i></span>
+                </div>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock content %}

@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 class Administrador(models.Model):
-    usuario_id = models.IntegerField(max_length=38, primary_key=True)
+    usuario_id = models.IntegerField(primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -23,7 +23,7 @@ class Administrador(models.Model):
 
 
 class Empleado(models.Model):
-    usuario_id = models.IntegerField(max_length=38, primary_key=True)
+    usuario_id = models.IntegerField(primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -47,7 +47,7 @@ class Empleado(models.Model):
 
 
 class Cliente(models.Model):
-    usuario_id = models.IntegerField(max_length=38, primary_key=True)
+    usuario_id = models.IntegerField(primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -68,7 +68,7 @@ class Cliente(models.Model):
 
 
 class Vendedor(models.Model):
-    usuario_id = models.IntegerField(max_length=38, primary_key=True)
+    usuario_id = models.IntegerField(primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -90,48 +90,15 @@ class Vendedor(models.Model):
         return self.nombres + ' ' + self.appaterno
 
 
-class Marca(models.Model):
-    nombre = models.CharField(max_length=50)
-
-    class Meta:
-        db_table = 'Marca'
-
-    def __str__(self):
-        return self.nombre
-
-class Producto(models.Model):
-    producto_id = models.CharField(max_length=17, primary_key=True)
-    sku = models.CharField(max_length=100)
-    nombre = models.CharField(max_length=100)
-    color = models.CharField(max_length=20)
-    descripcion = models.CharField(max_length=100)
-    stock = models.IntegerField()
-    stock_critico = models.IntegerField()
-    disponibilidad = models.CharField(max_length=1)
-    precio_normal = models.IntegerField()
-    precio_oferta = models.IntegerField()
-    marca = models.ForeignKey(Marca, on_delete=models.SET_NULL, null=True)
-    url_img = models.CharField(max_length=200)
-
-    class Meta:
-        db_table = 'Producto'
-
-    def __str__(self):
-        return self.nombre
-
 class Compra(models.Model):
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
-    id_compra = models.IntegerField(max_length=38, primary_key=True)
+    id_compra = models.IntegerField(primary_key=True)
     monto_total = models.IntegerField()
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Compra'
 
-class ProductoCompra(models.Model):
-    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
 
 class Actividad(models.Model):
     fecha_hora = models.DateField()
@@ -147,6 +114,36 @@ class Categoria(models.Model):
 
     class Meta:
         db_table = 'Categoria'
+
+
+class Marca(models.Model):
+    nombre = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'Marca'
+
+    def __str__(self):
+        return self.nombre
+
+class Producto(models.Model):
+    producto_id = models.CharField(max_length=17, primary_key=True)
+    sku = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
+    color = models.CharField(max_length=20)
+    descripcion = models.CharField(max_length=500)
+    stock = models.IntegerField()
+    stock_critico = models.IntegerField()
+    disponibilidad = models.CharField(max_length=1)
+    precio_normal = models.IntegerField()
+    precio_oferta = models.IntegerField()
+    marca = models.ForeignKey(Marca, on_delete=models.SET_NULL, null=True)
+    url_img = models.CharField(max_length=200)
+
+    class Meta:
+        db_table = 'Producto'
+
+    def __str__(self):
+        return self.nombre
 
 
 class CategoriaProducto(models.Model):
