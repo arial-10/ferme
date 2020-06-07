@@ -27,8 +27,8 @@ html, body {
     margin-top: 4rem;
 }
 
-#main {
-
+.contenedor-carrusel {
+    width: 100%;
 }
 
 .marginTop {
@@ -38,6 +38,18 @@ html, body {
 .marginBottom {
     margin-bottom: 1rem;
 }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img-panel {
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+
 /* ========================== Fuentes ======================= */
 
 .hepta {
