@@ -1,0 +1,37 @@
+{% extends 'tienda/admin/panel_admin.html' %}
+{% load static %}
+{% block oc_active %} active {% endblock %}
+{% block titulo_panel %}
+	Gestión de Órdenes de Compra
+{% endblock %}
+
+{% block headers_tabla %}
+<thead class="thead-light">
+    <tr>
+        <th class="header-tabla">ID</th>
+        <th class="header-tabla">FECHA RECEPCION</th>
+        <th class="header-tabla">ESTADO</th>
+        <th class="header-tabla">PROVEEDOR</th>
+    </tr>
+</thead>
+{% endblock %}
+
+{% block filas_tabla %}
+<th scope="row">{{ clase_administrada.ID }}</th>
+<th >{{ clase_administrada.FECHA_RECEPCION }}</th>
+<th >{{ clase_administrada.ESTADO }}</th>
+<th >{{ clase_administrada.PROVEEDOR_ID }}</th>
+{% endblock %}
+
+{% block botones_administracion %}
+<a href="{% url 'actualizar_orden' clase_administrada.ID %}" class="btn btn-warning"
+    data-toggle="tooltip"
+    data-placement="top" title="Modificar Orden">
+    <i class="fas fa-pen"></i>
+</a>
+<a href="{% url 'eliminar_orden' clase_administrada.ID %}" class="btn btn-danger ml-2"
+    data-toggle="tooltip"
+    data-placement="top" title="Eliminar Orden">
+    <i class="fas fa-trash"></i>
+</a>
+{% endblock %}

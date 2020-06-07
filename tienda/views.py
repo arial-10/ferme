@@ -580,5 +580,46 @@ def actualizar_vendedor_admin(request, id):
                           'form': form
                       })
 
+# ------------------ Ordenes de Compra ------------------
+
+def administrar_oc(request):
+    """Muestra la página de gestión de ordenes de compra.
+
+    Args:
+    Returns:
+        Una página
+    """
+    query = Query().from_table('ordendecompra')
+    ocs = query.select()
+
+    return render(request, 'tienda/admin/ordenes_compra/ordenes_compra.html',
+                {
+                    'clase_administrada': 'orden_de_compra',
+                    'coleccion': ocs
+                })
 
 
+def actualizar_orden(request, id):
+    """Actualiza un orden segun su id
+
+    Args:
+        id (int): id del orden a modificar
+    Returns:
+        Una página
+    """
+    edita_orden = True
+
+    orden = ordendecompra.objects.get(id=id)
+    if request.method == "POST":
+        form = ordenForm(request.POST, instance=orden)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'orden actualizado exitosamente.')
+            return redirect('ordenes_admin')
+    else:
+        form = ordenForm(instance=orden)
+        return render(request, 'tienda/admin/ordenes/orden_form.html',
+                      {
+                          'form': form,
+                          'edita': edita_orden
+                      })

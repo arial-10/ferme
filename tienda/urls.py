@@ -70,7 +70,12 @@ urlpatterns = static(settings.STATIC_URL,
     path('ferme-admin/obtener-vendedor/', views.obtener_vendedor_admin,
          name='obtener_vendedor_admin'),
     path('ferme-admin/usuarios/actualizar-vendedor/<str:id>', views.actualizar_vendedor_admin,
-         name='actualizar_vendedor_admin')
+         name='actualizar_vendedor_admin'),
+
+    # Seccion Ordenes de compra
+    path('ferme-admin/ordenes', views.administrar_oc, name='oc_admin'),
+    path('ferme-admin/ordenes/actualizar/<str:id>', views.administrar_oc, name='actualizar_orden'),
+    path('ferme-admin/ordenes/eliminar/<str:id>', views.administrar_oc, name='eliminar_orden'),
 
 
 ]
