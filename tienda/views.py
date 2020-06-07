@@ -697,6 +697,11 @@ def administrar_oc(request):
     """Muestra la página de gestión de ordenes de compra.
 
     Args:
+        clase_administrada: nombre de la clase para ser utilizado en el código de la plantilla
+        nombre_clase: nombre de la clase que se muestra al usuario
+        coleccion: colleción de objetos para iterar
+        url_busqueda: url que se usará para filtrar la colección
+        url_agregar: url que se usará para agregar un objeto a la colección
     Returns:
         Una página
     """
@@ -706,7 +711,10 @@ def administrar_oc(request):
     return render(request, 'tienda/admin/ordenes_compra/ordenes_compra.html',
                 {
                     'clase_administrada': 'orden_de_compra',
-                    'coleccion': ocs
+                    'nombre_clase': 'Orden de compra',
+                    'coleccion': ocs,
+                    'url_busqueda': 'oc_admin',
+                    'url_agregar': 'oc_admin'
                 })
 
 

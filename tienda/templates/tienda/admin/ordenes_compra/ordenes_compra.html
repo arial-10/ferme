@@ -5,33 +5,66 @@
 	Gestión de Órdenes de Compra
 {% endblock %}
 
+{% block filtro_1 %}
+    <div class="filtro-producto-admin mb-2 ml-3">
+        <h6>Nombre:</h6>
+        <input type="text" class="form-control" name="nombre">
+    </div>
+{% endblock %}
+
+{% block filtro_2 %}
+    <div class="filtro-producto-admin mb-2 ml-3">
+        <h6>Marca:</h6>
+        <select name="marca" class="form-control" >
+            <option value="0">----------------</option>
+            {% for marca in marcas %}
+                <option value="{{ marca.id }}">
+                    {{ marca.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}
+
+{% block filtro_3 %}
+    <div class="filtro-producto-admin mb-2 ml-3">
+        <h6>SKU:</h6>
+        <input type="text" class="form-control" name="sku">
+    </div>
+
+    <button type="submit" class="btn boton-admin-primary mb-2 ml-3" >
+        <span><i class="fas fa-search"></i></span>
+        Buscar
+    </button>
+{% endblock %}
+
 {% block headers_tabla %}
-<thead class="thead-light">
-    <tr>
-        <th class="header-tabla">ID</th>
-        <th class="header-tabla">FECHA RECEPCION</th>
-        <th class="header-tabla">ESTADO</th>
-        <th class="header-tabla">PROVEEDOR</th>
-    </tr>
-</thead>
+    <thead class="thead-light">
+        <tr>
+            <th class="header-tabla">ID</th>
+            <th class="header-tabla">FECHA RECEPCION</th>
+            <th class="header-tabla">ESTADO</th>
+            <th class="header-tabla">PROVEEDOR</th>
+        </tr>
+    </thead>
 {% endblock %}
 
 {% block filas_tabla %}
-<th scope="row">{{ clase_administrada.ID }}</th>
-<th >{{ clase_administrada.FECHA_RECEPCION }}</th>
-<th >{{ clase_administrada.ESTADO }}</th>
-<th >{{ clase_administrada.PROVEEDOR_ID }}</th>
+    <th scope="row">{{ clase_administrada.ID }}</th>
+    <th >{{ clase_administrada.FECHA_RECEPCION }}</th>
+    <th >{{ clase_administrada.ESTADO }}</th>
+    <th >{{ clase_administrada.PROVEEDOR_ID }}</th>
 {% endblock %}
 
 {% block botones_administracion %}
-<a href="{% url 'actualizar_orden' clase_administrada.ID %}" class="btn btn-warning"
-    data-toggle="tooltip"
-    data-placement="top" title="Modificar Orden">
-    <i class="fas fa-pen"></i>
-</a>
-<a href="{% url 'eliminar_orden' clase_administrada.ID %}" class="btn btn-danger ml-2"
-    data-toggle="tooltip"
-    data-placement="top" title="Eliminar Orden">
-    <i class="fas fa-trash"></i>
-</a>
+    <a href="{% url 'actualizar_orden' clase_administrada.ID %}" class="btn btn-warning"
+        data-toggle="tooltip"
+        data-placement="top" title="Modificar Orden">
+        <i class="fas fa-pen"></i>
+    </a>
+    <a href="{% url 'eliminar_orden' clase_administrada.ID %}" class="btn btn-danger ml-2"
+        data-toggle="tooltip"
+        data-placement="top" title="Eliminar Orden">
+        <i class="fas fa-trash"></i>
+    </a>
 {% endblock %}
