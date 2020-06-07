@@ -151,6 +151,10 @@ def filtrar_catalogo(request):
         else:
             if precios_seleccionados[0] == 5000:
                 productos = Producto.objects.filter(precio_normal__gt=0, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+            elif precios_seleccionados[0] == 25000:
+                productos = Producto.objects.filter(precio_normal__gt=5000, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+            elif precios_seleccionados[0] == 50000:
+                productos = Producto.objects.filter(precio_normal__gt=25000, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
             else:
                 productos = Producto.objects.filter(precio_normal__gt= precios_seleccionados[0], precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
     # Se seleccionan ambos
@@ -170,6 +174,10 @@ def filtrar_catalogo(request):
             else:
                 if precios_seleccionados[0] == 5000:
                     productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=0, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                elif precios_seleccionados[0] == 25000:
+                    productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=5000, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                elif precios_seleccionados[0] == 50000:
+                    productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=25000, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
                 else:
                     productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt= precios_seleccionados[0], precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
 
