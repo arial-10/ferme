@@ -6,20 +6,20 @@
 {% endblock %}
 
 {% block filtro_1 %}
-    <div class="filtro-producto-admin mb-2 ml-3">
-        <h6>Nombre:</h6>
-        <input type="text" class="form-control" name="nombre">
+    <div class="filtro-ordenes-admin mb-2 ml-3">
+        <h6>Fecha:</h6>
+        <input type="date" class="form-control" name="fecha">
     </div>
 {% endblock %}
 
 {% block filtro_2 %}
-    <div class="filtro-producto-admin mb-2 ml-3">
-        <h6>Marca:</h6>
-        <select name="marca" class="form-control" >
-            <option value="0">----------------</option>
-            {% for marca in marcas %}
-                <option value="{{ marca.id }}">
-                    {{ marca.nombre }}
+    <div class="filtro-ordenes-admin mb-2 ml-3">
+        <h6>Proveedor:</h6>
+        <select name="proveedor" class="form-control" >
+            <option value="0">(seleccione un proveedor)</option>
+            {% for proveedor in proveedores %}
+                <option value="{{ proveedor.id }}">
+                    {{ proveedor.razon_social }}
                 </option>
             {% endfor %}
         </select>
@@ -27,15 +27,16 @@
 {% endblock %}
 
 {% block filtro_3 %}
-    <div class="filtro-producto-admin mb-2 ml-3">
-        <h6>SKU:</h6>
-        <input type="text" class="form-control" name="sku">
+    <div class="filtro-ordenes-admin mb-2 ml-3">
+        <h6>Estado:</h6>
+        <select class="form-control" name="estado">
+            <option value="0">(seleccione un estado)</option>
+            <option value="1">RECIBIDA</option>
+            <option value="2">PENDIENTE</option>
+            <option value="3">ANULADA</option>
+            <option value="4">ENVIADA</option>
+        </select>
     </div>
-
-    <button type="submit" class="btn boton-admin-primary mb-2 ml-3" >
-        <span><i class="fas fa-search"></i></span>
-        Buscar
-    </button>
 {% endblock %}
 
 {% block headers_tabla %}
@@ -50,19 +51,19 @@
 {% endblock %}
 
 {% block filas_tabla %}
-    <th scope="row">{{ clase_administrada.ID }}</th>
-    <th >{{ clase_administrada.FECHA_RECEPCION }}</th>
-    <th >{{ clase_administrada.ESTADO }}</th>
-    <th >{{ clase_administrada.PROVEEDOR_ID }}</th>
+    <th scope="row">{{ clase_administrada.id }}</th>
+    <th >{{ clase_administrada.fecha_recepcion }}</th>
+    <th >{{ clase_administrada.estado }}</th>
+    <th >{{ clase_administrada.proveedor }}</th>
 {% endblock %}
 
 {% block botones_administracion %}
-    <a href="{% url 'actualizar_orden' clase_administrada.ID %}" class="btn btn-warning"
+    <a href="{% url 'actualizar_orden' clase_administrada.id %}" class="btn btn-warning"
         data-toggle="tooltip"
         data-placement="top" title="Modificar Orden">
         <i class="fas fa-pen"></i>
     </a>
-    <a href="{% url 'eliminar_orden' clase_administrada.ID %}" class="btn btn-danger ml-2"
+    <a href="{% url 'eliminar_orden' clase_administrada.id %}" class="btn btn-danger ml-2"
         data-toggle="tooltip"
         data-placement="top" title="Eliminar Orden">
         <i class="fas fa-trash"></i>

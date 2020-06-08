@@ -713,14 +713,15 @@ def administrar_oc(request):
     Returns:
         Una página
     """
-    query = Query().from_table('ordendecompra')
-    ocs = query.select()
+    ordenes = OrdenDeCompra.objects.all().prefetch_related('proveedor')
+    proveedores = Proveedor.objects.all()
 
     return render(request, 'tienda/admin/ordenes_compra/ordenes_compra.html',
                 {
                     'clase_administrada': 'orden_de_compra',
                     'nombre_clase': 'Orden de compra',
-                    'coleccion': ocs,
+                    'coleccion': ordenes,
+                    'proveedores': proveedores,
                     'url_busqueda': 'oc_admin',
                     'url_agregar': 'oc_admin'
                 })
@@ -736,16 +737,16 @@ def actualizar_orden(request, id):
     """
     edita_orden = True
 
-    orden = ordendecompra.objects.get(id=id)
+    orden = OrdenDeCompra.objects.get(id=id)
     if request.method == "POST":
-        form = ordenForm(request.POST, instance=orden)
+        form = OrdenForm(request.POST, instance=orden)
         if form.is_valid():
             form.save()
             messages.success(request, 'orden actualizado exitosamente.')
-            return redirect('ordenes_admin')
+            return redirect('oc_admin')
     else:
-        form = ordenForm(instance=orden)
-        return render(request, 'tienda/admin/ordenes/orden_form.html',
+        form = OrdenForm(instance=orden)
+        return render(request, 'tienda/admin/ordenes_compra/orden_form.html',
                       {
                           'form': form,
                           'edita': edita_orden
