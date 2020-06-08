@@ -746,6 +746,18 @@ def actualizar_vendedor_admin(request, id):
 
 # ------------------ Ordenes de Compra ------------------
 
+def cancelar_orden(request):
+    """Redirige a la página principal del módulo Ordenes de Compra.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
+    return redirect(reverse('oc_admin'))
+
+
 def administrar_oc(request):
     """Muestra la página de gestión de ordenes de compra.
 
@@ -768,7 +780,7 @@ def administrar_oc(request):
                     'coleccion': ordenes,
                     'proveedores': proveedores,
                     'url_busqueda': 'oc_admin',
-                    'url_agregar': 'oc_admin'
+                    'url_agregar': 'agregar_orden'
                 })
 
 
@@ -783,6 +795,7 @@ def actualizar_orden(request, id):
     edita_orden = True
 
     orden = OrdenDeCompra.objects.get(id=id)
+    items = ProductoOc.objects.filter(orden_de_compra__id=id)
     if request.method == "POST":
         form = OrdenForm(request.POST, instance=orden)
         if form.is_valid():
@@ -794,5 +807,99 @@ def actualizar_orden(request, id):
         return render(request, 'tienda/admin/ordenes_compra/orden_form.html',
                       {
                           'form': form,
-                          'edita': edita_orden
+                          'edita': edita_orden,
+                          'items': items
                       })
+
+def eliminar_orden(request, id):
+    """Elimina una orden de compra segun su id
+
+    Args:
+        id (int): id de la orden a eliminar
+    Returns:
+        Una página
+    """
+
+    orden = OrdenDeCompra.objects.get(id=id)
+
+    if request.method == 'POST':
+        orden.delete()
+        messages.success(request, 'Orden de compra eliminada exitosamente.')
+        return redirect('oc_admin')
+
+    return render(request, 'tienda/admin/ordenes_compra/eliminar_orden.html',
+                  {
+                      'orden': orden
+                  })
+
+def agregar_orden(request):
+    """Agrega una orden de compra a la base de datos
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
+    if request.method == 'POST':
+
+        form = OrdenForm(request.POST)
+
+        if form.is_valid():
+
+            model_instance = form.save(commit=False)
+            model_instance.save()
+            messages.success(request, 'Orden de compra agregada exitosamente.')
+
+            return redirect('oc_admin')
+    else:
+        form = OrdenForm()
+        return render(request, 'tienda/admin/ordenes_compra/orden_form.html',
+                      {
+                        'form': form
+                      })
+
+def obtener_ordenes(request):
+    """Retorna una lista de ordenes de compra dependiendo de los filtros
+    ingresados
+
+    Args:
+
+    Returns:
+        Una página
+        productos: Queryset con los productos
+    """
+
+    # fecha = request.GET.get('fecha')
+    # proveedor = request.GET.get('proveedor')
+    # estado = request.GET.get('estado')
+    # nombre_proveedor = []
+
+    # query = Query().from_table(OrdenDeCompra)
+
+    # if fecha != '':
+    #     query = query.where(fecha__contains=fecha)
+    # if estado != '':
+    #     query = query.where(estado__contains=estado)
+    # if proveedor.id != '0':
+    #     # Traemos los registros
+    #     query = query.where(proveedor_id=proveedor.id)
+    #     # Luego, buscamos el nombre de la marca
+    #     query2 = Query().from_table(Proveedor, ['NOMBRE']).where(id=proveedor.id)
+    #     # Guardamos el nombre
+    #     nombre_marca = query2.select()
+
+
+    # productos = query.select()
+
+    # # Si encontro el nombre
+    # if len(nombre_marca) > 0:
+    #     # Le pasamos a todos los productos(diccionarios) el nombre de la marca
+    #     for producto in productos:
+    #         producto['NOMBRE_MARCA'] = nombre_marca[0]['NOMBRE']
+
+    # return render(request, 'tienda/admin/productos/productos.html',
+    #               {
+    #                 'productos': productos,
+    #                 'marcas': obtener_marcas()
+    #               })

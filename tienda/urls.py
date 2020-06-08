@@ -78,7 +78,9 @@ urlpatterns = static(settings.STATIC_URL,
     # Seccion Ordenes de compra
     path('ferme-admin/ordenes', views.administrar_oc, name='oc_admin'),
     path('ferme-admin/ordenes/actualizar/<str:id>', views.actualizar_orden, name='actualizar_orden'),
-    path('ferme-admin/ordenes/eliminar/<str:id>', views.administrar_oc, name='eliminar_orden'),
+    path('ferme-admin/ordenes/agregar/', views.agregar_orden, name='agregar_orden'),
+    path('ferme-admin/ordenes/eliminar/<str:id>', views.eliminar_orden, name='eliminar_orden'),
+    path('ferme-admin/ordenes/cancelar', views.cancelar_orden, name='cancelar_orden')
 
 
 ]

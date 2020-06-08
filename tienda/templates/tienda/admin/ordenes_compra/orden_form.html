@@ -41,10 +41,45 @@
                             {{ form.proveedor }}
                         </div>
                     </div>
+                    <div class="table-responsive">
+	                    <table class="table table-hover table-bordered my-3">
+	                    	<thead class="thead-light">
+						        <tr>
+						            <th class="header-tabla">Producto</th>
+						            <th class="header-tabla">Marca</th>
+						            <th class="header-tabla">Cantidad</th>
+						            <th class="header-tabla">Opciones</th>
+						        </tr>
+						    </thead>
+	                    	{% for item in items %}
+						    <tbody>					    	
+							    <tr>
+			                    	<th scope="row">{{ item.producto }}</th>
+			                    	<td>{{ item.producto.marca }}</td>
+			                    	<td>{{ item.cantidad }}</td>
+			                    	<td>
+		                               	<div class="d-flex flex-row">
+		                                    <a href="" class="btn btn-warning"
+		                                        data-toggle="tooltip"
+		                                        data-placement="top" title="Modificar producto">
+		                                        <i class="fas fa-pen"></i>
+		                                    </a>
+		                                    <a href="" class="btn btn-danger ml-2"
+		                                        data-toggle="tooltip"
+		                                        data-placement="top" title="Eliminar producto">
+		                                        <i class="fas fa-trash"></i>
+		                                    </a>
+		                                </div>
+			                    	</td>
+							    </tr>
+						    </tbody>
+	                    	{% endfor %}
+	                    </table>
+                    </div>
 
                     <p style='font-size:11pt; text-align:justify; color: var(--accent_1)' class="ml-3">(*) Campos obligatorios.</p>
                     <div class="fila-form justify-content-end mr-3 mt-2">
-                        <a href="{% url 'cancelar_producto' %}" class="btn boton-admin-cancelar">
+                        <a href="{% url 'cancelar_orden' %}" class="btn boton-admin-cancelar">
                             <span><i class="fas fa-times-circle"></i></span>
                             Cancelar
                         </a>

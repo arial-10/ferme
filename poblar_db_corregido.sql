@@ -60,9 +60,9 @@ INSERT INTO carroproducto VALUES (2, 4, 2, '2984646234234');
 INSERT INTO carroproducto VALUES (3, 1, 3, '2984646645334');
 
 --PRODUCTO COMPRA
-INSERT INTO productocompra VALUES (1, 4, 101, 1);
-INSERT INTO productocompra VALUES (2, 30, 102, 2);
-INSERT INTO productocompra VALUES (3, 1, 103, 3);
+INSERT INTO productocompra VALUES (1, 4, 101, '2984646413121');
+INSERT INTO productocompra VALUES (2, 30, 102, '2984646234234');
+INSERT INTO productocompra VALUES (3, 1, 103, '2984646645334');
 
 -- ADMINISTRADOR
 INSERT INTO administrador VALUES (1, '16489546-K', 'Gustavo Andres', 'Figueroa', 'Romero', TO_DATE('20/10/1987', 'DD/MM/YYYY'), 'M', 'gustavock1@gmail.com', 945461234, 'gfigueroa', 'gas23123', 'ADM101');
@@ -82,10 +82,10 @@ INSERT INTO despachodomicilio VALUES (3, TO_DATE('28/04/2020', 'DD/MM/YYYY'), '1
 --INSERT INTO actividad VALUES (3, TO_DATE('11/05/2020 18:33', 'DD/MM/YYYY HH24:MI'), 2);
 
 -- BOLETA, FACTURA Y NOTA DE CREDITO
-INSERT INTO factura VALUES (1, 'CASA MATRIZ', 'CALLE FALSA 123', 'MAIPU', TO_DATE('05/05/2020', 'DD/MM/YYYY'), 0, 'EFECTIVO', '5555888-1', 3400, 101, 'VALIDA');
-INSERT INTO boleta VALUES(1, 'CASA MATRIZ', 'Los Puelches 928, Peñaflor', 'PEÑAFLOR', TO_DATE('05/05/2020', 'DD/MM/YYYY'), 0, 'EFECTIVO', 'VALIDA', 102, '14.098.120-1');
-INSERT INTO boleta VALUES(2, 'CASA MATRIZ', 'Los Puelches 928, Peñaflor', 'PEÑAFLOR', TO_DATE('01/05/2020', 'DD/MM/YYYY'), 0, 'EFECTIVO', 'ANULADA', 103, '14.098.120-1');
-INSERT INTO notacredito VALUES(1, 'CASA MATRIZ', 'Los Puelches 928, Peñaflor', 'PEÑAFLOR', TO_DATE('01/05/2020', 'DD/MM/YYYY'), 0, 'EFECTIVO', TO_DATE('02/05/2020', 'DD/MM/YYYY'), 'B2', 'SIERRA EN MAL ESTADO', 103, 1 , 'VALIDA');
+--INSERT INTO factura VALUES (1, 'CASA MATRIZ', 'CALLE FALSA 123', 'MAIPU', TO_DATE('05/05/2020', 'DD/MM/YYYY'), 0, 'EFECTIVO', '5555888-1', 3400, 101, 'VALIDA');
+--INSERT INTO boleta VALUES(1, 'CASA MATRIZ', 'Los Puelches 928, Peñaflor', 'PEÑAFLOR', TO_DATE('05/05/2020', 'DD/MM/YYYY'), 0, 'EFECTIVO', 'VALIDA', 102, '14.098.120-1');
+--INSERT INTO boleta VALUES(2, 'CASA MATRIZ', 'Los Puelches 928, Peñaflor', 'PEÑAFLOR', TO_DATE('01/05/2020', 'DD/MM/YYYY'), 0, 'EFECTIVO', 'ANULADA', 103, '14.098.120-1');
+--INSERT INTO notacredito VALUES(1, 'CASA MATRIZ', 'Los Puelches 928, Peñaflor', 'PEÑAFLOR', TO_DATE('01/05/2020', 'DD/MM/YYYY'), 0, 'EFECTIVO', TO_DATE('02/05/2020', 'DD/MM/YYYY'), 'B2', 'SIERRA EN MAL ESTADO', 103, 1 , 'VALIDA');
 
 -- PROVEEDOR
 INSERT INTO proveedor VALUES(111, 'RON SWANSON EIRL', 'CARPINTERIA', 'Malloquito 2354', 'ronswanson@parks.cl', '5695559292');
@@ -98,6 +98,6 @@ INSERT INTO ordendecompra VALUES(022, TO_DATE('05/04/2020', 'DD/MM/YYYY'), 'RECI
 INSERT INTO ordendecompra VALUES(033, TO_DATE('21/05/2020', 'DD/MM/YYYY'), 'PENDIENTE', 111);
 
 -- PRODUCTO_OC
-INSERT INTO productooc VALUES(1, 011, 1, 200);
-INSERT INTO productooc VALUES(3, 022, 3, 20);
-INSERT INTO productooc VALUES(2, 033, 2, 300);
+INSERT INTO productooc (id, orden_de_compra_id, producto_id, cantidad) VALUES(1, 011, '2984646413121', 200);
+INSERT INTO productooc (id, orden_de_compra_id, producto_id, cantidad) VALUES(3, 022, '2984646645334', 20);
+INSERT INTO productooc (id, orden_de_compra_id, producto_id, cantidad) VALUES(2, 033, '2984646234234', 300);

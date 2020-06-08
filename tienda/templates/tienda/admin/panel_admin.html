@@ -39,24 +39,26 @@
                             </div>
                         </div>
                         <!-- Tabla -->
-                        <table id="{{ clase_administrada }}Admin" class="table table-responsive table-hover table-bordered my-3">
-                            {% block headers_tabla %}
-                            {% endblock %}
-                            <tbody>
-                                {% for clase_administrada in coleccion %}
-                                <tr>
-                                    {% block filas_tabla %}
-                                    {% endblock %}
-                                    <td>                                        
-                                        <div class="d-flex flex-row">
-                                            {% block botones_administracion %}
-                                            {% endblock %}
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table id="{{ clase_administrada }}Admin" class="table table-hover table-bordered my-3">
+                                {% block headers_tabla %}
+                                {% endblock %}
+                                <tbody>
+                                    {% for clase_administrada in coleccion %}
+                                    <tr>
+                                        {% block filas_tabla %}
+                                        {% endblock %}
+                                        <td>                                        
+                                            <div class="d-flex flex-row">
+                                                {% block botones_administracion %}
+                                                {% endblock %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

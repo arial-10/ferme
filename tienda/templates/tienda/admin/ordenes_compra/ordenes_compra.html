@@ -46,15 +46,16 @@
             <th class="header-tabla">FECHA RECEPCION</th>
             <th class="header-tabla">ESTADO</th>
             <th class="header-tabla">PROVEEDOR</th>
+            <th >ADMINISTRAR</th>
         </tr>
     </thead>
 {% endblock %}
 
 {% block filas_tabla %}
     <th scope="row">{{ clase_administrada.id }}</th>
-    <th >{{ clase_administrada.fecha_recepcion }}</th>
-    <th >{{ clase_administrada.estado }}</th>
-    <th >{{ clase_administrada.proveedor }}</th>
+    <td >{{ clase_administrada.fecha_recepcion }}</td>
+    <td >{{ clase_administrada.estado }}</td>
+    <td >{{ clase_administrada.proveedor }}</td>
 {% endblock %}
 
 {% block botones_administracion %}
