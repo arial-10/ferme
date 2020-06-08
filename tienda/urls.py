@@ -10,6 +10,8 @@ urlpatterns = static(settings.STATIC_URL,
     path('', views.home, name='home'),
     #Ruta modulo Inicio Sesion
     path('inicio-sesion/', views.ver_inicio_sesion, name='inicio_sesion'),
+    path('inicio-sesion-admin/', views.ver_inicio_sesion_admin, name='inicio_sesion_admin'),
+    path('login/', views.cliente_login, name='cliente_login'),
     #Ruta modulo Registro/ Portal
     path('registro-usuario/', views.agregar_cliente, name='registro_usuario'),
 
