@@ -175,6 +175,7 @@ class CarroProducto(models.Model):
 
 
 class Proveedor(models.Model):
+    #esto necesita un RUN
     razon_social = models.CharField(max_length=55)
     sector_comercial = models.CharField(max_length=55)
     direccion = models.CharField(max_length=55)

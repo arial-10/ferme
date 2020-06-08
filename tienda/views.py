@@ -932,7 +932,20 @@ def administrar_proveedores(request):
                     'clase_administrada': 'proveedor_de_compra',
                     'nombre_clase': 'proveedor',
                     'coleccion': proveedores,
-                    'url_busqueda': 'oc_admin',
+                    'url_busqueda': 'buscar_proveedores',
+                    'url_agregar': 'agregar_proveedor'
+                })
+
+def buscar_proveedores(request):
+    params = request.GET
+    proveedores = []
+    return render(request, 'tienda/admin/proveedores/proveedores.html',
+                {
+                    'params': params,
+                    'clase_administrada': 'proveedor_de_compra',
+                    'nombre_clase': 'proveedor',
+                    'coleccion': proveedores,
+                    'url_busqueda': 'buscar_proveedores',
                     'url_agregar': 'agregar_proveedor'
                 })
 
@@ -947,20 +960,18 @@ def actualizar_proveedor(request, id):
     edita_proveedor = True
 
     proveedor = Proveedor.objects.get(id=id)
-    items = ProductoOc.objects.filter(proveedor_de_compra__id=id)
     if request.method == "POST":
         form = ProveedorForm(request.POST, instance=proveedor)
         if form.is_valid():
             form.save()
             messages.success(request, 'proveedor actualizado exitosamente.')
-            return redirect('oc_admin')
+            return redirect('administrar_proveedores')
     else:
         form = ProveedorForm(instance=proveedor)
         return render(request, 'tienda/admin/proveedores/proveedor_form.html',
                       {
                           'form': form,
                           'edita': edita_proveedor,
-                          'items': items
                       })
 
 def eliminar_proveedor(request, id):
@@ -975,9 +986,9 @@ def eliminar_proveedor(request, id):
     proveedor = Proveedor.objects.get(id=id)
 
     if request.method == 'POST':
-        Proveedor.delete()
+        proveedor.delete()
         messages.success(request, 'proveedor eliminada exitosamente.')
-        return redirect('oc_admin')
+        return redirect('administrar_proveedores')
 
     return render(request, 'tienda/admin/proveedores/eliminar_proveedor.html',
                   {
@@ -1003,7 +1014,7 @@ def agregar_proveedor(request):
             model_instance.save()
             messages.success(request, 'proveedor agregada exitosamente.')
 
-            return redirect('oc_admin')
+            return redirect('administrar_proveedores')
     else:
         form = ProveedorForm()
         return render(request, 'tienda/admin/proveedores/proveedor_form.html',

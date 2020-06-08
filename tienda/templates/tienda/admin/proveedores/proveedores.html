@@ -7,35 +7,18 @@
 
 {% block filtro_1 %}
     <div class="filtro-proveedores-admin mb-2 ml-3">
-        <h6>Fecha:</h6>
-        <input type="date" class="form-control" name="fecha">
+        <h6>Razon Social:</h6>
+        <input type="text" class="form-control" name="razon-social">
     </div>
 {% endblock %}
 
 {% block filtro_2 %}
-    <div class="filtro-proveedores-admin mb-2 ml-3">
-        <h6>Proveedor:</h6>
-        <select name="proveedor" class="form-control" >
-            <option value="0">(seleccione un proveedor)</option>
-            {% for proveedor in proveedores %}
-                <option value="{{ proveedor.id }}">
-                    {{ proveedor.razon_social }}
-                </option>
-            {% endfor %}
-        </select>
-    </div>
 {% endblock %}
 
 {% block filtro_3 %}
     <div class="filtro-proveedores-admin mb-2 ml-3">
-        <h6>Estado:</h6>
-        <select class="form-control" name="estado">
-            <option value="0">(seleccione un estado)</option>
-            <option value="1">RECIBIDA</option>
-            <option value="2">PENDIENTE</option>
-            <option value="3">ANULADA</option>
-            <option value="4">ENVIADA</option>
-        </select>
+        <h6>Sector Comercial:</h6>
+        <input type="text" class="form-control" name="sector-comercial">
     </div>
 {% endblock %}
 

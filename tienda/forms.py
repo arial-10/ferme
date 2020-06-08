@@ -454,3 +454,33 @@ class OrdenForm(ModelForm):
                 }
             )
         }
+
+class ProveedorForm(ModelForm):
+    class Meta:
+        model = Proveedor
+        fields = ['id', 'razon_social', 'sector_comercial', 'direccion', 'email', 'fono']
+
+        labeld = {
+            'razon_social': 'Razon Social',
+            'sector_comercial': 'Sector Comercial',
+            'direccion': 'Direccion',
+            'email': 'Correo',
+            'fono': 'Telefono'
+        }
+        widgets = {
+            'razon_social': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'sector_comercial': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'direccion': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'email': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'fono': forms.TextInput(attrs={
+                    'class': 'form-control'
+                })
+        }
