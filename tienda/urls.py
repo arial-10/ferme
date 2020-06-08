@@ -80,7 +80,13 @@ urlpatterns = static(settings.STATIC_URL,
     path('ferme-admin/ordenes/actualizar/<str:id>', views.actualizar_orden, name='actualizar_orden'),
     path('ferme-admin/ordenes/agregar/', views.agregar_orden, name='agregar_orden'),
     path('ferme-admin/ordenes/eliminar/<str:id>', views.eliminar_orden, name='eliminar_orden'),
-    path('ferme-admin/ordenes/cancelar', views.cancelar_orden, name='cancelar_orden')
-
+    path('ferme-admin/ordenes/cancelar', views.cancelar_orden, name='cancelar_orden'),
+    
+    # Seccion Proveedores
+    path('ferme-admin/proveedores', views.administrar_proveedores, name='administrar_proveedores'),
+    path('ferme-admin/proveedores/actualizar/<str:id>', views.actualizar_proveedor, name='actualizar_proveedor'),
+    path('ferme-admin/proveedores/agregar/', views.agregar_proveedor, name='agregar_proveedor'),
+    path('ferme-admin/proveedores/eliminar/<str:id>', views.eliminar_proveedor, name='eliminar_proveedor'),
+    path('ferme-admin/proveedores/cancelar', views.cancelar_proveedor, name='cancelar_proveedor')
 
 ]

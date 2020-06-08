@@ -757,7 +757,6 @@ def cancelar_orden(request):
 
     return redirect(reverse('oc_admin'))
 
-
 def administrar_oc(request):
     """Muestra la página de gestión de ordenes de compra.
 
@@ -782,7 +781,6 @@ def administrar_oc(request):
                     'url_busqueda': 'oc_admin',
                     'url_agregar': 'agregar_orden'
                 })
-
 
 def actualizar_orden(request, id):
     """Actualiza una orden segun su id
@@ -903,3 +901,112 @@ def obtener_ordenes(request):
     #                 'productos': productos,
     #                 'marcas': obtener_marcas()
     #               })
+
+def cancelar_proveedor(request):
+    """Redirige a la página principal del módulo proveedores.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
+    return redirect(reverse('administrar_proveedores'))
+
+def administrar_proveedores(request):
+    """Muestra la página de gestión de proveedores.
+
+    Args:
+        clase_administrada: nombre de la clase para ser utilizado en el código de la plantilla
+        nombre_clase: nombre de la clase que se muestra al usuario
+        coleccion: colleción de objetos para iterar
+        url_busqueda: url que se usará para filtrar la colección
+        url_agregar: url que se usará para agregar un objeto a la colección
+    Returns:
+        Una página
+    """
+    proveedores = Proveedor.objects.all()
+
+    return render(request, 'tienda/admin/proveedores/proveedores.html',
+                {
+                    'clase_administrada': 'proveedor_de_compra',
+                    'nombre_clase': 'proveedor',
+                    'coleccion': proveedores,
+                    'url_busqueda': 'oc_admin',
+                    'url_agregar': 'agregar_proveedor'
+                })
+
+def actualizar_proveedor(request, id):
+    """Actualiza una proveedor segun su id
+
+    Args:
+        id (int): id de la proveedor a modificar
+    Returns:
+        Una página
+    """
+    edita_proveedor = True
+
+    proveedor = Proveedor.objects.get(id=id)
+    items = ProductoOc.objects.filter(proveedor_de_compra__id=id)
+    if request.method == "POST":
+        form = ProveedorForm(request.POST, instance=proveedor)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'proveedor actualizado exitosamente.')
+            return redirect('oc_admin')
+    else:
+        form = ProveedorForm(instance=proveedor)
+        return render(request, 'tienda/admin/proveedores/proveedor_form.html',
+                      {
+                          'form': form,
+                          'edita': edita_proveedor,
+                          'items': items
+                      })
+
+def eliminar_proveedor(request, id):
+    """Elimina una proveedor segun su id
+
+    Args:
+        id (int): id de la proveedor a eliminar
+    Returns:
+        Una página
+    """
+
+    proveedor = Proveedor.objects.get(id=id)
+
+    if request.method == 'POST':
+        Proveedor.delete()
+        messages.success(request, 'proveedor eliminada exitosamente.')
+        return redirect('oc_admin')
+
+    return render(request, 'tienda/admin/proveedores/eliminar_proveedor.html',
+                  {
+                      'proveedor': proveedor
+                  })
+
+def agregar_proveedor(request):
+    """Agrega una proveedor a la base de datos
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
+    if request.method == 'POST':
+
+        form = ProveedorForm(request.POST)
+
+        if form.is_valid():
+
+            model_instance = form.save(commit=False)
+            model_instance.save()
+            messages.success(request, 'proveedor agregada exitosamente.')
+
+            return redirect('oc_admin')
+    else:
+        form = ProveedorForm()
+        return render(request, 'tienda/admin/proveedores/proveedor_form.html',
+                      {
+                        'form': form
+                      })

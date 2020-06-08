@@ -1,0 +1,76 @@
+{% extends 'tienda/admin/panel_admin.html' %}
+{% load static %}
+{% block oc_active %} active {% endblock %}
+{% block titulo_panel %}
+	Gestión de Proveedores
+{% endblock %}
+
+{% block filtro_1 %}
+    <div class="filtro-proveedores-admin mb-2 ml-3">
+        <h6>Fecha:</h6>
+        <input type="date" class="form-control" name="fecha">
+    </div>
+{% endblock %}
+
+{% block filtro_2 %}
+    <div class="filtro-proveedores-admin mb-2 ml-3">
+        <h6>Proveedor:</h6>
+        <select name="proveedor" class="form-control" >
+            <option value="0">(seleccione un proveedor)</option>
+            {% for proveedor in proveedores %}
+                <option value="{{ proveedor.id }}">
+                    {{ proveedor.razon_social }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}
+
+{% block filtro_3 %}
+    <div class="filtro-proveedores-admin mb-2 ml-3">
+        <h6>Estado:</h6>
+        <select class="form-control" name="estado">
+            <option value="0">(seleccione un estado)</option>
+            <option value="1">RECIBIDA</option>
+            <option value="2">PENDIENTE</option>
+            <option value="3">ANULADA</option>
+            <option value="4">ENVIADA</option>
+        </select>
+    </div>
+{% endblock %}
+
+{% block headers_tabla %}
+    <thead class="thead-light">
+        <tr>
+            <th class="header-tabla">ID</th>
+            <th class="header-tabla">RAZON SOCIAL</th>
+            <th class="header-tabla">SECTOR COMERCIAL</th>
+            <th class="header-tabla">DIRECCION</th>
+            <th class="header-tabla">EMAIL</th>
+            <th class="header-tabla">FONO</th>
+            <th >ADMINISTRAR</th>
+        </tr>
+    </thead>
+{% endblock %}
+
+{% block filas_tabla %}
+    <th scope="row">{{ clase_administrada.id }}</th>
+    <th >{{ clase_administrada.razon_social }}</th>
+    <td >{{ clase_administrada.sector_comercial }}</td>
+    <td >{{ clase_administrada.direccion }}</td>
+    <td >{{ clase_administrada.email }}</td>
+    <td >{{ clase_administrada.fono }}</td>
+{% endblock %}
+
+{% block botones_administracion %}
+    <a href="{% url 'actualizar_proveedor' clase_administrada.id %}" class="btn btn-warning"
+        data-toggle="tooltip"
+        data-placement="top" title="Modificar Proveedor">
+        <i class="fas fa-pen"></i>
+    </a>
+    <a href="{% url 'eliminar_proveedor' clase_administrada.id %}" class="btn btn-danger ml-2"
+        data-toggle="tooltip"
+        data-placement="top" title="Eliminar Proveedor">
+        <i class="fas fa-trash"></i>
+    </a>
+{% endblock %}
