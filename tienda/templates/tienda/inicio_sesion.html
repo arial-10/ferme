@@ -11,7 +11,7 @@
         <script src="{% static 'js/popper.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <!--CSS propio-->
-        <link rel="stylesheet" href="{% static 'css/estilo_autenticacion.css' %}">
+        <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
         <title>FERME</title>
         <!-- Font awesome -->
         <script src="{% static 'fontawesome/js/all.js' %}"></script>
@@ -21,11 +21,11 @@
             $(function(){
               $('[data-toggle="tooltip"]').tooltip();
             });
-        </script>
+        </script> 
     <body>
         <!-- Header -->
         {% include "tienda/components/header.html" %}
-
+        
         <div id="contenedor">
             <div id="main">
                 {% block content %}
@@ -34,39 +34,31 @@
             </div>
         </div>
 
-
+  
         <div class="modal-dialog modal-login">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header">				
                     <h4 class="modal-title">Inicie Sesión</h4>
                 </div>
-                <div class="modal-body">
-                    <form action="/examples/actions/confirmation.php" method="POST">
+                <div class="login">
+                    <form method="post" action="{% url 'cliente_login' %}" class="form-group">
                         {% csrf_token %}
                         <div class="form-group">
-                            <div class="input-group">
-                                <i class="icon-header fas fa-user"></i>
-                                <input type="text" class="form-control" name="username" placeholder="Ingrese su e-mail" required="required">
-                            </div>
+                            <label for="email"></label>
+                            <input type="text" class="form-control" name="email" placeholder="Email">
+                            <input type="hidden" name="origen" value="1">
                         </div>
                         <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                <input type="text" class="form-control" name="password" placeholder="Ingrese su contraseña" required="required">
-                            </div>
+                            <label for="contrasena"></label>
+                            <input type="password" class="form-control" name="contrasena" placeholder="Contraseña">
                         </div>
-                        <p class="hint-text"><a href="#">¿Olvido su contraseña?</a></p>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block btn-lg">INICIAR SESIÓN</button>
-                        </div>
-
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                     </form>
-
                 </div>
                 <div class="modal-footer">¿No tiene cuenta? &nbsp; <a href="{% url 'registro_usuario' %}">REGÍSTRESE</a></div>
-
+                
             </div>
-
+             
         </div>
         <!---{% include "tienda/components/footer.html" %}--->
     </body>

@@ -15,6 +15,51 @@ def home(request):
 def ver_inicio_sesion(request):
     return render(request, 'tienda/inicio_sesion.html')
 
+def ver_inicio_sesion_admin(request):
+    return render(request, 'tienda/admin/inicio_sesion_admin.html')  
+
+
+# Iniciar sesión
+def cliente_login(request):
+    # Si estoy recibiendo un formulario con method POST
+    if request.method == 'POST':
+        # Recibimos la información del formulario
+        email = request.POST.get('email')
+        contrasena = request.POST.get('contrasena')
+        origen = request.POST.get('origen')
+        print(origen)
+        if origen == '1': 
+            # Autenticamos al usuario
+            user = Cliente.objects.filter(email=email, contrasena=contrasena).exists()
+            print(user)
+            # Verificamos que exista el usuario
+            if user:
+                # Verificamos si está activo
+                if user == True:
+                    return HttpResponseRedirect('/')
+                else:
+                    return HttpResponse("Tu cuenta está inactiva.")
+            else:  # Si no existe el usuario
+                print("email: {} - contrasena: {}".format(email, contrasena))
+                return render(request, 'tienda/inicio_sesion.html', {})
+
+        if origen == '2': #Vengo del administrador
+            # Autenticamos al usuario
+            user = Administrador.objects.filter(email=email, contrasena=contrasena).exists()
+            print(user)
+            # Verificamos que exista el usuario
+            if user:
+                # Verificamos si está activo
+                if user == True:
+                    return HttpResponseRedirect('/ferme-admin')
+                else:
+                    return HttpResponse("Tu cuenta está inactiva.")
+            else:  # Si no existe el usuario
+                print("email: {} - contrasena: {}".format(email, contrasena))
+                return render(request, 'tienda/admin/inicio_sesion_admin.html', {})       
+
+
+
 # ------ Metodo cliente/portal ------ #
 def agregar_cliente(request):
 
