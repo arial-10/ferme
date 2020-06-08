@@ -189,10 +189,16 @@ class Proveedor(models.Model):
 
 
 class OrdenDeCompra(models.Model):
-    fecha_recepcion = models.DateField()
-    estado = models.CharField(max_length=20)
-    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    estado_choices = (
+        ('RECIBIDA', 'Recibida'),
+        ('PENDIENTE', 'Pendiente'),
+        ('ANULADA', 'Anulada'),
+        ('ENVIADA', 'Enviada')
+    )
 
+    fecha_recepcion = models.DateField()
+    estado = models.CharField(max_length=20, choices=estado_choices)
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     class Meta:
         db_table = 'OrdenDeCompra'
 
