@@ -44,6 +44,8 @@ urlpatterns = static(settings.STATIC_URL,
          name='obtener_clientes_admin'),
     path('ferme-admin/usuarios/actualizar-clientes/<str:id>', views.actualizar_clientes_admin,
          name='actualizar_clientes_admin'),
+    path('ferme-admin/usuarios/eliminar-cliente/<str:id>', views.eliminar_cliente_admin,
+         name='eliminar_cliente_admin'),
 
     # Seccion Administrador
     path('ferme-admin/usuarios/administrador.html', views.ver_administrador_admin,
@@ -64,6 +66,8 @@ urlpatterns = static(settings.STATIC_URL,
          name='agregar_empleado_admin'),
     path('ferme-admin/obtener-empleado/', views.obtener_empleado_admin,
          name='obtener_empleado_admin'),
+    path('ferme-admin/usuarios/actualizar-empleado-admin/<str:id>', views.actualizar_empleado_admin,
+         name='actualizar_empleado_admin'),  
 
     # Seccion Vendedor
     path('ferme-admin/usuarios/vendedor.html', views.ver_vendedor_admin,
