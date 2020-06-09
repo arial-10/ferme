@@ -14,7 +14,7 @@
     <div class="filtro-ordenes-admin mb-2 ml-3">
         <h6>Proveedor:</h6>
         <select name="proveedor" class="form-control" >
-            <option value="0">(seleccione un proveedor)</option>
+            <option value="">(seleccione un proveedor)</option>
             {% for proveedor in proveedores %}
                 <option value="{{ proveedor.id }}">
                     {{ proveedor.razon_social }}
@@ -27,11 +27,12 @@
     <div class="filtro-ordenes-admin mb-2 ml-3">
         <h6>Estado:</h6>
         <select class="form-control" name="estado">
-            <option value="0">(seleccione un estado)</option>
-            <option value="1">RECIBIDA</option>
-            <option value="2">PENDIENTE</option>
-            <option value="3">ANULADA</option>
-            <option value="4">ENVIADA</option>
+            <option value="">(seleccione un estado)</option>
+            {% for estado in estados %}
+                <option value="{{ estado.0 }}">
+                    {{ estado.1 }}
+                </option>
+            {% endfor %}
         </select>
     </div>
 {% endblock %}
@@ -63,5 +64,9 @@
         data-placement="top" title="Eliminar Orden">
         <i class="fas fa-trash"></i>
     </a>
+    <a href="{% url 'recibir_orden' clase_administrada.id %}" class="btn btn-success ml-2"
+        data-toggle="tooltip"
+        data-placement="top" title="Recibir Orden">
+        <i class="fas fa-truck"></i>
+    </a>
 {% endblock %}
-

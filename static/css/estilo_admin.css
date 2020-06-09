@@ -148,3 +148,6 @@ html, body {
     display: inline-flex;
 }
 
+#navbarAdmin{
+    margin-left: 3vw;
+}

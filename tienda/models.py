@@ -191,10 +191,10 @@ class Proveedor(models.Model):
 
 class OrdenDeCompra(models.Model):
     estado_choices = (
-        ('RECIBIDA', 'Recibida'),
-        ('PENDIENTE', 'Pendiente'),
-        ('ANULADA', 'Anulada'),
-        ('ENVIADA', 'Enviada')
+        ('RECIBIDA', 'RECIBIDA'),
+        ('PENDIENTE', 'PENDIENTE'),
+        ('ANULADA', 'ANULADA'),
+        ('ENVIADA', 'ENVIADA')
     )
 
     fecha_recepcion = models.DateField()

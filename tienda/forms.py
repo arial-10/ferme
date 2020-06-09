@@ -459,7 +459,7 @@ class ProveedorForm(ModelForm):
         model = Proveedor
         fields = ['id', 'razon_social', 'sector_comercial', 'direccion', 'email', 'fono']
 
-        labeld = {
+        labels = {
             'razon_social': 'Razon Social',
             'sector_comercial': 'Sector Comercial',
             'direccion': 'Direccion',
@@ -480,6 +480,29 @@ class ProveedorForm(ModelForm):
                     'class': 'form-control'
                 }),
             'fono': forms.TextInput(attrs={
+                    'class': 'form-control'
+                })
+        }
+
+class ProductoOrdenForm(ModelForm):
+    class Meta:
+        model = ProductoOc
+        fields = ['producto', 'orden_de_compra', 'cantidad']
+
+        label = {
+            'producto': 'Producto',
+            'orden_de_compra': 'Orden de compra',
+            'cantidad': 'Cantidad'
+        }
+
+        widgets = {
+            'producto': forms.Select(attrs={
+                    'class': 'form-control'
+                }),
+            'orden_de_compra': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'cantidad': forms.TextInput(attrs={
                     'class': 'form-control'
                 })
         }

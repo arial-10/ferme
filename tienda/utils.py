@@ -24,3 +24,13 @@ def filtrar_icontains(params, class_):
 			}
 			coleccion = class_.objects.filter(**kwargs)
 	return coleccion
+
+def filtrar_equals(params, class_):
+    coleccion = class_.objects.all()
+    for param in params:
+        if params[param] != '':
+            kwargs = {
+                (param): params[param],
+            }
+            coleccion = class_.objects.filter(**kwargs)
+    return coleccion

@@ -1,6 +1,6 @@
 {% extends 'tienda/admin/panel_admin.html' %}
 {% load static %}
-{% block oc_active %} active {% endblock %}
+{% block proveedores_active %} active {% endblock %}
 {% block titulo_panel %}
 	Gestión de Proveedores
 {% endblock %}
@@ -57,3 +57,32 @@
         <i class="fas fa-trash"></i>
     </a>
 {% endblock %}
+
+<!-- 2do Acordion -->
+<div id="accordion" role="tablist" class="col-lg-7">
+    <div class="card tarjeta">
+        <div class="card-header tarjeta-header d-flex justify-content-between" role="tab" id="headingOne">
+            <h4><strong>Recepción de Productos</strong></h4>
+            <a class="collapsed" data-toggle="collapse" href="#recepcion" aria-expanded="true" aria-controls="recepcion">
+                <i class="icon fas fa-chevron-down"></i>
+            </a>
+        </div>
+        <div id="recepcion" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="card-body">
+                <!-- ====== CONTENIDO ====== -->
+                {% include "tienda/components/messages.html" %}
+                <form action="" method="GET">
+                    <div class="form-inline d-flex flex-wrap">
+                         <div class="filtro-producto-admin mb-2 ml-3">
+                            <h6 class="ml-3 mt-3">ID Orden de Compra:</h6>
+                            <input type="text" class="form-control ml-3 mb-3" name="id">
+                            <button type="submit" class="btn btn-success ml-3 mb-3">Confirmar</button>
+                            <button type="submit" class="btn btn-warning ml-3 mb-3">Pendiente</button>
+                            <button type="submit" class="btn btn-danger ml-3 mb-3">Anular</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

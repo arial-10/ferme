@@ -1010,13 +1010,14 @@ def administrar_oc(request):
     """
     ordenes = OrdenDeCompra.objects.all().prefetch_related('proveedor')
     proveedores = Proveedor.objects.all()
-
+    estados = OrdenDeCompra.estado_choices
     return render(request, 'tienda/admin/ordenes_compra/ordenes_compra.html',
                 {
                     'clase_administrada': 'orden_de_compra',
                     'nombre_clase': 'Orden de compra',
                     'coleccion': ordenes,
                     'proveedores': proveedores,
+                    'estados': estados,
                     'url_busqueda': 'buscar_ordenes',
                     'url_agregar': 'agregar_orden'
                 })
@@ -1032,20 +1033,40 @@ def actualizar_orden(request, id):
     edita_orden = True
 
     orden = OrdenDeCompra.objects.get(id=id)
-    items = ProductoOc.objects.filter(orden_de_compra__id=id)
+    orden.estado = 'RECIBIDA'
+    logging.warning(orden.fecha_recepcion)
+    logging.warning(orden.estado)
+    logging.warning(orden.proveedor)
+    items = ProductoOc.objects.filter(orden_de_compra__id=id).prefetch_related('producto')
+
     if request.method == "POST":
         form = OrdenForm(request.POST, instance=orden)
         if form.is_valid():
             form.save()
-            messages.success(request, 'orden actualizado exitosamente.')
+            messages.success(request, 'Orden actualizada exitosamente.')
             return redirect('oc_admin')
+        else:
+            messages.error(request, 'No se ha podido actualizar la orden')
+            return redirect('oc_admin')
+
     else:
         form = OrdenForm(instance=orden)
+        itemForms = []
+        productoForms = []
+        for item in items:
+            productoForms.append(
+                    ProductoForm(instance=item.producto)
+                )
+            itemForms.append(
+                    ProductoOrdenForm(instance=item)
+                )
+        logging.warning(productoForms)
         return render(request, 'tienda/admin/ordenes_compra/orden_form.html',
                       {
                           'form': form,
                           'edita': edita_orden,
-                          'items': items
+                          'items': itemForms,
+                          'productos': productoForms
                       })
 
 def eliminar_orden(request, id):
@@ -1106,17 +1127,41 @@ def buscar_ordenes(request):
         Una página
         productos: Queryset con los productos
     """
-
-    fecha = request.GET.fecha_recepcion
+    params = request.GET
     
+    proveedores = Proveedor.objects.all()
+    estados = OrdenDeCompra.estado_choices
+
+    ordenes = utils.filtrar_equals(params, OrdenDeCompra)
+
     return render(request, 'tienda/admin/ordenes_compra/ordenes_compra.html',
                 {
                     'clase_administrada': 'orden_de_compra',
-                    'nombre_clase': 'orden_de_compra',
+                    'nombre_clase': 'Orden de compra',
                     'coleccion': ordenes,
+                    'proveedores': proveedores,
+                    'estados': estados,
                     'url_busqueda': 'buscar_ordenes',
                     'url_agregar': 'agregar_orden'
                 })
+
+def recibir_orden(request, id):
+    orden = OrdenDeCompra.objects.get(id=id)
+    if orden.estado == 'PENDIENTE':
+        items = ProductoOc.objects.filter(orden_de_compra__id=id).prefetch_related('producto')
+        for item in items:
+            item.producto.stock += item.cantidad
+            item.producto.save()
+        orden.estado = 'RECIBIDA'
+        orden.save()
+        messages.success(request, 'Orden de compra recibida exitosamente.')
+        return redirect(reverse('oc_admin'))
+    else:
+        messages.error(request, 'Solo se pueden recibir ordenes pendientes')
+        return redirect(reverse('oc_admin'))
+
+
+# ------------------ Proveedores ------------------
 
 def cancelar_proveedor(request):
     """Redirige a la página principal del módulo proveedores.
