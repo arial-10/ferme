@@ -44,6 +44,10 @@ urlpatterns = static(settings.STATIC_URL,
          name='obtener_clientes_admin'),
     path('ferme-admin/usuarios/actualizar-clientes/<str:id>', views.actualizar_clientes_admin,
          name='actualizar_clientes_admin'),
+    path('ferme-admin/usuarios/eliminar-cliente/<str:id>', views.eliminar_cliente_admin,
+         name='eliminar_cliente_admin'),
+    path('ferme-admin/usuarios/cancelar-cliente', views.cancelar_cliente_admin,
+         name='cancelar_cliente_admin'),
 
     # Seccion Administrador
     path('ferme-admin/usuarios/administrador.html', views.ver_administrador_admin,
@@ -56,6 +60,8 @@ urlpatterns = static(settings.STATIC_URL,
          name='actualizar_administrador_admin'),
     path('ferme-admin/usuarios/eliminar-admin/<str:id>', views.eliminar_administrador_admin,
          name='eliminar_administrador_admin'),
+    path('ferme-admin/usuarios/cancelar-admin', views.cancelar_administrador_admin,
+         name='cancelar_administrador_admin'),
 
     # Seccion Empleado
     path('ferme-admin/usuarios/empleado.html', views.ver_empleado_admin,
@@ -64,6 +70,12 @@ urlpatterns = static(settings.STATIC_URL,
          name='agregar_empleado_admin'),
     path('ferme-admin/obtener-empleado/', views.obtener_empleado_admin,
          name='obtener_empleado_admin'),
+    path('ferme-admin/usuarios/actualizar-empleado-admin/<str:id>', views.actualizar_empleado_admin,
+         name='actualizar_empleado_admin'),  
+    path('ferme-admin/usuarios/eliminar-empleado/<str:id>', views.eliminar_empleado_admin,
+         name='eliminar_empleado_admin'), 
+    path('ferme-admin/usuarios/cancelar-empleado', views.cancelar_empleado_admin,
+         name='cancelar_empleado_admin'),
 
     # Seccion Vendedor
     path('ferme-admin/usuarios/vendedor.html', views.ver_vendedor_admin,
@@ -74,6 +86,10 @@ urlpatterns = static(settings.STATIC_URL,
          name='obtener_vendedor_admin'),
     path('ferme-admin/usuarios/actualizar-vendedor/<str:id>', views.actualizar_vendedor_admin,
          name='actualizar_vendedor_admin'),
+    path('ferme-admin/usuarios/eliminar-vendedor/<str:id>', views.eliminar_vendedor_admin,
+         name='eliminar_vendedor_admin'), 
+    path('ferme-admin/usuarios/cancelar-vendedor', views.cancelar_vendedor_admin,
+         name='cancelar_vendedor_admin'),
 
     # Seccion Ordenes de compra
     path('ferme-admin/ordenes', views.administrar_oc, name='oc_admin'),

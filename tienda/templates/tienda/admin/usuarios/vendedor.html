@@ -42,7 +42,7 @@
                         <div class="mb-2" style="display: inline-flex; align-items: flex-end;">
                             <a href="{% url 'agregar_vendedor_admin' %}" class="btn btn-success">
                                 <i class="fas fa-plus mr-2"></i>
-                                <span>Agregar Nuevo Vendedor</span>
+                                <span>Agregar nuevo vendedor</span>
                             </a>
                         </div>
                     </div>
@@ -89,6 +89,11 @@
                                             data-toggle="tooltip"
                                             data-placement="top" title="Modificar vendedor">
                                             <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a href="{% url 'eliminar_vendedor_admin' vendedor.usuario_id %}" class="btn btn-danger ml-2"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Eliminar empleado">
+                                            <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
                                 </td>

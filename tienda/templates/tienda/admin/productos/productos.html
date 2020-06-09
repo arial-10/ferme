@@ -56,51 +56,53 @@
                         </div>
                     </div>
                     <!-- Tabla -->
-                    <table id="productosAdmin" class="table table-responsive table-hover table-bordered my-3">
-                        <thead class="thead-light">
-                            <tr>
-                                <th class="header-tabla">Id</th>
-                                <th class="header-tabla">SKU</th>
-                                <th class="header-tabla">Nombre</th>
-                                <th class="header-tabla">Marca</th>
-                                <th class="header-tabla">Stock</th>
-                                <th class="header-tabla">Stock Crítico</th>
-                                <th class="header-tabla">Disponibilidad</th>
-                                <th class="header-tabla">Precio Normal</th>
-                                <th class="header-tabla">Precio Oferta</th>
-                                <th class="header-tabla">Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for producto in productos %}
-                            <tr>
-                                <th scope="row">{{ producto.PRODUCTO_ID }}</th>
-                                <td>{{ producto.SKU }}</td>
-                                <td>{{ producto.NOMBRE }}</td>
-                                <td>{{ producto.NOMBRE_MARCA }}</td>
-                                <td>{{ producto.STOCK }}</td>
-                                <td>{{ producto.STOCK_CRITICO }}</td>
-                                <td>{{ producto.DISPONIBILIDAD }}</td>
-                                <td>{{ producto.PRECIO_NORMAL }}</td>
-                                <td>{{ producto.PRECIO_OFERTA }}</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <a href="{% url 'actualizar_producto' producto.PRODUCTO_ID %}" class="btn btn-warning"
-                                            data-toggle="tooltip"
-                                            data-placement="top" title="Modificar producto">
-                                            <i class="fas fa-pen"></i>
-                                        </a>
-                                        <a href="{% url 'eliminar_producto' producto.PRODUCTO_ID %}" class="btn btn-danger ml-2"
-                                            data-toggle="tooltip"
-                                            data-placement="top" title="Eliminar producto">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="productosAdmin" class="table table-hover table-bordered my-3">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="header-tabla">Id</th>
+                                    <th class="header-tabla">SKU</th>
+                                    <th class="header-tabla">Nombre</th>
+                                    <th class="header-tabla">Marca</th>
+                                    <th class="header-tabla">Stock</th>
+                                    <th class="header-tabla">Stock Crítico</th>
+                                    <th class="header-tabla">Disponibilidad</th>
+                                    <th class="header-tabla">Precio Normal</th>
+                                    <th class="header-tabla">Precio Oferta</th>
+                                    <th class="header-tabla">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for producto in productos %}
+                                <tr>
+                                    <th scope="row">{{ producto.PRODUCTO_ID }}</th>
+                                    <td>{{ producto.SKU }}</td>
+                                    <td>{{ producto.NOMBRE }}</td>
+                                    <td>{{ producto.NOMBRE_MARCA }}</td>
+                                    <td>{{ producto.STOCK }}</td>
+                                    <td>{{ producto.STOCK_CRITICO }}</td>
+                                    <td>{{ producto.DISPONIBILIDAD }}</td>
+                                    <td>{{ producto.PRECIO_NORMAL }}</td>
+                                    <td>{{ producto.PRECIO_OFERTA }}</td>
+                                    <td>
+                                        <div class="d-flex flex-row">
+                                            <a href="{% url 'actualizar_producto' producto.PRODUCTO_ID %}" class="btn btn-warning"
+                                                data-toggle="tooltip"
+                                                data-placement="top" title="Modificar producto">
+                                                <i class="fas fa-pen"></i>
+                                            </a>
+                                            <a href="{% url 'eliminar_producto' producto.PRODUCTO_ID %}" class="btn btn-danger ml-2"
+                                                data-toggle="tooltip"
+                                                data-placement="top" title="Eliminar producto">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
 
 
                 </div>

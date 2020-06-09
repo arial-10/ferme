@@ -101,3 +101,12 @@ INSERT INTO ordendecompra VALUES(033, TO_DATE('21/05/2020', 'DD/MM/YYYY'), 'PEND
 INSERT INTO productooc (id, orden_de_compra_id, producto_id, cantidad) VALUES(1, 011, '2984646413121', 200);
 INSERT INTO productooc (id, orden_de_compra_id, producto_id, cantidad) VALUES(3, 022, '2984646645334', 20);
 INSERT INTO productooc (id, orden_de_compra_id, producto_id, cantidad) VALUES(2, 033, '2984646234234', 300);
+
+-- PROVEEDOR PRODUCTO
+INSERT INTO proveedorproducto VALUES (1, '2984646413121', 111);
+INSERT INTO proveedorproducto VALUES (2, '3489451234542', 111);
+INSERT INTO proveedorproducto VALUES (3, '3026487542121', 222);
+INSERT INTO proveedorproducto VALUES (4, '5649754621448', 222);
+INSERT INTO proveedorproducto VALUES (5, '2984646234234', 333);
+INSERT INTO proveedorproducto VALUES (6, '2984646645334', 333);
+
