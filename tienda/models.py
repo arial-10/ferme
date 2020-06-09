@@ -295,3 +295,12 @@ class ProductoCompra(models.Model):
 
     class Meta:
         db_table = 'ProductoCompra'
+
+
+class ProveedorProducto(models.Model):
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.SET_NULL,
+                                 null=True)
+
+    class Meta:
+        db_table = 'ProveedorProducto'
