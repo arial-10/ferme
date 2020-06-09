@@ -6,7 +6,7 @@ from .models import *
 from .forms import *
 from querybuilder.query import Query
 from . import utils
-
+import logging
 # ======================== FERME TIENDA ========================
 def home(request):
     return render(request, 'tienda/home.html')
@@ -1017,7 +1017,7 @@ def administrar_oc(request):
                     'nombre_clase': 'Orden de compra',
                     'coleccion': ordenes,
                     'proveedores': proveedores,
-                    'url_busqueda': 'oc_admin',
+                    'url_busqueda': 'buscar_ordenes',
                     'url_agregar': 'agregar_orden'
                 })
 
@@ -1096,7 +1096,7 @@ def agregar_orden(request):
                         'form': form
                       })
 
-def obtener_ordenes(request):
+def buscar_ordenes(request):
     """Retorna una lista de ordenes de compra dependiendo de los filtros
     ingresados
 
@@ -1107,39 +1107,16 @@ def obtener_ordenes(request):
         productos: Queryset con los productos
     """
 
-    # fecha = request.GET.get('fecha')
-    # proveedor = request.GET.get('proveedor')
-    # estado = request.GET.get('estado')
-    # nombre_proveedor = []
-
-    # query = Query().from_table(OrdenDeCompra)
-
-    # if fecha != '':
-    #     query = query.where(fecha__contains=fecha)
-    # if estado != '':
-    #     query = query.where(estado__contains=estado)
-    # if proveedor.id != '0':
-    #     # Traemos los registros
-    #     query = query.where(proveedor_id=proveedor.id)
-    #     # Luego, buscamos el nombre de la marca
-    #     query2 = Query().from_table(Proveedor, ['NOMBRE']).where(id=proveedor.id)
-    #     # Guardamos el nombre
-    #     nombre_marca = query2.select()
-
-
-    # productos = query.select()
-
-    # # Si encontro el nombre
-    # if len(nombre_marca) > 0:
-    #     # Le pasamos a todos los productos(diccionarios) el nombre de la marca
-    #     for producto in productos:
-    #         producto['NOMBRE_MARCA'] = nombre_marca[0]['NOMBRE']
-
-    # return render(request, 'tienda/admin/productos/productos.html',
-    #               {
-    #                 'productos': productos,
-    #                 'marcas': obtener_marcas()
-    #               })
+    fecha = request.GET.fecha_recepcion
+    
+    return render(request, 'tienda/admin/ordenes_compra/ordenes_compra.html',
+                {
+                    'clase_administrada': 'orden_de_compra',
+                    'nombre_clase': 'orden_de_compra',
+                    'coleccion': ordenes,
+                    'url_busqueda': 'buscar_ordenes',
+                    'url_agregar': 'agregar_orden'
+                })
 
 def cancelar_proveedor(request):
     """Redirige a la página principal del módulo proveedores.
@@ -1168,7 +1145,7 @@ def administrar_proveedores(request):
 
     return render(request, 'tienda/admin/proveedores/proveedores.html',
                 {
-                    'clase_administrada': 'proveedor_de_compra',
+                    'clase_administrada': 'proveedor',
                     'nombre_clase': 'proveedor',
                     'coleccion': proveedores,
                     'url_busqueda': 'buscar_proveedores',
@@ -1176,17 +1153,19 @@ def administrar_proveedores(request):
                 })
 
 def buscar_proveedores(request):
+    
     params = request.GET
-    proveedores = []
+    proveedores = utils.filtrar_icontains(params, Proveedor)
+
     return render(request, 'tienda/admin/proveedores/proveedores.html',
                 {
-                    'params': params,
-                    'clase_administrada': 'proveedor_de_compra',
+                    'clase_administrada': 'proveedor',
                     'nombre_clase': 'proveedor',
                     'coleccion': proveedores,
                     'url_busqueda': 'buscar_proveedores',
                     'url_agregar': 'agregar_proveedor'
                 })
+
 
 def actualizar_proveedor(request, id):
     """Actualiza una proveedor segun su id
