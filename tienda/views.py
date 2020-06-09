@@ -494,6 +494,28 @@ def actualizar_clientes_admin(request, id):
                       {
                           'form': form
                       })
+    
+    
+    def eliminar_cliente_admin(request, id):
+    """Actualiza un cliente segun su id
+
+    Args:
+        id (int): id del cliente a eliminar
+    Returns:
+        Una página
+    """
+
+    cliente = Cliente.objects.get(usuario_id=id)
+
+    if request.method == 'POST':
+        cliente.delete()
+        messages.success(request, 'Cliente eliminado exitosamente.')
+        return redirect('clientes_admin')
+
+    return render(request, 'tienda/admin/usuarios/eliminar_cliente.html',
+                  {
+                      'cliente': cliente
+                  })
 
 # ----- Administrador ------
 def ver_administrador_admin(request):
