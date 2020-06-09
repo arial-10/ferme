@@ -418,9 +418,16 @@ def cancelar_producto(request):
 def home_empleado(request):
     return render(request, 'tienda/empleado/home.html')
 
-
 # ----- Clientes ------
 def ver_clientes_admin(request):
+    """Muestra la página de gestión de Clientes.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
     run = Cliente.objects.all()
 
     return render(request, 'tienda/admin/usuarios/clientes.html',
@@ -430,6 +437,13 @@ def ver_clientes_admin(request):
 
 
 def agregar_clientes_admin(request):
+    """Agrega un cliente a la base de datos
+
+    Args:
+
+    Returns:
+        Una página
+    """
 
     if request.method == 'POST':
 
@@ -449,6 +463,14 @@ def agregar_clientes_admin(request):
 
 
 def obtener_clientes_admin(request):
+    """Retorna una lista de clientes dependiendo de los filtros
+    ingresados
+
+    Args:
+
+    Returns:
+        Una página
+    """
 
     run = request.GET.get('run')
     appaterno= request.GET.get('appaterno')
@@ -480,7 +502,13 @@ def obtener_clientes_admin(request):
 
 
 def actualizar_clientes_admin(request, id):
-    #logger.info('AAA')
+    """Actualiza un cliente segun su id
+    Args:
+        id (int): id del cliente a modificar
+    Returns:
+        Una página
+    """
+
     cliente = Cliente.objects.get(usuario_id=id)
     if request.method == "POST":
         form = ClienteForm(request.POST, instance=cliente)
@@ -494,9 +522,9 @@ def actualizar_clientes_admin(request, id):
                       {
                           'form': form
                       })
-    
-    
-    def eliminar_cliente_admin(request, id):
+
+
+def eliminar_cliente_admin(request, id):
     """Actualiza un cliente segun su id
 
     Args:
@@ -517,8 +545,29 @@ def actualizar_clientes_admin(request, id):
                       'cliente': cliente
                   })
 
+
+def cancelar_cliente_admin(request):
+    """Redirige a la página principal del módulo Clientes.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
+    return redirect(reverse('clientes_admin'))                  
+
+
 # ----- Administrador ------
 def ver_administrador_admin(request):
+    """Muestra la página de gestión de Administradores.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
     run = Administrador.objects.all()
 
     return render(request, 'tienda/admin/usuarios/administrador.html',
@@ -528,6 +577,13 @@ def ver_administrador_admin(request):
 
 
 def agregar_administrador_admin(request):
+    """Agrega un administrador a la base de datos
+
+    Args:
+
+    Returns:
+        Una página
+    """
 
     if request.method == 'POST':
 
@@ -547,6 +603,14 @@ def agregar_administrador_admin(request):
 
 
 def obtener_administrador_admin(request):
+    """Retorna una lista de administradores dependiendo de los filtros
+    ingresados
+
+    Args:
+
+    Returns:
+        Una página
+    """
 
     run = request.GET.get('run')
     appaterno= request.GET.get('appaterno')
@@ -578,7 +642,28 @@ def obtener_administrador_admin(request):
                 })
 
 
+def cancelar_administrador_admin(request):
+    """Redirige a la página principal del módulo Administradores.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
+    return redirect(reverse('administrador_admin'))                  
+
+
+
 def actualizar_administrador_admin(request, id):
+    """Actualiza un administrador segun su id
+
+    Args:
+        id (int): id del administrador a modificar
+
+    Returns:
+        Una página
+    """
 
     administrador = Administrador.objects.get(usuario_id=id)
     if request.method == "POST":
@@ -596,6 +681,14 @@ def actualizar_administrador_admin(request, id):
 
 
 def eliminar_administrador_admin(request, id):
+    """Actualiza un administrador segun su id
+
+    Args:
+        id (int): id del administrador a eliminar
+
+    Returns:
+        Una página
+    """
     administrador = Administrador.objects.get(usuario_id=id)
 
     if request.method == 'POST':
@@ -611,6 +704,14 @@ def eliminar_administrador_admin(request, id):
 
 # ----- Empleado ------
 def ver_empleado_admin(request):
+    """Muestra la página de gestión de Empleados.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
     run = Empleado.objects.all()
 
     return render(request, 'tienda/admin/usuarios/empleado.html',
@@ -620,6 +721,13 @@ def ver_empleado_admin(request):
 
 
 def agregar_empleado_admin(request):
+    """Agrega un empleado a la base de datos
+
+    Args:
+
+    Returns:
+        Una página
+    """
 
     if request.method == 'POST':
 
@@ -639,7 +747,14 @@ def agregar_empleado_admin(request):
 
 
 def obtener_empleado_admin(request):
+    """Retorna una lista de empleados dependiendo de los filtros
+    ingresados
 
+    Args:
+
+    Returns:
+        Una página
+    """
     run = request.GET.get('run')
     appaterno= request.GET.get('appaterno')
     genero = request.GET.get('genero')
@@ -670,7 +785,37 @@ def obtener_empleado_admin(request):
                 })
 
 
+def eliminar_empleado_admin(request, id):
+    """Actualiza un empleado segun su id
+
+    Args:
+        id (int): id del empleado a eliminar
+    Returns:
+        Una página
+    """
+
+    empleado = Empleado.objects.get(usuario_id=id)
+
+    if request.method == 'POST':
+        empleado.delete()
+        messages.success(request, 'Empleado eliminado exitosamente.')
+        return redirect('empleado_admin')
+
+    return render(request, 'tienda/admin/usuarios/eliminar_empleado.html',
+                  {
+                      'empleado': empleado
+                  })
+
+
 def actualizar_empleado_admin(request, id):
+    """Actualiza un empleado segun su id
+
+    Args:
+        id (int): id del empleado a modificar
+
+    Returns:
+        Una página
+    """
 
     empleado = Empleado.objects.get(usuario_id=id)
     if request.method == "POST":
@@ -686,11 +831,27 @@ def actualizar_empleado_admin(request, id):
                           'form': form
                       })
 
+def cancelar_empleado_admin(request):
+    """Redirige a la página principal del módulo Empleados.
 
+    Args:
 
+    Returns:
+        Una página
+    """
+
+    return redirect(reverse('empleado_admin'))   
 
 # ----- Vendedor ------
 def ver_vendedor_admin(request):
+    """Muestra la página de gestión de Vendedores.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
     run = Vendedor.objects.all()
 
     return render(request, 'tienda/admin/usuarios/vendedor.html',
@@ -700,6 +861,13 @@ def ver_vendedor_admin(request):
 
 
 def agregar_vendedor_admin(request):
+    """Agrega un vendedor a la base de datos
+
+    Args:
+
+    Returns:
+        Una página
+    """
 
     if request.method == 'POST':
 
@@ -719,6 +887,14 @@ def agregar_vendedor_admin(request):
 
 
 def obtener_vendedor_admin(request):
+    """Retorna una lista de vendedores dependiendo de los filtros
+    ingresados
+
+    Args:
+
+    Returns:
+        Una página
+    """
 
     run = request.GET.get('run')
     appaterno= request.GET.get('appaterno')
@@ -751,6 +927,14 @@ def obtener_vendedor_admin(request):
 
 
 def actualizar_vendedor_admin(request, id):
+    """Actualiza un vendedor segun su id
+
+    Args:
+        id (int): id del vendedor a modificar
+
+    Returns:
+        Una página
+    """
 
     vendedor = Vendedor.objects.get(usuario_id=id)
     if request.method == "POST":
@@ -765,6 +949,39 @@ def actualizar_vendedor_admin(request, id):
                       {
                           'form': form
                       })
+
+
+def eliminar_vendedor_admin(request, id):
+    """Actualiza un vendedor segun su id
+
+    Args:
+        id (int): id del vendedor a eliminar
+    Returns:
+        Una página
+    """
+
+    vendedor = Vendedor.objects.get(usuario_id=id)
+
+    if request.method == 'POST':
+        vendedor.delete()
+        messages.success(request, 'Vendedor eliminado exitosamente.')
+        return redirect('vendedor_admin')
+
+    return render(request, 'tienda/admin/usuarios/eliminar_vendedor.html',
+                  {
+                      'vendedor': vendedor
+                  })
+
+def cancelar_vendedor_admin(request):
+    """Redirige a la página principal del módulo Vendedores.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+
+    return redirect(reverse('vendedor_admin'))   
 
 # ------------------ Ordenes de Compra ------------------
 
