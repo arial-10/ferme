@@ -1,0 +1,18 @@
+{% extends 'tienda/admin/base.html' %}
+
+{% block cliente_active %} active {% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <div class="card mt-3">
+            <div class="card-body">
+                <p>¿Estás seguro de querer eliminar "{{empleado.run}}"?</p>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <a class="btn boton-admin-cancelar" href="{% url 'cancelar_empleado_admin' %}">Cancelar</a>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
