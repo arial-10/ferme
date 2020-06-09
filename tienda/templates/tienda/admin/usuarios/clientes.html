@@ -86,7 +86,11 @@
                                             data-placement="top" title="Modificar cliente">
                                             <i class="fas fa-pen"></i>
                                         </a>
-
+                                        <a href="{% url 'eliminar_cliente_admin' cliente.usuario_id %}" class="btn btn-danger ml-2"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Eliminar cliente">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
