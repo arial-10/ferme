@@ -17,38 +17,38 @@
                             {{ form.usuario_id }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for="">Run:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Run:</label>
                             {{ form.run }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for="">Nombres:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Nombres:</label>
                             {{ form.nombres }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for="">Paterno:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Apellido Paterno:</label>
                             {{ form.appaterno }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for="">Materno:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Apellido Materno:</label>
                             {{ form.apmaterno }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for="">Fecha nacimiento:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Fecha Nacimiento:</label>
                             {{ form.fecha_nacimiento }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for="">Genero:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Genero:</label>
                             {{ form.genero }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for="">Email:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Email:</label>
                             {{ form.email }}
                         </div>
                     </div>
 
                     <div class="fila-form">
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for="">Telefono:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Telefono:</label>
                             {{ form.telefono }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
@@ -60,7 +60,7 @@
                             {{ form.contrasena }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for="">direccion:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Direccion:</label>
                             {{ form.direccion }}
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                     
                     <p style='font-size:11pt; text-align:justify; color: var(--accent_1)' class="ml-3">(*) Campos obligatorios.</p>
                     <div class="fila-form justify-content-end mr-3 mt-2">
-                        <a href="{% url 'cancelar_producto' %}" class="btn boton-admin-cancelar">Cancelar</a>
+                        <a href="{% url 'cancelar_cliente_admin' %}" class="btn boton-admin-cancelar">Cancelar</a>
                         <button type="submit" class="btn boton-admin-primary ml-3">Guardar
                         </button>
                     </div>
