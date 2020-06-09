@@ -52,7 +52,7 @@ class Cliente(models.Model):
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
     apmaterno = models.CharField(max_length=50)
-    fecha_nacimiento = models.DateField(auto_now=True)
+    fecha_nacimiento = models.DateField()
     genero = models.CharField(max_length=6)
     email = models.CharField(max_length=50)
     telefono = models.IntegerField(default=0)
