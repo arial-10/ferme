@@ -92,7 +92,11 @@
                                             data-placement="top" title="Modificar empleado">
                                             <i class="fas fa-pen"></i>
                                         </a>
-
+                                        <a href="{% url 'eliminar_empleado_admin' empleado.usuario_id %}" class="btn btn-danger ml-2"
+                                        data-toggle="tooltip"
+                                        data-placement="top" title="Eliminar empleado">
+                                        <i class="fas fa-trash"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
