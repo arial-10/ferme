@@ -1,0 +1,35 @@
+<h1 id="sistema-de-gestion-ferreteria-ferme">Sistema de Gestion Ferreteria Ferme</h1>
+<h1 id="instalación">Instalación</h1>
+<h2 id="requerimientos">Requerimientos</h2>
+<ul>
+<li>Oracle 18c</li>
+<li>Python 3.8</li>
+<li>Dependencias de Python en requirements.txt (ver preparación)</li>
+</ul>
+<h2 id="instalación-de-la-base-de-datos">Instalación de la Base de datos</h2>
+<p>FERME funciona con python 3.8 y Oracle Express 18c. Para instalar, primero descarguelo del siguiente <a href="https://www.oracle.com/database/technologies/xe-downloads.html">link</a> extraiga el archivo y ejecute el instalador. Siga las instrucciones de instalación.</p>
+<p>Una vez instalado es importante anotar estos valores: la ip será <strong>127.0.0.1 o localhost</strong>, el puerto <strong>1521</strong> y el nombre de la base de datos <strong>XE</strong>, estos datos serán útiles si prefiere usar su propio <a href="https://dbeaver.io/">gestor de base de datos</a>. FERME usará estos valores para conectarse a la base de datos.</p>
+<h3 id="creación-del-usuario">Creación del Usuario</h3>
+<p>FERME utiliza un usuario específico para manejar sus tablas, para crear este usuario debe correr el script de creación de usuario (<code>crear_usuario.sql</code>) desde un gestor de bases de datos o utilizando <code>sqlplus</code></p>
+<h2 id="preparación-del-ambiente-python">Preparación del Ambiente Python</h2>
+<p>Clone el repositorio o extraiga el zip que se le ha entregado. Los siguientes pasos deben ser realizados en una línea de comandos (cmd.exe en windows)</p>
+<p>Para los siguientes pasos asumiremos que el repositorio se encuentra clonado/descomprimido en C:</p>
+<h3 id="creación-del-ambiente-virtual">1. Creación del Ambiente Virtual</h3>
+<ol type="1">
+<li>Ingrese al Directorio: <code>cd C:\Ferme</code></li>
+<li>Cree un ambiente virtual: <code>python -m venv venv</code> (python venv <nombre>)<br />
+Esto creará una carpeta llamada <code>venv</code></li>
+<li>Cargue el ambiente virtual <code>venv/scripts/activate.bat</code> (en linux <code>source venv/bin/source</code>)</li>
+<li>Si ha cargado el ambiente correctamente aparecerá <code>(venv)</code> al comienzo de la línea</li>
+</ol>
+<h3 id="instalación-de-los-requerimientos">2. Instalación de los requerimientos</h3>
+<ol type="1">
+<li>Dentro del ambiente virtual instale los requerimientos con pip <code>(venv) python pip install -r requirements.txt</code></li>
+<li>Con los requerimientos instalados podemos crear las tablas de la base de datos, si no está usando el puerto e IP por defecto, debe editar <code>ferme/settings.py</code><br />
+2.1 Cree los archivos de migración: <code>(venv) python -m manage.py makemigreations</code> 2.2 Cree las tablas: <code>(venv) python -m manage.py migrate</code> Finalmente puede verificar que las tablas se encuentran creadas en su gestor de base de datos o usando <code>sqlplus</code> ## Carga de datos</li>
+</ol>
+<p>Para la carga de datos de pruebas se adjunta un archivo <code>datos_prueba.sql</code>, puede ejecutarlo para poblar las tablas.</p>
+<h2 id="ejecución">Ejecución</h2>
+<p>Para iniciar el servidor, dentro del ambiente virtual debe correr el siguiente comando:</p>
+<pre><code>(venv) python -m manage.py runserver</code></pre>
+<p>Una vez que el servidor esté corriendo puede acceder el servicio desde cualquier navegador: <a href="http://localhost:8000">http://localhost:8000</a></p>
