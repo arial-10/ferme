@@ -487,15 +487,19 @@ class ProveedorForm(ModelForm):
 class ProductoOrdenForm(ModelForm):
     class Meta:
         model = ProductoOc
-        fields = ['producto', 'orden_de_compra', 'cantidad']
+        fields = ['id', 'producto', 'orden_de_compra', 'cantidad']
 
         label = {
+            'id': 'Id',
             'producto': 'Producto',
             'orden_de_compra': 'Orden de compra',
             'cantidad': 'Cantidad'
         }
 
         widgets = {
+            'id': forms.Select(attrs={
+                    'class': 'form-control'
+                }),
             'producto': forms.Select(attrs={
                     'class': 'form-control'
                 }),

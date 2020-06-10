@@ -45,6 +45,7 @@
 	                    <table class="table table-hover table-bordered my-3">
 	                    	<thead class="thead-light">
 						        <tr>
+                                    <th class="header-tabla">ID</th>
 						            <th class="header-tabla">Producto</th>
 						            <th class="header-tabla">Cantidad</th>
 						            <th class="header-tabla">Opciones</th>
@@ -53,12 +54,13 @@
 	                    	{% for item in items %}
 						    <tbody>					    	
 							    <tr>
+                                    <th scope="row">{{item.id}}</th>
                                     <td style="display: none">{{item.orden_de_compra}}</td>
 			                    	<td>{{ item.producto }}</th>
 			                    	<td>{{ item.cantidad }}</td>
 			                    	<td>
 		                               	<div class="d-flex flex-row">
-		                                    <a href="" class="btn btn-danger ml-2"
+		                                    <a href="{% url 'eliminar_item' 1 %}" class="btn btn-danger ml-2"
 		                                        data-toggle="tooltip"
 		                                        data-placement="top" title="Eliminar Item">
 		                                        <i class="fas fa-trash"></i>

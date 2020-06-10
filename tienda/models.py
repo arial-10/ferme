@@ -205,6 +205,7 @@ class OrdenDeCompra(models.Model):
 
 
 class ProductoOc(models.Model):
+    id = models.IntegerField(max_length=11, primary_key=True)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     orden_de_compra = models.ForeignKey(OrdenDeCompra,
                                         on_delete=models.CASCADE)

@@ -1070,6 +1070,8 @@ def actualizar_orden(request, id):
             itemForms.append(
                     ProductoOrdenForm(instance=item)
                 )
+        logging.warning(items.id)
+        logging.warning(itemForms)
         return render(request, 'tienda/admin/ordenes_compra/orden_form.html',
                       {
                           'form': form,
