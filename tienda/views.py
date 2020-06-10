@@ -2,11 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
+from django.forms import formset_factory
+from django.forms import modelformset_factory
 from .models import *
 from .forms import *
 from querybuilder.query import Query
 from . import utils
 import logging
+
 # ======================== FERME TIENDA ========================
 def home(request):
     return render(request, 'tienda/home.html')
@@ -1037,26 +1040,22 @@ def actualizar_orden(request, id):
     edita_orden = True
 
     orden = OrdenDeCompra.objects.get(id=id)
-    items = ProductoOc.objects.filter(orden_de_compra__id=id)
+    ItemFormSet = modelformset_factory(ProductoOc, fields=('producto', 'orden_de_compra', 'cantidad'))
 
     if request.method == "POST":
-        listaValida = True
-
         form = OrdenForm(request.POST, instance=orden)
-        itemForms = []
-
-        for item in items:
-            itemForm = ProductoOrdenForm(request.POST, instance=item)
-            itemForms.append(itemForm)
-
-            if not itemForm.is_valid():
-                logging.error(itemForm.errors)
-                listaValida = False
-
-        if form.is_valid() and listaValida:
+        formset = ItemFormSet(request.POST, prefix='item')
+        
+        if form.is_valid():
+            for item in formset:
+                if item.is_valid():
+                    id_item = int(item['id'].value())
+                    cantidad = int(item['cantidad'].value())
+                    if cantidad > 0:
+                        item.save()
+                    else:
+                        ProductoOc.objects.get(id=id_item).delete()
             form.save()
-            for item in itemForms:
-                item.save()
             messages.success(request, 'Orden actualizada exitosamente.')
             return redirect('oc_admin')
         else:
@@ -1065,18 +1064,16 @@ def actualizar_orden(request, id):
 
     else:
         form = OrdenForm(instance=orden)
-        itemForms = []
-        for item in items:
-            itemForms.append(
-                    ProductoOrdenForm(instance=item)
-                )
-        logging.warning(items.id)
-        logging.warning(itemForms)
+        itemForms = ItemFormSet(queryset=ProductoOc.objects.filter(orden_de_compra__id=id), prefix='item',initial=[{
+                    'orden_de_compra': id,
+                }])
+
         return render(request, 'tienda/admin/ordenes_compra/orden_form.html',
                       {
+                          'id': id,
                           'form': form,
                           'edita': edita_orden,
-                          'items': itemForms,
+                          'items': itemForms
                       })
 
 def eliminar_orden(request, id):
@@ -1157,6 +1154,7 @@ def buscar_ordenes(request):
 
 def recibir_orden(request, id):
     orden = OrdenDeCompra.objects.get(id=id)
+
     if orden.estado == 'PENDIENTE':
         items = ProductoOc.objects.filter(orden_de_compra__id=id).prefetch_related('producto')
         for item in items:
@@ -1170,18 +1168,35 @@ def recibir_orden(request, id):
         messages.error(request, 'Solo se pueden recibir ordenes pendientes')
         return redirect(reverse('oc_admin'))
 
-def eliminar_item(request, id):
-    item = ProductoOc.objects.filter(id=id)
-    if request.methor == 'POST':
+def eliminar_item(request, id, idOrden):
+    item = ProductoOc.objects.get(id=id)
+    orden = OrdenDeCompra.objects.get(id=idOrden)
+
+    if request.method == 'POST':
         item.delete()
         messages.success(request, 'Item de compra eliminado exitosamente.')
-        return redirect(request, 'actualizar_orden id')
+        return redirect(reverse('actualizar_orden', kwargs={'id':idOrden}))
     else:
-        return render(request, 'tienda/admin/ordenes_compra/actualizar_orden.html',
-                {
+        return render(request, 'tienda/admin/ordenes_compra/eliminar_item.html',
+              {
+                  'item': item,
                   'orden': orden
-                })
+              })
 
+def agregar_item(request, idOrden):
+    orden = ProductoOc()
+    oc = OrdenDeCompra.objects.get(id=idOrden)
+    
+    orden.orden_de_compra = oc
+    orden.cantidad = 0
+    orden.producto = Producto.objects.first()
+    orden.save()
+    
+    logging.warning(orden)
+    return redirect(reverse('actualizar_orden', kwargs={'id':idOrden}))
+
+def cancelar_item(request, id):
+    return redirect(reverse('actualizar_orden', kwargs={'id':id}))
 # ------------------ Proveedores ------------------
 
 def cancelar_proveedor(request):

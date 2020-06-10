@@ -16,6 +16,7 @@
             </div>
             <div class="card-body">
                 <form class="d-flex flex-column" action="" method="POST">
+                    {% include "tienda/components/messages.html" %}
                     {% csrf_token %}
                     {% if edita %}
                         <h4 class="subtitulo ml-3 mb-4" class="nunito-bold">Editar Orden:</h4>
@@ -24,10 +25,6 @@
                     {% endif %}
 
                     <div class="fila-form">
-                        <div class="form-group d-flex flex-column ml-3">
-                            <label for=""><span style="color: var(--accent_1)">*</span>ID:</label>
-                            {{ form.id }}
-                        </div>
                         <div class="form-group d-flex flex-column ml-3">
                             <label for="">Feha Recepcion:</label>
                             {{ form.fecha_recepcion }}
@@ -45,32 +42,41 @@
 	                    <table class="table table-hover table-bordered my-3">
 	                    	<thead class="thead-light">
 						        <tr>
-                                    <th class="header-tabla">ID</th>
 						            <th class="header-tabla">Producto</th>
 						            <th class="header-tabla">Cantidad</th>
 						            <th class="header-tabla">Opciones</th>
 						        </tr>
 						    </thead>
-	                    	{% for item in items %}
-						    <tbody>					    	
-							    <tr>
-                                    <th scope="row">{{item.id}}</th>
-                                    <td style="display: none">{{item.orden_de_compra}}</td>
-			                    	<td>{{ item.producto }}</th>
-			                    	<td>{{ item.cantidad }}</td>
-			                    	<td>
-		                               	<div class="d-flex flex-row">
-		                                    <a href="{% url 'eliminar_item' 1 %}" class="btn btn-danger ml-2"
-		                                        data-toggle="tooltip"
-		                                        data-placement="top" title="Eliminar Item">
-		                                        <i class="fas fa-trash"></i>
-		                                    </a>
-		                                </div>
-			                    	</td>
-							    </tr>
-						    </tbody>
-	                    	{% endfor %}
+                            <tbody>         
+                                {% for item in items %}                       
+                                    <tr>
+                                        <td style="display: none">{{item.id}}</td>
+                                        <td style="display: none">{{item.orden_de_compra}}</td>
+                                        <td>{{ item.producto }}</th>
+                                        <td>{{ item.cantidad }}</td>
+                                        {% if item.id.value is not null %}
+                                        <td>
+                                            <div class="d-flex flex-row">
+                                                <a href="{% url 'eliminar_item' item.id.value id %}" class="btn btn-danger ml-2"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top" title="Eliminar Item">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                                {{ items.management_form }}
 	                    </table>
+                        <div class="d-flex flex-row justify-content-end">
+                            <a href="{% url 'agregar_item' id %}" class="btn btn-success ml-2"
+                                data-toggle="tooltip"
+                                data-placement="top" title="Agregar Item">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
                     </div>
 
                     <p style='font-size:11pt; text-align:justify; color: var(--accent_1)' class="ml-3">(*) Campos obligatorios.</p>
