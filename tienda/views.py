@@ -1033,16 +1033,26 @@ def actualizar_orden(request, id):
     edita_orden = True
 
     orden = OrdenDeCompra.objects.get(id=id)
-    orden.estado = 'RECIBIDA'
-    logging.warning(orden.fecha_recepcion)
-    logging.warning(orden.estado)
-    logging.warning(orden.proveedor)
-    items = ProductoOc.objects.filter(orden_de_compra__id=id).prefetch_related('producto')
+    items = ProductoOc.objects.filter(orden_de_compra__id=id)
 
     if request.method == "POST":
+        listaValida = True
+        
         form = OrdenForm(request.POST, instance=orden)
-        if form.is_valid():
+        itemForms = []
+
+        for item in items:
+            itemForm = ProductoOrdenForm(request.POST, instance=item)
+            itemForms.append(itemForm)
+
+            if not itemForm.is_valid():
+                logging.error(itemForm.errors)
+                listaValida = False
+
+        if form.is_valid() and listaValida:
             form.save()
+            for item in itemForms:
+                item.save()
             messages.success(request, 'Orden actualizada exitosamente.')
             return redirect('oc_admin')
         else:
@@ -1052,21 +1062,15 @@ def actualizar_orden(request, id):
     else:
         form = OrdenForm(instance=orden)
         itemForms = []
-        productoForms = []
         for item in items:
-            productoForms.append(
-                    ProductoForm(instance=item.producto)
-                )
             itemForms.append(
                     ProductoOrdenForm(instance=item)
                 )
-        logging.warning(productoForms)
         return render(request, 'tienda/admin/ordenes_compra/orden_form.html',
                       {
                           'form': form,
                           'edita': edita_orden,
                           'items': itemForms,
-                          'productos': productoForms
                       })
 
 def eliminar_orden(request, id):
