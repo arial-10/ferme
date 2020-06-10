@@ -1164,6 +1164,17 @@ def recibir_orden(request, id):
         messages.error(request, 'Solo se pueden recibir ordenes pendientes')
         return redirect(reverse('oc_admin'))
 
+def eliminar_item(request, id):
+    item = ProductoOc.objects.filter(id=id)
+    if request.methor == 'POST':
+        item.delete()
+        messages.success(request, 'Item de compra eliminado exitosamente.')
+        return redirect(request, 'actualizar_orden id')
+    else:
+        return render(request, 'tienda/admin/ordenes_compra/actualizar_orden.html',
+                {
+                  'orden': orden
+                })
 
 # ------------------ Proveedores ------------------
 
