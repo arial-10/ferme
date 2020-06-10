@@ -38,15 +38,19 @@ Para los siguientes pasos asumiremos que el repositorio se encuentra clonado/des
   
 ### 2. Instalación de los requerimientos
 
-1. Dentro del ambiente virtual instale los requerimientos con pip\
-    ```(venv) python pip install -r requirements.txt```
+1. Dentro del ambiente virtual instale los requerimientos con pip
+    ```
+    (venv) python pip install -r requirements.txt
+    ```
 2. Con los requerimientos instalados podemos crear las tablas de la base de datos, si no está usando el puerto e IP por defecto, debe editar `ferme/settings.py`\
-    2.1 Cree los archivos de migración:\
+    2.1 Cree los archivos de migración:
       ```
       (venv) python -m manage.py makemigreations
       ```
-    2.2 Cree las tablas:\
-      `(venv) python -m manage.py migrate`\
+    2.2 Cree las tablas:
+      ```
+      (venv) python -m manage.py migrate
+      ```
 Finalmente puede verificar que las tablas se encuentran creadas en su gestor de base de datos o usando `sqlplus`
 ## Carga de datos
 
