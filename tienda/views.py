@@ -16,7 +16,7 @@ def ver_inicio_sesion(request):
     return render(request, 'tienda/inicio_sesion.html')
 
 def ver_inicio_sesion_admin(request):
-    return render(request, 'tienda/admin/inicio_sesion_admin.html')  
+    return render(request, 'tienda/admin/inicio_sesion_admin.html')
 
 
 # Iniciar sesión
@@ -28,7 +28,7 @@ def cliente_login(request):
         contrasena = request.POST.get('contrasena')
         origen = request.POST.get('origen')
         print(origen)
-        if origen == '1': 
+        if origen == '1':
             # Autenticamos al usuario
             user = Cliente.objects.filter(email=email, contrasena=contrasena).exists()
             print(user)
@@ -56,7 +56,7 @@ def cliente_login(request):
                     return HttpResponse("Tu cuenta está inactiva.")
             else:  # Si no existe el usuario
                 print("email: {} - contrasena: {}".format(email, contrasena))
-                return render(request, 'tienda/admin/inicio_sesion_admin.html', {})       
+                return render(request, 'tienda/admin/inicio_sesion_admin.html', {})
 
 
 
@@ -261,10 +261,14 @@ def ver_productos_admin(request):
         Una página
     """
 
+    productos = Query().from_table(Producto).select()
+
     return render(request, 'tienda/admin/productos/productos.html',
                   {
-                    'marcas': obtener_marcas()
+                    'marcas': obtener_marcas(),
+                    'productos': productos
                   })
+
 
 def obtener_productos_admin(request):
     """Retorna una lista de productos dependiendo de los filtros
@@ -555,7 +559,7 @@ def cancelar_cliente_admin(request):
         Una página
     """
 
-    return redirect(reverse('clientes_admin'))                  
+    return redirect(reverse('clientes_admin'))
 
 
 # ----- Administrador ------
@@ -651,7 +655,7 @@ def cancelar_administrador_admin(request):
         Una página
     """
 
-    return redirect(reverse('administrador_admin'))                  
+    return redirect(reverse('administrador_admin'))
 
 
 
@@ -840,7 +844,7 @@ def cancelar_empleado_admin(request):
         Una página
     """
 
-    return redirect(reverse('empleado_admin'))   
+    return redirect(reverse('empleado_admin'))
 
 # ----- Vendedor ------
 def ver_vendedor_admin(request):
@@ -981,7 +985,7 @@ def cancelar_vendedor_admin(request):
         Una página
     """
 
-    return redirect(reverse('vendedor_admin'))   
+    return redirect(reverse('vendedor_admin'))
 
 # ------------------ Ordenes de Compra ------------------
 
@@ -1037,7 +1041,7 @@ def actualizar_orden(request, id):
 
     if request.method == "POST":
         listaValida = True
-        
+
         form = OrdenForm(request.POST, instance=orden)
         itemForms = []
 
@@ -1132,7 +1136,7 @@ def buscar_ordenes(request):
         productos: Queryset con los productos
     """
     params = request.GET
-    
+
     proveedores = Proveedor.objects.all()
     estados = OrdenDeCompra.estado_choices
 
@@ -1213,7 +1217,7 @@ def administrar_proveedores(request):
                 })
 
 def buscar_proveedores(request):
-    
+
     params = request.GET
     proveedores = utils.filtrar_icontains(params, Proveedor)
 

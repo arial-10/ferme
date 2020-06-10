@@ -55,7 +55,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: var(--light);
+    background-color: var(--gray);
 }
 
 /* =================== Admin ================================ */
@@ -63,10 +63,6 @@ html, body {
 .subtitulo {
     color: var(--blue);
     font-family: 'Nunito', sans-serif;
-}
-
-#admin-body {
-    background-color: var(--gray);
 }
 
 .sub-contenedor {
