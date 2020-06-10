@@ -62,5 +62,5 @@ Para iniciar el servidor, dentro del ambiente virtual debe correr el siguiente c
 ```
 (venv) python -m manage.py runserver
 ```
-Una vez que el servidor esté corriendo puede acceder el servicio en un navegador:
+Una vez que el servidor esté corriendo puede acceder el servicio desde cualquier navegador:
 [http://localhost:8000](http://localhost:8000)
