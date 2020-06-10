@@ -11,6 +11,7 @@
     --light: #f2f4f7;
     --accent_1: #ff5964;
     --accent_2: #25ced1;
+    --inactive: #14356e;
 }
 
 /* ========================== Fuentes ======================= */
@@ -150,4 +151,8 @@ html, body {
 
 #navbarAdmin{
     margin-left: 3vw;
+}
+
+.inactivo {
+    color: var(--inactive)!important;
 }
