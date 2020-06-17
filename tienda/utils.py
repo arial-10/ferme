@@ -10,7 +10,7 @@ def formatear_numero_miles(entero):
         String del entero con formato
     """
     numero_formateado = f"{entero:,}"
-    #prueba
+    
     resultado = format(numero_formateado).replace(',', '.')
 
     return resultado
