@@ -6,10 +6,10 @@
     <div class="d-flex justify-content-center">
         <div class="card mt-3">
             <div class="card-body">
-                <p>¿Estás seguro de querer el item "{{item.producto}} de la orden"?</p>
+                <p>¿Estás seguro de querer eliminar {{item.cantidad}} pieza{{ item.cantidad|pluralize:"s" }} de "{{item.producto}}" de la orden {{orden.id}}?</p>
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <a class="btn boton-admin-cancelar" href="{% url 'cancelar_item' %}">Cancelar</a>
+                    <a class="btn boton-admin-cancelar" href="{% url 'cancelar_item' orden.id %}">Cancelar</a>
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
             </div>

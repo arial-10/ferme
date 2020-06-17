@@ -429,16 +429,11 @@ class OrdenForm(ModelForm):
         fields = ['id' ,'fecha_recepcion' ,'estado' ,'proveedor']
 
         labels = {
-            'id': 'ID',
             'fecha_recepcion': 'Fecha Recepcion',
             'estado': 'Estado',
             'proveedor': 'Proveedor'
         }
         widgets = {
-            'id': forms.TextInput(attrs={
-                    'class': 'form-control'
-                }
-            ),
             'fecha_recepcion': forms.DateInput(attrs={
                     'class': 'form-control',
                     'id': 'datepicker'
@@ -487,19 +482,15 @@ class ProveedorForm(ModelForm):
 class ProductoOrdenForm(ModelForm):
     class Meta:
         model = ProductoOc
-        fields = ['id', 'producto', 'orden_de_compra', 'cantidad']
+        fields = ['producto', 'orden_de_compra', 'cantidad']
 
         label = {
-            'id': 'Id',
             'producto': 'Producto',
             'orden_de_compra': 'Orden de compra',
             'cantidad': 'Cantidad'
         }
 
         widgets = {
-            'id': forms.Select(attrs={
-                    'class': 'form-control'
-                }),
             'producto': forms.Select(attrs={
                     'class': 'form-control'
                 }),

@@ -40,16 +40,16 @@ Para los siguientes pasos asumiremos que el repositorio se encuentra clonado/des
 
 1. Dentro del ambiente virtual instale los requerimientos con pip
     ```
-    (venv) python pip install -r requirements.txt
+    (venv) pip install -r requirements.txt
     ```
 2. Con los requerimientos instalados podemos crear las tablas de la base de datos, si no está usando el puerto e IP por defecto, debe editar `ferme/settings.py`\
     2.1 Cree los archivos de migración:
       ```
-      (venv) python -m manage.py makemigreations
+      (venv) python manage.py makemigreations
       ```
     2.2 Cree las tablas:
       ```
-      (venv) python -m manage.py migrate
+      (venv) python manage.py migrate
       ```
 Finalmente puede verificar que las tablas se encuentran creadas en su gestor de base de datos o usando `sqlplus`
 ## Carga de datos
@@ -60,7 +60,7 @@ Para la carga de datos de pruebas se adjunta un archivo `datos_prueba.sql`, pued
 
 Para iniciar el servidor, dentro del ambiente virtual debe correr el siguiente comando:
 ```
-(venv) python -m manage.py runserver
+(venv) python manage.py runserver
 ```
 Una vez que el servidor esté corriendo puede acceder el servicio desde cualquier navegador:
 [http://localhost:8000](http://localhost:8000)
