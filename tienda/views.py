@@ -104,8 +104,10 @@ def catalogo(request):
         productos = Producto.objects.filter(nombre__icontains=busqueda)
 
     for producto in productos:
-        producto.precio_front = utils.formatear_numero_miles(producto.precio_normal)
-        producto.poferta_front = utils.formatear_numero_miles(producto.precio_oferta)
+        producto.precio_front = utils.formatear_numero_miles(
+            producto.precio_normal)
+        producto.poferta_front = utils.formatear_numero_miles(
+            producto.precio_oferta)
 
     cantidad_productos = len(productos)
 
@@ -128,8 +130,10 @@ def detalle_producto(request, id):
     """
     producto = Producto.objects.get(producto_id=id)
 
-    producto.precio_front = utils.formatear_numero_miles(producto.precio_normal)
-    producto.poferta_front = utils.formatear_numero_miles(producto.precio_oferta)
+    producto.precio_front = utils.formatear_numero_miles(
+        producto.precio_normal)
+    producto.poferta_front = utils.formatear_numero_miles(
+        producto.precio_oferta)
 
     return render(request, 'tienda/detalle_producto.html',
                   {
@@ -150,13 +154,13 @@ def filtrar_catalogo(request):
     productos = []
     marcas = Marca.objects.all()
     marcas_seleccionadas = []
-    precios = [
-        {'precio': '5000'},
-        {'precio': '25000'},
-        {'precio': '50000'},
-        {'precio': '100000'},
-        {'precio': '200000'},
-    ]
+    precios = {
+        'precio1': '5000',
+        'precio2': '25000',
+        'precio3': '50000',
+        'precio4': '100000',
+        'precio5': '200000'
+    }
     precios_seleccionados = []
     cantidad_productos = 0
 
@@ -169,10 +173,9 @@ def filtrar_catalogo(request):
                 marcas_seleccionadas.append(Marca.objects.get(id=marca.id))
 
     # Validamos los precios que se seleccionaron en el front
-    for precio in precios:
-        # Validamos que el parametro por GET exista
-        if request.GET.get(precio['precio']) is not None:
-            precio_int = int(precio['precio'])
+    for key, value in precios.items():
+        if request.GET.get(key) is not None:
+            precio_int = int(value)
             precios_seleccionados.append(precio_int)
 
     # Ordenamos ascendentemente los precios seleccionados
@@ -187,47 +190,80 @@ def filtrar_catalogo(request):
     if len(precios_seleccionados) > 0 and len(marcas_seleccionadas) == 0:
         if len(precios_seleccionados) == 1:
             if precios_seleccionados[0] == 5000:
-                productos = Producto.objects.filter(precio_normal__lt=5000)
+                productos = Producto.objects.filter(precio_normal__lte=5000)
             if precios_seleccionados[0] == 25000:
-                productos = Producto.objects.filter(precio_normal__gt=5000, precio_normal__lt=25000)
+                productos = Producto.objects.filter(precio_normal__gt=5000,
+                    precio_normal__lte=25000)
             if precios_seleccionados[0] == 50000:
-                productos = Producto.objects.filter(precio_normal__gt=25000, precio_normal__lt=50000)
+                productos = Producto.objects.filter(precio_normal__gt=25000,
+                    precio_normal__lte=50000)
             if precios_seleccionados[0] == 100000:
-                productos = Producto.objects.filter(precio_normal__gt=50000, precio_normal__lt=100000)
+                productos = Producto.objects.filter(precio_normal__gt=50000,
+                    precio_normal__lte=100000)
             if precios_seleccionados[0] == 200000:
-                productos = Producto.objects.filter(precio_normal__gt=100000, precio_normal__lt=200000)
+                productos = Producto.objects.filter(precio_normal__gt=100000)
         else:
             if precios_seleccionados[0] == 5000:
-                productos = Producto.objects.filter(precio_normal__gt=0, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                productos = Producto.objects.filter(precio_normal__gt=0,
+                    precio_normal__lte=precios_seleccionados[
+                        len(precios_seleccionados) - 1])
             elif precios_seleccionados[0] == 25000:
-                productos = Producto.objects.filter(precio_normal__gt=5000, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                productos = Producto.objects.filter(precio_normal__gt=5000,
+                    precio_normal__lte=precios_seleccionados[
+                        len(precios_seleccionados) - 1])
             elif precios_seleccionados[0] == 50000:
-                productos = Producto.objects.filter(precio_normal__gt=25000, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                productos = Producto.objects.filter(precio_normal__gt=25000,
+                    precio_normal__lte=precios_seleccionados[
+                        len(precios_seleccionados) - 1])
             else:
-                productos = Producto.objects.filter(precio_normal__gt= precios_seleccionados[0], precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                productos = Producto.objects.filter(
+                    precio_normal__gt=precios_seleccionados[0],
+                    precio_normal__lte=precios_seleccionados[
+                        len(precios_seleccionados) - 1])
     # Se seleccionan ambos
     if len(precios_seleccionados) > 0 and len(marcas_seleccionadas) > 0:
         for marca_seleccionada in marcas_seleccionadas:
             if len(precios_seleccionados) == 1:
                 if precios_seleccionados[0]  == 5000:
-                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__lt=5000)
+                    productos += Producto.objects.filter(
+                        marca=marca_seleccionada.id, precio_normal__lte=5000)
                 if precios_seleccionados[0] == 25000:
-                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=5000, precio_normal__lt=25000)
+                    productos += Producto.objects.filter(
+                        marca=marca_seleccionada.id, precio_normal__gt=5000,
+                        precio_normal__lte=25000)
                 if precios_seleccionados[0] == 50000:
-                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=25000, precio_normal__lt=50000)
+                    productos += Producto.objects.filter(
+                        marca=marca_seleccionada.id, precio_normal__gt=25000,
+                        precio_normal__lte=50000)
                 if precios_seleccionados[0] == 100000:
-                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=50000, precio_normal__lt=100000)
+                    productos += Producto.objects.filter(
+                        marca=marca_seleccionada.id, precio_normal__gt=50000,
+                        precio_normal__lte=100000)
                 if precios_seleccionados[0] == 200000:
-                    productos += Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=100000, precio_normal__lt=200000)
+                    productos += Producto.objects.filter(
+                        marca=marca_seleccionada.id, precio_normal__gt=100000)
             else:
                 if precios_seleccionados[0] == 5000:
-                    productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=0, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                    productos = Producto.objects.filter(
+                        marca=marca_seleccionada.id, precio_normal__gt=0,
+                        precio_normal__lte=precios_seleccionados[
+                            len(precios_seleccionados) - 1])
                 elif precios_seleccionados[0] == 25000:
-                    productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=5000, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                    productos = Producto.objects.filter(
+                        marca=marca_seleccionada.id, precio_normal__gt=5000,
+                        precio_normal__lte=precios_seleccionados[
+                            len(precios_seleccionados) - 1])
                 elif precios_seleccionados[0] == 50000:
-                    productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt=25000, precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                    productos = Producto.objects.filter(
+                        marca=marca_seleccionada.id, precio_normal__gt=25000,
+                        precio_normal__lte=precios_seleccionados[
+                            len(precios_seleccionados) - 1])
                 else:
-                    productos = Producto.objects.filter(marca=marca_seleccionada.id, precio_normal__gt= precios_seleccionados[0], precio_normal__lt=precios_seleccionados[len(precios_seleccionados) - 1])
+                    productos = Producto.objects.filter(
+                        marca=marca_seleccionada.id,
+                        precio_normal__gt=precios_seleccionados[0],
+                        precio_normal__lte=precios_seleccionados[
+                            len(precios_seleccionados) - 1])
 
     # Si no se selecciona ninguno, se muestran todos
     if len(precios_seleccionados) == 0 and len(marcas_seleccionadas) == 0:
@@ -235,8 +271,10 @@ def filtrar_catalogo(request):
 
     # Formateamos los valores de precios
     for producto in productos:
-        producto.precio_front = utils.formatear_numero_miles(producto.precio_normal)
-        producto.poferta_front = utils.formatear_numero_miles(producto.precio_oferta)
+        producto.precio_front = utils.formatear_numero_miles(
+            producto.precio_normal)
+        producto.poferta_front = utils.formatear_numero_miles(
+            producto.precio_oferta)
 
     # Obtenemos la cantidad total de productos que seran enviados al front
     cantidad_productos = len(productos)
@@ -346,6 +384,7 @@ def agregar_producto(request):
                       {
                         'form': form
                       })
+
 
 def actualizar_producto(request, id):
     """Actualiza un producto segun su id
@@ -1045,7 +1084,7 @@ def actualizar_orden(request, id):
     if request.method == "POST":
         form = OrdenForm(request.POST, instance=orden)
         formset = ItemFormSet(request.POST, prefix='item')
-        
+
         if form.is_valid():
             for item in formset:
                 if item.is_valid():
@@ -1186,12 +1225,12 @@ def eliminar_item(request, id, idOrden):
 def agregar_item(request, idOrden):
     orden = ProductoOc()
     oc = OrdenDeCompra.objects.get(id=idOrden)
-    
+
     orden.orden_de_compra = oc
     orden.cantidad = 0
     orden.producto = Producto.objects.first()
     orden.save()
-    
+
     logging.warning(orden)
     return redirect(reverse('actualizar_orden', kwargs={'id':idOrden}))
 
