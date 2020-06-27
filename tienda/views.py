@@ -9,6 +9,8 @@ from .forms import *
 from querybuilder.query import Query
 from . import utils
 import logging
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # ======================== FERME TIENDA ========================
 def home(request):
@@ -1347,3 +1349,57 @@ def agregar_proveedor(request):
                       {
                         'form': form
                       })
+
+# --------------------------------------------------------------------------------------------
+#   Prueba Autenticacion
+#---------------------------------------------------------------------------------------------
+def login_usuario(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
+                return redirect(reverse('login'))
+
+        else:
+            return render(request, 'tienda/auth/login.html', {})
+
+
+def logout_usuario(request):
+    logout(request)
+    return redirect('home')
+
+
+def registro(request):
+    return render(request, 'tienda/auth/registro_cliente.html', {})
+    # if request.user.is_authenticated:
+    #     return redirect('index')
+    # else:
+    #     if request.method == 'POST':
+    #         form = CreateUserForm(request.POST)
+    #         if form.is_valid():
+    #             form.save()
+    #             # La funcion cleaned date de un Form permite acceder
+    #             # y trabajar con la informacion que este contiene.
+    #             user = form.cleaned_data.get('first_name')
+
+    #             messages.success(request, f"{user}, la creacion de tu cuenta ha sido exitosa. Ahora ya puedes iniciar sesion con tu nombre de usuario.")
+    #             return redirect('login')
+    #         else:
+    #             messages.error(request, "Error al crear una nueva cuenta.")
+    #             return redirect(reverse('register'))
+    #     else:
+    #         form = CreateUserForm()
+    #         return render(request, 'moovie/auth/register.html',
+    #                       {
+    #                         'form': form
+    #                       })

@@ -1,0 +1,60 @@
+{% extends 'tienda/base.html' %}
+
+{% block titulo %} - Crea tu cuenta {% endblock titulo %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center mb-3">Creacion de Cuenta</h4>
+                <hr>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group d-flex flex-column">
+                        <label for="">Nombre de usuario:</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label for="">Correo electronico:</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label for="">Nombre:</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label for="">Apellidos:</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="form-group d-flex flex-column mr-3">
+                            <label for="">Contraseña:</label>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="form-group d-flex flex-column">
+                            <label for="">Confirmar contraseña:</label>
+                            {{ form.password2 }}
+                        </div>
+                    </div>
+                    {% if messages %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul>
+                                {% for message in  messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                    {% endif %}
+                    <hr>
+                    <p style='font-size:11pt; text-align:center;'>Si ya tienes una cuenta, <a href="{% url 'login' %}">inicia sesion </a>.</p>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success">Crear cuenta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
