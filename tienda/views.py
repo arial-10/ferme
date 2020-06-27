@@ -164,25 +164,22 @@ def filtrar_catalogo(request):
     precios_seleccionados = []
     cantidad_productos = 0
 
-    # Validamos las marcas que se seleccionaron en el front
-    for marca in marcas:
+    for marca in marcas: 
         # Validamos que el parametro por GET exista
         if request.GET.get(marca.nombre) is not None:
             marca_id = int(request.GET.get(marca.nombre))
             if marca.id == marca_id:
                 marcas_seleccionadas.append(Marca.objects.get(id=marca.id))
-
     # Validamos los precios que se seleccionaron en el front
     for key, value in precios.items():
         if request.GET.get(key) is not None:
             precio_int = int(value)
             precios_seleccionados.append(precio_int)
 
-    # Ordenamos ascendentemente los precios seleccionados
     precios_seleccionados.sort()
 
     # Distintos escenarios
-    # Se selecciona solo marcas
+    # Se selecciona solo marcas    
     if len(marcas_seleccionadas) > 0 and len(precios_seleccionados) == 0:
         for marca_seleccionada in marcas_seleccionadas:
             productos += Producto.objects.filter(marca=marca_seleccionada.id)
@@ -265,18 +262,15 @@ def filtrar_catalogo(request):
                         precio_normal__lte=precios_seleccionados[
                             len(precios_seleccionados) - 1])
 
-    # Si no se selecciona ninguno, se muestran todos
     if len(precios_seleccionados) == 0 and len(marcas_seleccionadas) == 0:
         productos = Producto.objects.all()
 
-    # Formateamos los valores de precios
     for producto in productos:
         producto.precio_front = utils.formatear_numero_miles(
             producto.precio_normal)
         producto.poferta_front = utils.formatear_numero_miles(
             producto.precio_oferta)
 
-    # Obtenemos la cantidad total de productos que seran enviados al front
     cantidad_productos = len(productos)
 
     return render(request, 'tienda/productos.html',
@@ -334,19 +328,13 @@ def obtener_productos_admin(request):
     if sku != '':
         query = query.where(sku__contains=sku)
     if id_marca != '0':
-        # Traemos los registros
         query = query.where(marca_id=id_marca)
-        # Luego, buscamos el nombre de la marca
         query2 = Query().from_table(Marca, ['NOMBRE']).where(id=id_marca)
-        # Guardamos el nombre
         nombre_marca = query2.select()
 
-
     productos = query.select()
-
-    # Si encontro el nombre
+    
     if len(nombre_marca) > 0:
-        # Le pasamos a todos los productos(diccionarios) el nombre de la marca
         for producto in productos:
             producto['NOMBRE_MARCA'] = nombre_marca[0]['NOMBRE']
 
