@@ -285,10 +285,12 @@ def filtrar_catalogo(request):
 
 
 # ======================== FERME ADMIN ========================
+@login_required(login_url='login_admin')
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')
 
 # ------------ PRODUCTOS ------------
+@login_required(login_url='login_admin')
 def ver_productos_admin(request):
     """Muestra la página de gestión de Productos.
 
@@ -306,7 +308,7 @@ def ver_productos_admin(request):
                     'productos': productos
                   })
 
-
+@login_required(login_url='login_admin')
 def obtener_productos_admin(request):
     """Retorna una lista de productos dependiendo de los filtros
     ingresados
@@ -346,7 +348,7 @@ def obtener_productos_admin(request):
                     'marcas': obtener_marcas()
                   })
 
-
+@login_required(login_url='login_admin')
 def agregar_producto(request):
     """Agrega un producto a la base de datos
 
@@ -375,7 +377,7 @@ def agregar_producto(request):
                         'form': form
                       })
 
-
+@login_required(login_url='login_admin')
 def actualizar_producto(request, id):
     """Actualiza un producto segun su id
 
@@ -401,7 +403,7 @@ def actualizar_producto(request, id):
                           'edita': edita_producto
                       })
 
-
+@login_required(login_url='login_admin')
 def eliminar_producto(request, id):
     """Actualiza un producto segun su id
 
@@ -437,7 +439,7 @@ def obtener_marcas():
 
     return marcas
 
-
+@login_required(login_url='login_admin')
 def cancelar_producto(request):
     """Redirige a la página principal del módulo Productos.
 
@@ -1020,7 +1022,7 @@ def cancelar_vendedor_admin(request):
     return redirect(reverse('vendedor_admin'))
 
 # ------------------ Ordenes de Compra ------------------
-
+@login_required(login_url='login_admin')
 def cancelar_orden(request):
     """Redirige a la página principal del módulo Ordenes de Compra.
 
@@ -1032,6 +1034,7 @@ def cancelar_orden(request):
 
     return redirect(reverse('oc_admin'))
 
+@login_required(login_url='login_admin')
 def administrar_oc(request):
     """Muestra la página de gestión de ordenes de compra.
 
@@ -1058,6 +1061,7 @@ def administrar_oc(request):
                     'url_agregar': 'agregar_orden'
                 })
 
+@login_required(login_url='login_admin')
 def actualizar_orden(request, id):
     """Actualiza una orden segun su id
 
@@ -1105,6 +1109,7 @@ def actualizar_orden(request, id):
                           'items': itemForms
                       })
 
+@login_required(login_url='login_admin')
 def eliminar_orden(request, id):
     """Elimina una orden de compra segun su id
 
@@ -1126,6 +1131,7 @@ def eliminar_orden(request, id):
                       'orden': orden
                   })
 
+@login_required(login_url='login_admin')
 def agregar_orden(request):
     """Agrega una orden de compra a la base de datos
 
@@ -1153,6 +1159,7 @@ def agregar_orden(request):
                         'form': form
                       })
 
+@login_required(login_url='login_admin')
 def buscar_ordenes(request):
     """Retorna una lista de ordenes de compra dependiendo de los filtros
     ingresados
@@ -1181,6 +1188,7 @@ def buscar_ordenes(request):
                     'url_agregar': 'agregar_orden'
                 })
 
+@login_required(login_url='login_admin')
 def recibir_orden(request, id):
     orden = OrdenDeCompra.objects.get(id=id)
 
@@ -1212,6 +1220,7 @@ def eliminar_item(request, id, idOrden):
                   'orden': orden
               })
 
+@login_required(login_url='login_admin')
 def agregar_item(request, idOrden):
     orden = ProductoOc()
     oc = OrdenDeCompra.objects.get(id=idOrden)
@@ -1224,10 +1233,12 @@ def agregar_item(request, idOrden):
     logging.warning(orden)
     return redirect(reverse('actualizar_orden', kwargs={'id':idOrden}))
 
+@login_required(login_url='login_admin')
 def cancelar_item(request, id):
     return redirect(reverse('actualizar_orden', kwargs={'id':id}))
 # ------------------ Proveedores ------------------
 
+@login_required(login_url='login_admin')
 def cancelar_proveedor(request):
     """Redirige a la página principal del módulo proveedores.
 
@@ -1239,6 +1250,7 @@ def cancelar_proveedor(request):
 
     return redirect(reverse('administrar_proveedores'))
 
+@login_required(login_url='login_admin')
 def administrar_proveedores(request):
     """Muestra la página de gestión de proveedores.
 
@@ -1262,6 +1274,7 @@ def administrar_proveedores(request):
                     'url_agregar': 'agregar_proveedor'
                 })
 
+@login_required(login_url='login_admin')
 def buscar_proveedores(request):
 
     params = request.GET
@@ -1276,7 +1289,7 @@ def buscar_proveedores(request):
                     'url_agregar': 'agregar_proveedor'
                 })
 
-
+@login_required(login_url='login_admin')
 def actualizar_proveedor(request, id):
     """Actualiza una proveedor segun su id
 
@@ -1302,6 +1315,7 @@ def actualizar_proveedor(request, id):
                           'edita': edita_proveedor,
                       })
 
+@login_required(login_url='login_admin')
 def eliminar_proveedor(request, id):
     """Elimina una proveedor segun su id
 
@@ -1323,6 +1337,7 @@ def eliminar_proveedor(request, id):
                       'proveedor': proveedor
                   })
 
+@login_required(login_url='login_admin')
 def agregar_proveedor(request):
     """Agrega una proveedor a la base de datos
 
