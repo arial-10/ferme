@@ -1353,7 +1353,7 @@ def agregar_proveedor(request):
 # --------------------------------------------------------------------------------------------
 #   Prueba Autenticacion
 #---------------------------------------------------------------------------------------------
-def login_usuario(request):
+def login_cliente(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
@@ -1369,16 +1369,40 @@ def login_usuario(request):
                 return redirect('home')
             else:
                 messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
-                return redirect(reverse('login'))
+                return redirect(reverse('login_cliente'))
 
         else:
             return render(request, 'tienda/auth/login.html', {})
 
 
-def logout_usuario(request):
+def logout_cliente(request):
     logout(request)
     return redirect('home')
 
+def login_admin(request):
+    if request.user.is_authenticated:
+        return redirect('admin')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                messages.success(request, f"Inicio de sesión exitoso.")
+                return redirect('admin')
+            else:
+                messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
+                return redirect(reverse('login_admin'))
+
+        else:
+            return render(request, 'tienda/admin/inicio_sesion_admin.html', {})
+
+def logout_admin(request):
+    logout(request)
+    return redirect('login_admin')
 
 def registro(request):
     

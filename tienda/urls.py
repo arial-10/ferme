@@ -112,7 +112,9 @@ urlpatterns = static(settings.STATIC_URL,
     path('ferme-admin/proveedores/cancelar', views.cancelar_proveedor, name='cancelar_proveedor'),
 
     # Seccion Autenticacion de prueba
-    path('login-usuario/', views.login_usuario, name='login'),
-    path('logout-usuario/', views.logout_usuario, name='logout'),
-    path('registro/', views.registro, name='registro')
+    path('login-cliente/', views.login_cliente, name='login_cliente'),
+    path('logout-cliente/', views.logout_cliente, name='logout_cliente'),
+    path('login-admin/', views.login_admin, name='login_admin'),
+    path('logout-admin/', views.logout_admin, name='logout_admin'),
+    path('registro/', views.registro, name='registro_cliente')
 ]

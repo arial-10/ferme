@@ -152,3 +152,35 @@ html, body {
 .inactivo {
     color: var(--inactive)!important;
 }
+
+/*-------------------------------------------------------------------------------------------- 
+    Prueba Autenticacion
+-------------------------------------------------------------------------------------------- */
+#login-container {
+    font-family: 'Nunito', sans-serif;
+    color: var(--blue);
+    margin-top: 3rem;
+}
+
+.boton-login {
+    background-color:  var(--blue);
+    color: var(--white);
+}
+
+.boton-login:hover {
+    background-color:  var(--yellow);
+    color: var(--dark);
+}
+
+.messages-container {
+    font-size: 9pt;
+    max-width: 285px;
+}
+
+@media (min-width: 1000px) {
+    .logout_admin {
+        position: fixed;
+        right: 0;
+        top: 0.5rem;
+    }
+}
