@@ -1365,6 +1365,7 @@ def login_usuario(request):
 
             if user is not None:
                 login(request, user)
+                messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {user.first_name}")
                 return redirect('home')
             else:
                 messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
@@ -1380,26 +1381,24 @@ def logout_usuario(request):
 
 
 def registro(request):
-    return render(request, 'tienda/auth/registro_cliente.html', {})
-    # if request.user.is_authenticated:
-    #     return redirect('index')
-    # else:
-    #     if request.method == 'POST':
-    #         form = CreateUserForm(request.POST)
-    #         if form.is_valid():
-    #             form.save()
-    #             # La funcion cleaned date de un Form permite acceder
-    #             # y trabajar con la informacion que este contiene.
-    #             user = form.cleaned_data.get('first_name')
-
-    #             messages.success(request, f"{user}, la creacion de tu cuenta ha sido exitosa. Ahora ya puedes iniciar sesion con tu nombre de usuario.")
-    #             return redirect('login')
-    #         else:
-    #             messages.error(request, "Error al crear una nueva cuenta.")
-    #             return redirect(reverse('register'))
-    #     else:
-    #         form = CreateUserForm()
-    #         return render(request, 'moovie/auth/register.html',
-    #                       {
-    #                         'form': form
-    #                       })
+    
+    if request.user.is_authenticated:
+        return redirect('home')    
+    else:
+        if request.method == 'POST':
+            form = CrearUsuarioForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('first_name')
+                messages.success(request, f"{user}, la creación de tu cuenta ha sido exitosa." +
+                    " Ahora ya puedes iniciar sesión con tu nombre de usuario.")
+                return redirect('login')
+            else:
+                messages.error(request, "Error al crear una nueva cuenta.")
+                return redirect(reverse('registro'), {'form': form})
+        else:
+            form = CrearUsuarioForm()
+            return render(request, 'tienda/auth/registro_cliente.html',
+                            {
+                                'form': form
+                            })
