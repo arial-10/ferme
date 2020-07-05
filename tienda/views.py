@@ -10,7 +10,9 @@ from querybuilder.query import Query
 from . import utils
 import logging
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
+from .decorators import *
 
 # ======================== FERME TIENDA ========================
 def home(request):
@@ -286,6 +288,7 @@ def filtrar_catalogo(request):
 
 # ======================== FERME ADMIN ========================
 @login_required(login_url='login_admin')
+@solo_admin
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')
 
@@ -1394,26 +1397,24 @@ def logout_cliente(request):
     logout(request)
     return redirect('home')
 
+@unauthenticated_user
 def login_admin(request):
-    if request.user.is_authenticated:
-        return redirect('admin')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-            user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password)
 
-            if user is not None:
-                login(request, user)
-                messages.success(request, f"Inicio de sesión exitoso.")
-                return redirect('admin')
-            else:
-                messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
-                return redirect(reverse('login_admin'))
-
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Inicio de sesión exitoso.")
+            return redirect('admin')
         else:
-            return render(request, 'tienda/admin/inicio_sesion_admin.html', {})
+            messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
+            return redirect(reverse('login_admin'))
+
+    else:
+        return render(request, 'tienda/admin/auth/login_admin.html', {})
 
 def logout_admin(request):
     logout(request)
@@ -1427,17 +1428,40 @@ def registro(request):
         if request.method == 'POST':
             form = CrearUsuarioForm(request.POST)
             if form.is_valid():
-                form.save()
-                user = form.cleaned_data.get('first_name')
-                messages.success(request, f"{user}, la creación de tu cuenta ha sido exitosa." +
+                user = form.save()
+                nombre = form.cleaned_data.get('first_name')
+
+                # Se agrega automaticamente como cliente.
+                grupo = Group.objects.get(name='cliente')
+                user.groups.add(grupo)
+
+                messages.success(request, f"{nombre}, la creación de tu cuenta ha sido exitosa." +
                     " Ahora ya puedes iniciar sesión con tu nombre de usuario.")
-                return redirect('login')
+                return redirect('login_cliente')
             else:
                 messages.error(request, "Error al crear una nueva cuenta.")
-                return redirect(reverse('registro'), {'form': form})
+                return redirect(reverse('registro_cliente'))
         else:
             form = CrearUsuarioForm()
             return render(request, 'tienda/auth/registro_cliente.html',
                             {
                                 'form': form
                             })
+
+@login_required(login_url='login_admin')
+def registro_admin(request):
+    if request.method == 'POST':
+        form = CrearUsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Usuario creado exitosamente.")
+            return redirect(reverse('registro_admin'))
+        else:
+            messages.error(request, "Error al crear nuevo usuario.")
+            return redirect(reverse('registro_admin'))
+    else:
+        form = CrearUsuarioForm()
+        return render(request, 'tienda/admin/auth/registro_admin.html',
+                        {
+                            'form': form
+                        })

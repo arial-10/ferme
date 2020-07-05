@@ -184,3 +184,8 @@ html, body {
         top: 0.5rem;
     }
 }
+
+.error-404 {
+    font-family: 'Nunito', sans-serif;
+    color: var(--accent_1);
+}

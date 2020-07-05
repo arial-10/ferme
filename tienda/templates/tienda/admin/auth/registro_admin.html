@@ -1,0 +1,55 @@
+{% extends 'tienda/admin/base.html' %}
+{% block titulo %} Registro de usuarios {% endblock titulo %}
+
+{% block content %}
+    <div id="login-container" class="d-flex justify-content-center">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center mb-3" style="font-weight: bold;">
+                    Creación de usuario FERME</h4>
+                <hr>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group d-flex flex-column">
+                        <label for="">Nombre de usuario:</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label for="">Correo electrónico:</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label for="">Nombre:</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label for="">Apellidos:</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="form-group d-flex flex-column mr-3">
+                            <label for=""><span style="color: var(--accent_1)">*</span>Contraseña:</label>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="form-group d-flex flex-column">
+                            <label for="">Confirmar contraseña:</label>
+                            {{ form.password2 }}
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <p style='font-size:11pt; text-align:center; font-style: italic;'>
+                           <span style="color: var(--accent_1); font-style: normal;">(*)</span> La contraseña debe ser alfanumérica y tener un mínimo de 6 caracteres.
+                        </p>
+                    </div>
+                    <div class="d-flex flex-column" style="margin-top: 1rem;">
+                        {% include "tienda/components/messages.html" %}
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success">Crear nuevo usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

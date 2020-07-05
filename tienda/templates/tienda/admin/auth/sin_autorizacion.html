@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!--Bootstrap con Jquery -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <!--CSS propio-->
+        <link rel="stylesheet" href="{% static 'css/estilo_admin.css' %}">
+        <link rel="icon" type="image/png" href="{% static 'favicon.png' %}"/>
+        <!-- Font awesome -->
+        <script src="{% static 'fontawesome/js/all.js' %}"></script>
+        <title>Sin autorización - FERME</title>
+    </head>
+    <body style="background-color: var(--blue);">
+        <div class="d-flex flex-wrap justify-content-center">
+            <div class="card error-404 text-center mt-4">
+                <h1 class="p-4" >Usted no cuenta con los privilegios necesarios para ver esta sección.</h1>
+                <span style="font-size: 200pt; margin-bottom: 2rem;"><i class="fas fa-ban"></i></span>
+            </div>
+        </div>
+    </body>
+</html>
