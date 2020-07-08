@@ -1434,6 +1434,8 @@ def registro(request):
                 # Se agrega automaticamente como cliente.
                 grupo = Group.objects.get(name='cliente')
                 user.groups.add(grupo)
+                # Se relaciona con un perfil
+                ClientePrueba.objects.create(user=user)
 
                 messages.success(request, f"{nombre}, la creación de tu cuenta ha sido exitosa." +
                     " Ahora ya puedes iniciar sesión con tu nombre de usuario.")
@@ -1449,6 +1451,7 @@ def registro(request):
                             })
 
 @login_required(login_url='login_admin')
+@autorizar_usuarios(roles_permitidos=['administrador'])
 def registro_admin(request):
     if request.method == 'POST':
         form = CrearUsuarioForm(request.POST)
@@ -1465,3 +1468,11 @@ def registro_admin(request):
                         {
                             'form': form
                         })
+
+def perfil_cliente(request):
+    usuario = request.user
+    # id_cliente = request.user.id;
+    perfil = ClientePrueba.objects.get(user=usuario.id)
+    print("perfil: ", perfil.rut)
+    form = PerfilClienteForm(instance=perfil)
+    return render(request, 'tienda/perfil.html', {'form': form})

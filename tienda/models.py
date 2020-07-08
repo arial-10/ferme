@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class Administrador(models.Model):
     usuario_id = models.IntegerField(primary_key=True)
@@ -304,3 +305,14 @@ class ProveedorProducto(models.Model):
 
     class Meta:
         db_table = 'ProveedorProducto'
+
+# ----------------------------------------------------------------------------
+#               PRUEBA AUNTENTICACION DISTINTOS USUARIOS
+# ----------------------------------------------------------------------------
+class ClientePrueba(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    rut = models.CharField(max_length=12)
+
+    class Meta:
+        db_table = 'ClientePrueba'
+

@@ -517,3 +517,18 @@ class CrearUsuarioForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'password1',
                  'password2']
+
+class PerfilClienteForm(ModelForm):
+    class Meta:
+        model = ClientePrueba
+        fields = ['rut']
+
+        label = {
+            'rut': 'RUT'
+        }
+
+        widgets = {
+            'rut': forms.TextInput(attrs={
+                    'class': 'form-control'
+                })
+        }

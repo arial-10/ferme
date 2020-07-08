@@ -118,4 +118,5 @@ urlpatterns = static(settings.STATIC_URL,
     path('logout-admin/', views.logout_admin, name='logout_admin'),
     path('registro/', views.registro, name='registro_cliente'),
     path('ferme-admin/registro-admin/', views.registro_admin, name='registro_admin'),
+    path('perfil/', views.perfil_cliente, name='perfil_cliente'),
 ]
