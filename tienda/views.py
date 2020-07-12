@@ -285,6 +285,9 @@ def filtrar_catalogo(request):
                     'cantidad': cantidad_productos
                   })
 
+# ---------- Carro de Compras ---------------------
+def ver_carro(request):
+    return render(request, 'tienda/carro_compras.html', {})
 
 # ======================== FERME ADMIN ========================
 @login_required(login_url='login_admin')

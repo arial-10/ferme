@@ -300,7 +300,7 @@ footer {
 -------------------------------------------------------------------------------------------- */
 #login-container {
     font-family: 'Nunito', sans-serif;
-    color: var(--blue);
+    color: var(--dark);
     margin-top: 3rem;
 }
 
@@ -318,3 +318,70 @@ footer {
     font-size: 9pt;
     max-width: 285px;
 }
+
+/* ================= Carro de Compras ================ */
+#carrito {
+    font-family: 'Nunito', sans-serif;
+    color: var(--dark);
+}
+
+.titulo-carrito {
+    font-weight: bold;
+    padding: 1rem 1rem 0 1rem;
+}
+
+.img-carrito {
+    padding: 2rem;
+}
+
+.producto-carrito {
+    margin-top: 1rem;
+}
+
+.info-carrito {
+    display: inline-flex;
+    margin: 3rem;
+}
+
+.precio-carrito {
+    color: var(--blue);
+    margin-left: 3rem;
+}
+
+.cantidad-carrito {
+    margin-left: 3rem;
+}
+
+.eliminar-carrito {
+    color: var(--accent_1);
+    font-weight: bold;
+}
+
+.eliminar-carrito:link, .eliminar-carrito:visited, 
+    .eliminar-carrito:hover, .eliminar-carrito:active {
+  text-decoration: none;
+  color: var(--accent_1);
+}
+
+.boton-compra-carrito {
+    width: 180px;
+    background-color: var(--yellow);
+    color: var(--blue);
+}
+
+.boton-compra-carrito:hover {
+    background-color: seagreen;
+    color: var(--white);
+}
+
+.boton-seguir-carrito {
+    width: 180px;
+    background-color: var(--dark);
+    color: var(--white);
+}
+
+.boton-seguir-carrito:hover {
+    background-color: var(--accent_1);
+    color: var(--white);
+}
+
