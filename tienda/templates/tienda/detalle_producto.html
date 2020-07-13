@@ -39,9 +39,9 @@
                     </div>
 
                     <div class="mt-4">
-                        <form class="form-inline" action="">
+                        <form class="form-inline" method="GET" action="{% url 'agregar_carro' producto.producto_id %}">
                             <div class="form-group">
-                                <input type="number" value="1" class="form-control mt-2 ml-3" 
+                                <input name="cantidad" type="number" value="1" class="form-control mt-2 ml-3" 
                                     {% if producto.stock == 0 %} disabled {% endif %}>
                                 <button type="submit" class="btn btn-danger mt-2 ml-3" 
                                     {% if producto.stock == 0 %} disabled {% endif %}>

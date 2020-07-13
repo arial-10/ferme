@@ -289,6 +289,16 @@ def filtrar_catalogo(request):
 def ver_carro(request):
     return render(request, 'tienda/carro_compras.html', {})
 
+
+def agregar_carro(request, id):
+    usuario = request.user
+
+    # if usuario.is_authenticated:
+    #     Carro.objects.create(carro_id="CAR123", cliente=usuario)
+
+        
+    return redirect(reverse('catalogo'))
+
 # ======================== FERME ADMIN ========================
 @login_required(login_url='login_admin')
 @solo_admin
@@ -1387,6 +1397,8 @@ def login_cliente(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {user.first_name}")
+                # Cada vez que un usuario logee, se creara una instancia de carrito.
+                Carro.objects.create(carro_id="CAR123", cliente=request.user)
                 return redirect('home')
             else:
                 messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
@@ -1397,6 +1409,8 @@ def login_cliente(request):
 
 
 def logout_cliente(request):
+    carrito = Carro.objects.get(carro_id="CAR123")
+    carrito.delete()
     logout(request)
     return redirect('home')
 

@@ -158,7 +158,7 @@ class CategoriaProducto(models.Model):
 
 class Carro(models.Model):
     carro_id = models.CharField(max_length=8, primary_key=True)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Carro'
