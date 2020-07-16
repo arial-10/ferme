@@ -32,6 +32,12 @@
                     <span class="texto-boton nunito-bold">Mis <br> Ordenes</span>
                 </div>
             </a>
+            <a class="link-header" href="{% url 'carro' %}">
+                <div style="display: inline-flex;">
+                    <i class="icon-header fas fa-shopping-cart"></i>
+                    <span class="texto-boton nunito-bold">Carro de <br> Compras</span>
+                </div>
+            </a>
         {% else %}
             <a class="link-header" href="{% url 'login_cliente' %}">
                 <div style="display: inline-flex;">
@@ -40,11 +46,5 @@
                 </div>
             </a>
         {% endif %}
-        <a class="link-header" href="{% url 'carro' %}">
-            <div style="display: inline-flex;">
-                <i class="icon-header fas fa-shopping-cart"></i>
-                <span class="texto-boton nunito-bold">Carro de <br> Compras</span>
-            </div>
-        </a>
     </div>
 </header>

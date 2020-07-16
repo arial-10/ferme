@@ -157,12 +157,14 @@ class CategoriaProducto(models.Model):
 
 
 class Carro(models.Model):
-    carro_id = models.CharField(max_length=8, primary_key=True)
+    carro_id = models.CharField(max_length=15, primary_key=True)
     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Carro'
 
+    def __str__(self):
+        return self.carro_id
 
 
 class CarroProducto(models.Model):

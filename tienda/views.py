@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .decorators import *
+from datetime import datetime
 
 # ======================== FERME TIENDA ========================
 def home(request):
@@ -291,8 +292,17 @@ def ver_carro(request):
 
 
 def agregar_carro(request, id):
-    usuario = request.user
+    if request.user.is_authenticated:
+        usuario = request.user
+        producto = Producto.objects.get(producto_id=id)
+        cantidad = request.GET.get('cantidad')
+        carro = Carro.objects.get(cliente=usuario.id)
 
+        carro_producto = CarroProducto.objects.create(cantidad=cantidad, producto=producto, carro=carro)
+        messages.success(request, "Producto agregado correctamente al carrito de compras.")
+        print("Producto: ", producto, " Cantidad: ", cantidad, " Carro: ", carro)
+    else:
+        messages.error(request, "Antes de empezar a comprar, tiene que iniciar sesión.")
     # if usuario.is_authenticated:
     #     Carro.objects.create(carro_id="CAR123", cliente=usuario)
 
@@ -1398,7 +1408,9 @@ def login_cliente(request):
                 login(request, user)
                 messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {user.first_name}")
                 # Cada vez que un usuario logee, se creara una instancia de carrito.
-                Carro.objects.create(carro_id="CAR123", cliente=request.user)
+                fecha = datetime.now()
+                carro_id = fecha.strftime("%d%m%y%H%M%S") + str(request.user.id);
+                Carro.objects.create(carro_id=carro_id, cliente=request.user)
                 return redirect('home')
             else:
                 messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
@@ -1409,7 +1421,8 @@ def login_cliente(request):
 
 
 def logout_cliente(request):
-    carrito = Carro.objects.get(carro_id="CAR123")
+    # De momento, el carro se elimina al cerrar sesion
+    carrito = Carro.objects.get(cliente=request.user)
     carrito.delete()
     logout(request)
     return redirect('home')
