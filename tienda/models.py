@@ -169,12 +169,16 @@ class Carro(models.Model):
 
 class CarroProducto(models.Model):
     cantidad = models.IntegerField()
+    precio = models.CharField(max_length=10)
     producto = models.ForeignKey(Producto, on_delete=models.SET_NULL,
                                  null=True)
     carro = models.ForeignKey(Carro, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'CarroProducto'
+
+    def __str__(self):
+        return self.producto.nombre
 
 
 class Proveedor(models.Model):

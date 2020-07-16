@@ -363,6 +363,12 @@ footer {
   color: var(--accent_1);
 }
 
+.nombre-carrito:link, .nombre-carrito:visited, 
+    .nombre-carrito:hover, .nombre-carrito:active {
+  text-decoration: none;
+  color: var(--dark);
+}
+
 .boton-compra-carrito {
     width: 180px;
     background-color: var(--yellow);

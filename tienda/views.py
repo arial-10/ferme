@@ -288,23 +288,29 @@ def filtrar_catalogo(request):
 
 # ---------- Carro de Compras ---------------------
 def ver_carro(request):
-    return render(request, 'tienda/carro_compras.html', {})
+    if request.method == 'POST':
+        pass
+    else:
+        carro = Carro.objects.get(cliente=request.user)
+        productos_carro = CarroProducto.objects.filter(carro=carro)
+        print("Productos: ", productos_carro)
+        return render(request, 'tienda/carro_compras.html', 
+            {
+                'productos': productos_carro
+            })
 
 
 def agregar_carro(request, id):
     if request.user.is_authenticated:
         usuario = request.user
         producto = Producto.objects.get(producto_id=id)
-        cantidad = request.GET.get('cantidad')
+        cantidad = int(request.GET.get('cantidad'))
         carro = Carro.objects.get(cliente=usuario.id)
-
-        carro_producto = CarroProducto.objects.create(cantidad=cantidad, producto=producto, carro=carro)
+        precio = utils.formatear_numero_miles(producto.precio_normal * cantidad)
+        carro_producto = CarroProducto.objects.create(cantidad=cantidad, producto=producto, carro=carro, precio=precio)
         messages.success(request, "Producto agregado correctamente al carrito de compras.")
-        print("Producto: ", producto, " Cantidad: ", cantidad, " Carro: ", carro)
     else:
         messages.error(request, "Antes de empezar a comprar, tiene que iniciar sesión.")
-    # if usuario.is_authenticated:
-    #     Carro.objects.create(carro_id="CAR123", cliente=usuario)
 
         
     return redirect(reverse('catalogo'))
