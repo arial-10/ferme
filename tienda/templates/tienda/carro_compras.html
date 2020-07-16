@@ -3,39 +3,50 @@
 {% block titulo %} Carro de Compras {% endblock %}
 
 {% block content %}
+    {% include "tienda/components/messages.html" %}
     <div class="sub-contenedor d-flex justify-content-center">
-        <div id="carrito" class="card col-md-6">
+        <div id="carrito" class="card col-lg-6">
             <div class="card-body">
                 <h2 class="titulo-carrito"><i class="fas fa-shopping-cart mr-2"></i>
                     Carro de Compras</h2>
                 <hr>
-                {% for producto in productos %}
-                    <div class="producto-carrito card">
-                        <div class="d-flex flex-wrap" style="width: 100%;">
-                            <a href="{% url 'detalle_producto' producto.producto.producto_id %}">
-                                <img class="img-carrito img-fluid rounded m-3" src="{% static producto.producto.url_img %}" alt="img_producto" width="200" height="290">
-                            </a>
-                            <div class="info-carrito">
-                                <div class="">
-                                    <a class="nombre-carrito" href="{% url 'detalle_producto' producto.producto.producto_id %}">
-                                        <p style="font-weight: bold;">{{ producto.producto.nombre }}</p>
-                                    </a>
-                                    <p style="font-weight: bold; color: gray;">{{ producto.producto.marca }}</p>
-                                    <a class="eliminar-carrito" href="#">Eliminar</a>
+                {% if cantidad > 0 %}
+                    {% for producto in productos %}
+                        <div class="producto-carrito card">
+                            <div class="d-flex flex-wrap" style="width: 100%;">
+                                <a href="{% url 'detalle_producto' producto.producto.producto_id %}">
+                                    <img class="img-carrito img-fluid rounded m-3" src="{% static producto.producto.url_img %}" alt="img_producto" width="200" height="290">
+                                </a>
+                                <div class="info-carrito d-flex flex-wrap">
+                                    <div class="">
+                                        <div class="text-wrap" style="width: 15rem;">
+                                            <a class="nombre-carrito" href="{% url 'detalle_producto' producto.producto.producto_id %}">
+                                                <p style="font-weight: bold;">{{ producto.producto.nombre }}</p>
+                                            </a>
+                                        </div>
+                                        <p style="font-weight: bold; color: gray;">{{ producto.producto.marca }}</p>
+                                        <a class="eliminar-carrito" href="{% url 'eliminar_carro' producto.id %}">Eliminar</a>
+                                    </div>
+                                    <p class="cantidad-carrito">{{ producto.cantidad }} unid.</p>
+                                    <p class="precio-carrito">${{ producto.precio }}</p>
                                 </div>
-                                <p class="cantidad-carrito">{{ producto.cantidad }} unid.</p>
-                                <p class="precio-carrito">${{ producto.precio }}</p>
                             </div>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="card text-center">
+                        <h3>El carro de compras está vacío.</h3>
                     </div>
-                {% endfor %}
+                {% endif %}
                 <hr>
                 <div class="botones-carrito d-flex justify-content-end">
                     <a href="{% url 'catalogo' %}" class="btn boton-seguir-carrito mr-2">Seguir comprando</a>
-                    <form action="" method="POST">
-                        {% csrf_token %}
-                        <a href="#" class="btn boton-compra-carrito">Finalizar Compra</a>
-                    </form>
+                    {% if cantidad > 0 %}
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn boton-compra-carrito">Finalizar Compra...</button>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         </div>

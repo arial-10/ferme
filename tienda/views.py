@@ -289,15 +289,21 @@ def filtrar_catalogo(request):
 # ---------- Carro de Compras ---------------------
 def ver_carro(request):
     if request.method == 'POST':
-        pass
+        carro = Carro.objects.get(cliente=request.user)
+        carro.delete()
+        return redirect('home')
     else:
         carro = Carro.objects.get(cliente=request.user)
-        productos_carro = CarroProducto.objects.filter(carro=carro)
-        print("Productos: ", productos_carro)
+        productos_carro = []
+        if carro is not None:
+            productos_carro = CarroProducto.objects.filter(carro=carro)
+        cantidad = len(productos_carro)
         return render(request, 'tienda/carro_compras.html', 
             {
-                'productos': productos_carro
+                'productos': productos_carro,
+                'cantidad': cantidad
             })
+
 
 
 def agregar_carro(request, id):
@@ -314,6 +320,12 @@ def agregar_carro(request, id):
 
         
     return redirect(reverse('catalogo'))
+
+def eliminar_carro(request, id):
+    producto = CarroProducto.objects.get(id=id)
+    producto.delete()
+    messages.success(request, f"{producto} fue eliminado de tu carro de compras.")
+    return redirect(reverse('carro'))
 
 # ======================== FERME ADMIN ========================
 @login_required(login_url='login_admin')
@@ -1414,9 +1426,12 @@ def login_cliente(request):
                 login(request, user)
                 messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {user.first_name}")
                 # Cada vez que un usuario logee, se creara una instancia de carrito.
-                fecha = datetime.now()
-                carro_id = fecha.strftime("%d%m%y%H%M%S") + str(request.user.id);
-                Carro.objects.create(carro_id=carro_id, cliente=request.user)
+                carro = Carro.objects.filter(cliente=request.user.id).first()
+                if carro is None:
+                    fecha = datetime.now()
+                    carro_id = fecha.strftime("%d%m%y%H%M%S") + str(request.user.id);
+                    Carro.objects.create(carro_id=carro_id, cliente=request.user)
+
                 return redirect('home')
             else:
                 messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
@@ -1428,8 +1443,8 @@ def login_cliente(request):
 
 def logout_cliente(request):
     # De momento, el carro se elimina al cerrar sesion
-    carrito = Carro.objects.get(cliente=request.user)
-    carrito.delete()
+    # carrito = Carro.objects.get(cliente=request.user)
+    # carrito.delete()
     logout(request)
     return redirect('home')
 
