@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!--Bootstrap con Jquery -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <!--CSS propio-->
+        <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+        <title>FERME</title>
+        <!-- Font awesome -->
+        <script src="{% static 'fontawesome/js/all.js' %}"></script>
+    </head>
+
+         <script>
+            $(function(){
+              $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script> 
+    <body>
+        <!-- Header -->
+        {% include "tienda/components/header.html" %}
+        
+        <div id="contenedor">
+            <div id="main">
+                {% block content %}
+
+                {% endblock content %}
+            </div>
+        </div>    
+
+                
+        <div class="container">
+            <div class="row">
+            
+                 <div class="col-md-6 col-md-offset-3">
+        <h4 style="border-bottom: 1px solid #c5c5c5;">
+            <i class="glyphicon glyphicon-user">
+            </i>
+            <br>
+            <br>
+            <br>
+            Recuperar Contraseña
+        </h4>
+        <div style="padding: 20px;" id="form-olvidado">
+            <h4 class="">
+                ¿Olvidaste tu contraseña?
+                </h4>
+                <form accept-charset="UTF-8" action="{% url 'recuperar_contrasena_admin' %}" role="form" id="login-recordar" method="post">
+                    {% csrf_token %}
+                <fieldset>
+                    <span class="help-block">
+                    Ingrese su email que utiliza para iniciar sesión en su cuenta
+                    <br>
+                    &nbsp; &nbsp;Le enviaremos un correo electrónico con su contraseña.
+                    </span>
+                    <div class="form-group input-group">
+                        <input type="text" class="form-control" name="email" placeholder="Email">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="btn-olvidado">
+                    Continue
+                    </button>
+                </fieldset>
+                </form>
+        </div>
+        <div style="display: none;" id="form-olvidado">
+            
+        </div>
+        </div>
+            </div>
+        </div>
+ 
+        <!---{% include "tienda/components/footer.html" %}--->
+    </body>
+</html>

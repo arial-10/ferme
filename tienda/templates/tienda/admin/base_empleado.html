@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!--Bootstrap con Jquery -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <!-- <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script> -->
+        <script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+        <script src="{% static 'js/jquery-ui.js' %}"></script>
+        <script src="{% static 'js/datepicker-es.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <!--CSS propio-->
+        <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+        <link rel="stylesheet" href="{% static 'css/estilo_admin.css' %}">
+        <link rel="icon" type="image/png" href="{% static 'favicon.png' %}"/>
+        <title>FERME ADMIN</title>
+        <!-- Font awesome -->
+        <script src="{% static 'fontawesome/js/all.js' %}"></script>
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--blue);">
+            <a class="logo-admin" href="#"><span>FERME EMPLEADOS</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarAdmin">
+                <div class="flex-grow-1 navbar-nav">
+                    
+                    <row>
+                    <a class="nav-item nav-link nunito-bold {% block inicio_active %} {% endblock %}"
+                    style="font-size: 14pt;" href="{% url 'admin' %}">Inicio</a>
+
+                    <a class="nav-item nav-link nunito-bold {% block ventas_active %} inactivo {% endblock %}"
+                    style="font-size: 14pt;" href="#"></a>
+                    </row>
+                    <row>
+                    <a class="nav-item nav-link nunito-bold {% block productos_active %} {% endblock %}"
+                    style="font-size: 14pt;" href="{% url 'nota_credito' %}">Nota de Credito</a>
+
+                    </row>
+                </div>
+                <div class="">
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link icon-admin" href="#">
+                            <div>
+                                <i class="icon-header fas fa-sign-out-alt" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"></i>
+                            </div>
+                        </a>
+                    {% else %}
+                        <a class="nav-item nav-link icon-admin" href="{% url 'inicio_sesion_admin' %}">
+                            <div>
+                                <i class="icon-header fas fa-user" data-toggle="tooltip" data-placement="bottom" title="Inicia Sesión"></i>
+                            </div>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        <div id="contenedor">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        <script>
+        $(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+        });
+        </script>
+    </body>
+</html>
