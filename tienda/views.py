@@ -288,6 +288,15 @@ def filtrar_catalogo(request):
 
 
 def ver_categoria(request, id):
+    """Retorna una lista de productos dependiendo de la categoria
+    seleccionada
+
+    Args:
+
+    Returns:
+        Una página
+        productos: Queryset con los productos
+    """
     categoria = Categoria.objects.get(id=id)
     productos_categoria = CategoriaProducto.objects.filter(categoria=categoria.id)
     marcas = Marca.objects.all()
@@ -307,9 +316,17 @@ def ver_categoria(request, id):
             'categoria': categoria
         })
 
-
 # ---------- Carro de Compras ---------------------
 def ver_carro(request):
+    """Retorna una lista de productos que corresponden
+     a los que estan en el carro de compras del usuario
+
+    Args:
+
+    Returns:
+        Una página
+        productos: Queryset con los productos
+    """
     if request.method == 'POST':
         carro = Carro.objects.get(cliente=request.user)
         carro.delete()
@@ -327,8 +344,14 @@ def ver_carro(request):
             })
 
 
-
 def agregar_carro(request, id):
+    """Agrega un producto al carro de compras.
+
+    Args:
+
+    Returns:
+        Una página
+    """
     if request.user.is_authenticated:
         usuario = request.user
         producto = Producto.objects.get(producto_id=id)
@@ -343,7 +366,15 @@ def agregar_carro(request, id):
         
     return redirect(reverse('catalogo'))
 
+
 def eliminar_carro(request, id):
+    """Elimina un producto del carro de compras.
+
+    Args:
+
+    Returns:
+        Una página
+    """
     producto = CarroProducto.objects.get(id=id)
     producto.delete()
     messages.success(request, f"{producto} fue eliminado de tu carro de compras.")
