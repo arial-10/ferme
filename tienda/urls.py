@@ -16,6 +16,7 @@ urlpatterns = static(settings.STATIC_URL,
     path('registro-usuario/', views.agregar_cliente, name='registro_usuario'),
 
     path('catalogo/', views.catalogo, name='catalogo'),
+    path('catalogo/categoria/<str:id>', views.ver_categoria, name='categoria'),
     path('catalogo/detalle/<str:id>', views.detalle_producto, name='detalle_producto'),
     path('catalogo/filtrado', views.filtrar_catalogo, name='filtrado'),
     path('cuenta/carro-compras', views.ver_carro, name='carro'),

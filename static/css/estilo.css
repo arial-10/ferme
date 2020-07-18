@@ -391,3 +391,10 @@ footer {
     color: var(--white);
 }
 
+/* ================= Categoria ================ */
+.titulo-categoria {
+    font-family: 'Changa One', sans-serif;
+    color: var(--blue);
+    text-align: center;
+    margin: 2rem 0 0 0;
+}

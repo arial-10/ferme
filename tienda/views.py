@@ -286,6 +286,28 @@ def filtrar_catalogo(request):
                     'cantidad': cantidad_productos
                   })
 
+
+def ver_categoria(request, id):
+    categoria = Categoria.objects.get(id=id)
+    productos_categoria = CategoriaProducto.objects.filter(categoria=categoria.id)
+    marcas = Marca.objects.all()
+    productos = []
+    aux = None;
+
+    for producto in productos_categoria:
+        aux = Producto.objects.get(producto_id=producto.producto.producto_id)
+        productos.append(aux)
+    
+    cantidad = len(productos)
+
+    return render(request, 'tienda/productos.html', {
+            'productos': productos,
+            'cantidad': cantidad,
+            'marcas': marcas,
+            'categoria': categoria
+        })
+
+
 # ---------- Carro de Compras ---------------------
 def ver_carro(request):
     if request.method == 'POST':

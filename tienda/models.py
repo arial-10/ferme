@@ -116,6 +116,9 @@ class Categoria(models.Model):
     class Meta:
         db_table = 'Categoria'
 
+    def __str__(self):
+        return self.nombre
+
 
 class Marca(models.Model):
     nombre = models.CharField(max_length=50)
@@ -154,6 +157,8 @@ class CategoriaProducto(models.Model):
     class Meta:
         db_table = 'CategoriaProducto'
 
+    def __str__(self):
+        return self.producto.nombre
 
 
 class Carro(models.Model):
