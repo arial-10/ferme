@@ -1,0 +1,18 @@
+{% extends 'tienda/admin/base_empleado.html' %}
+
+{% load static %}
+
+{% block inicio_active %} active {% endblock inicio_active %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+    <div class="card bg-light my-3 nunito" style="max-width: 500px; ">
+      <div class="card-header">Bienvenido/a, {{ user.username }}</div>
+      <div class="card-body">
+        <h5 class="card-title">Sistema de Gestión Ferretería Ferme</h5>
+        <p class="card-text">Aquí podrás editar todas los modulos del sistema</p>
+      </div>
+    </div>
+</div>
+
+{% endblock content %}
