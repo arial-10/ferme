@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
 
 class Administrador(models.Model):
     usuario_id = models.IntegerField(primary_key=True)
@@ -60,13 +62,13 @@ class Cliente(models.Model):
     nombre_usuario = models.CharField(max_length=40)
     contrasena = models.CharField(max_length=50)
     direccion = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Cliente'
 
     def __str__(self):
         return self.nombres + ' ' + self.appaterno
-
 
 class Vendedor(models.Model):
     usuario_id = models.IntegerField(primary_key=True)
@@ -315,4 +317,55 @@ class ClientePrueba(models.Model):
 
     class Meta:
         db_table = 'ClientePrueba'
+
+
+# ----------------------------------------------------------------------------#
+#               AUNTENTICACION DISTINTOS USUARIOS                             #
+# ----------------------------------------------------------------------------#
+
+@receiver(pre_save, sender=Cliente)
+def crear_usuario_cliente(sender, instance, **kwargs):
+    user = User.objects.create_user(
+            instance.nombre_usuario,
+            instance.email,
+            instance.contrasena
+        )
+    instance.user = user
+    grupo, created = Group.objects.get_or_create(name='cliente')
+    user.groups.add(grupo)
+
+@receiver(pre_save, sender=Empleado)
+def crear_usuario_empleado(sender, instance, **kwargs):
+    user = User.objects.create_user(
+            instance.nombre_usuario,
+            instance.email,
+            instance.contrasena
+        )
+    instance.user = user
+    grupo, created = Group.objects.get_or_create(name='empleado')
+
+    user.groups.add(grupo)
+
+@receiver(pre_save, sender=Administrador)
+def crear_usuario_administrador(sender, instance, **kwargs):
+    user = User.objects.create_user(
+            instance.nombre_usuario,
+            instance.email,
+            instance.contrasena
+        )
+    instance.user = user
+    grupo, created = Group.objects.get_or_create(name='administrador')
+    user.groups.add(grupo)
+
+    
+@receiver(pre_save, sender=Vendedor)
+def crear_usuario_vendedor(sender, instance, **kwargs):
+    user = User.objects.create_user(
+            instance.nombre_usuario,
+            instance.email,
+            instance.contrasena
+        )
+    instance.user = user
+    grupo, created = Group.objects.get_or_create(name='vendedor')
+    user.groups.add(grupo)
 
