@@ -8,20 +8,36 @@ urlpatterns = static(settings.STATIC_URL,
                      document_root=settings.STATIC_ROOT) + [
     # ================== URLS Ferme Tienda =============================
     path('', views.home, name='home'),
+
     #Ruta modulo Inicio Sesion
     path('inicio-sesion/', views.ver_inicio_sesion, name='inicio_sesion'),
     path('inicio-sesion-admin/', views.ver_inicio_sesion_admin, name='inicio_sesion_admin'),
     path('login/', views.cliente_login, name='cliente_login'),
+
+    #Ruta modulo Mis Ordenes
+    path('mis-ordenes/', views.ver_mis_ordenes, name='mis_ordenes'),
+
+    #Modulo Recuperar Contraseña
+    path('recuperar-contraseña/', views.recuperar_contrasena_cliente, name='recuperar_contrasena_cliente'),
+    path('recuperar-contraseña-admin/', views.recuperar_contrasena_admin, name='recuperar_contrasena_admin'),
+
     #Ruta modulo Registro/ Portal
     path('registro-usuario/', views.agregar_cliente, name='registro_usuario'),
 
+    #Tipo despacho
+    path('tipo-despacho/', views.tipo_despacho, name='tipo_despacho'), 
+    
+    #Pago
+    path('pago/', views.pago, name='pago'), 
+
     path('catalogo/', views.catalogo, name='catalogo'),
-    path('catalogo/categoria/<str:id>', views.ver_categoria, name='categoria'),
     path('catalogo/detalle/<str:id>', views.detalle_producto, name='detalle_producto'),
     path('catalogo/filtrado', views.filtrar_catalogo, name='filtrado'),
-    path('cuenta/carro-compras', views.ver_carro, name='carro'),
-    path('cuenta/carro-compras/eliminar/<str:id>', views.eliminar_carro, name='eliminar_carro'),
-    path('catalogo/detalle/agregar_carro/<str:id>', views.agregar_carro, name='agregar_carro'),
+
+    # ================== URLS Ferme Empleado ===========================
+    path('home-empleado/', views.home_empleado, name='home_empleado'),
+    path('nota-credito/', views.nota_credito, name='nota_credito'),
+
     # ================== URLS Ferme Admin ==============================
 
     # Seccion Productos
@@ -113,14 +129,5 @@ urlpatterns = static(settings.STATIC_URL,
     path('ferme-admin/proveedores/actualizar/<str:id>', views.actualizar_proveedor, name='actualizar_proveedor'),
     path('ferme-admin/proveedores/agregar/', views.agregar_proveedor, name='agregar_proveedor'),
     path('ferme-admin/proveedores/eliminar/<str:id>', views.eliminar_proveedor, name='eliminar_proveedor'),
-    path('ferme-admin/proveedores/cancelar', views.cancelar_proveedor, name='cancelar_proveedor'),
-
-    # Seccion Autenticacion de prueba
-    path('login-cliente/', views.login_cliente, name='login_cliente'),
-    path('logout-cliente/', views.logout_cliente, name='logout_cliente'),
-    path('login-admin/', views.login_admin, name='login_admin'),
-    path('logout-admin/', views.logout_admin, name='logout_admin'),
-    path('registro/', views.registro, name='registro_cliente'),
-    path('ferme-admin/registro-admin/', views.registro_admin, name='registro_admin'),
-    path('perfil/', views.perfil_cliente, name='perfil_cliente'),
+    path('ferme-admin/proveedores/cancelar', views.cancelar_proveedor, name='cancelar_proveedor')
 ]

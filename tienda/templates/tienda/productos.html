@@ -3,12 +3,6 @@
 {% load static %}
 
 {% block content %}
-    {% include "tienda/components/messages.html" %}
-    {% if categoria is not None %}
-        <div class="card titulo-categoria">
-            <h1 style="padding: 2rem">{{ categoria }}</h1>
-        </div>
-    {% endif %}
     <div class="contenedor-catalogo">
         <div class="filtros-catalogo">
             <div class="card">

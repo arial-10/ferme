@@ -24,45 +24,24 @@
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--blue);">
-            <a class="logo-admin" href="#"><span>FERME ADMIN</span></a>
+            <a class="logo-admin" href="#"><span>FERME EMPLEADOS</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse " id="navbarAdmin">
                 <div class="flex-grow-1 navbar-nav">
+                    
                     <row>
                     <a class="nav-item nav-link nunito-bold {% block inicio_active %} {% endblock %}"
                     style="font-size: 14pt;" href="{% url 'admin' %}">Inicio</a>
 
                     <a class="nav-item nav-link nunito-bold {% block ventas_active %} inactivo {% endblock %}"
-                    style="font-size: 14pt;" href="#">Ventas</a>
+                    style="font-size: 14pt;" href="#"></a>
                     </row>
                     <row>
                     <a class="nav-item nav-link nunito-bold {% block productos_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'productos_admin' %}">Productos</a>
+                    style="font-size: 14pt;" href="{% url 'nota_credito' %}">Nota de Credito</a>
 
-                    <a class="nav-item nav-link nunito-bold {% block oc_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'oc_admin' %}">Órdenes de Compra</a>
-                    </row>
-                    <row>
-                    <a class="nav-item nav-link nunito-bold {% block proveedores_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'administrar_proveedores' %}">Proveedores</a>
-
-                    <a class="nav-item nav-link nunito-bold {% block bolfac_active %} inactivo {% endblock %}" style="font-size: 14pt;" href="#">Boletas y Facturas</a>
-                    </row>
-                    <row>
-
-                    <a class="nav-item nav-link nunito-bold {% block clientes_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'clientes_admin' %}">Clientes</a>
-                    <a class="nav-item nav-link nunito-bold {% block administrador_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'administrador_admin' %}">Administradores</a>
-                    </row>
-                    <row>
-                    <a class="nav-item nav-link nunito-bold {% block empleado_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'empleado_admin' %}">Empleados</a>
-
-                    <a class="nav-item nav-link nunito-bold {% block vendedor_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'vendedor_admin' %}">Vendedor</a>
                     </row>
                 </div>
                 <div class="">

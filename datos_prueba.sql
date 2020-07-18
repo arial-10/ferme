@@ -32,13 +32,9 @@ INSERT INTO marca VALUES (104, 'Thomas Flinn');
 INSERT INTO marca VALUES (105, 'Ceresita');
 
 --CATEGORIA
-INSERT INTO categoria VALUES (101, 'Construcción');
-INSERT INTO categoria VALUES (102, 'Herramientas');
-INSERT INTO categoria VALUES (103, 'Maquinaria');
-INSERT INTO categoria VALUES (104, 'Piso y Pared');
-INSERT INTO categoria VALUES (105, 'Baño y Cocina');
-INSERT INTO categoria VALUES (106, 'Iluminación y Electricidad');
-INSERT INTO categoria VALUES (107, 'Automóviles');
+INSERT INTO categoria VALUES (101, 'Ferreteria');
+INSERT INTO categoria VALUES (102, 'Pisos');
+INSERT INTO categoria VALUES (103, 'Herramientas electricas');
 
 --PRODUCTO
 INSERT INTO producto VALUES ('2984646413121', '2998814752605', 'Martillo carpintero', NULL, 'Martillo carpintero 20 Oz acero', 100, 50, 'S', 5000, 4790, 'img/producto/2984646413121.jpg', 101);
@@ -50,13 +46,8 @@ INSERT INTO producto VALUES ('5649754621448', '7894644665474', 'Protector de mad
 
 --CATEGORIA PRODUCTO
 INSERT INTO categoriaproducto VALUES (1, 101, '2984646413121');
-INSERT INTO categoriaproducto VALUES (2, 102, '2984646413121');
-INSERT INTO categoriaproducto VALUES (3, 104, '2984646234234');
-INSERT INTO categoriaproducto VALUES (4, 103, '2984646645334');
-INSERT INTO categoriaproducto VALUES (5, 101, '3489451234542');
-INSERT INTO categoriaproducto VALUES (6, 102, '3489451234542');
-INSERT INTO categoriaproducto VALUES (7, 101, '3026487542121');
-INSERT INTO categoriaproducto VALUES (8, 101, '5649754621448');
+INSERT INTO categoriaproducto VALUES (2, 102, '2984646234234');
+INSERT INTO categoriaproducto VALUES (3, 103, '2984646645334');
 
 -- CARRO
 INSERT INTO carro VALUES (1, 1);

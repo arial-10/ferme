@@ -6,18 +6,198 @@ from django.forms import formset_factory
 from django.forms import modelformset_factory
 from .models import *
 from .forms import *
-from querybuilder.query import Query
+#from querybuilder.query import Query
 from . import utils
 import logging
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import Group
-from django.contrib.auth.decorators import login_required
-from .decorators import *
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
+
 from datetime import datetime
+from datetime import timedelta
+
+
+# Recuperar contraseña
+def recuperar_contrasena_cliente(request):
+    # create message object instance
+    if request.method == 'POST':
+        msg = MIMEMultipart()
+
+        email = request.POST.get('email')
+        cliente = Cliente.objects.get(email=email)
+
+        message = "Hola " + cliente.nombres + ",\n" + "Has solicitado recuperar tu contraseña de acceso a FerreteriaFerme.com\n\n" + "Usa tu contraseña para poder iniciar sesión y realizar tus compras: " + "\n\n" + cliente.contrasena
+        
+
+        # setup the parameters of the message
+        password = "ferreferme"
+        msg['From'] = "ferreteriasferme@gmail.com"
+        msg['To'] = email
+        msg['Subject'] = "Recuperación de Contraseña"
+        
+        # add in the message body
+        msg.attach(MIMEText(message, 'plain'))
+        
+        #create server
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        
+        server.starttls()
+        
+        # Login Credentials for sending the mail
+        server.login(msg['From'], password)
+        
+        
+        # send the message via the server.
+        server.sendmail(msg['From'], msg['To'], msg.as_string())
+        
+        server.quit()
+
+        return render(request, 'tienda/inicio_sesion.html')
+
+    else:
+        return render(request, 'tienda/recuperar_contrasena.html')
+
+
+def recuperar_contrasena_admin(request):
+    # create message object instance
+    if request.method == 'POST':
+        msg = MIMEMultipart()
+
+        email = request.POST.get('email')
+        administrador = Administrador.objects.get(email=email)
+
+        message = "Hola " + administrador.nombres + ",\n" + "Has solicitado recuperar tu contraseña de acceso a FerreteriaFerme.com\n\n" + "Usa tu contraseña para poder iniciar sesión y realizar tus compras: " + "\n\n" + administrador.contrasena
+        
+
+        # setup the parameters of the message
+        password = "ferreferme"
+        msg['From'] = "ferreteriasferme@gmail.com"
+        msg['To'] = email
+        msg['Subject'] = "Recuperación de Contraseña"
+        
+        # add in the message body
+        msg.attach(MIMEText(message, 'plain'))
+        
+        #create server
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        
+        server.starttls()
+        
+        # Login Credentials for sending the mail
+        server.login(msg['From'], password)
+        
+        
+        # send the message via the server.
+        server.sendmail(msg['From'], msg['To'], msg.as_string())
+        
+        server.quit()
+
+        return render(request, 'tienda/admin/inicio_sesion_admin.html')
+
+    else:
+        return render(request, 'tienda/admin/recuperar_contrasena_admin.html')
+
+# ======================== FERME EMPLEADO ========================
+def home_empleado(request):
+    return render(request, 'tienda/empleado_nc.html')
+
+def nota_credito(request):
+    return render(request, 'tienda/empleado_nc.html')
 
 # ======================== FERME TIENDA ========================
+def tipo_despacho(request):
+    # Retiro tienda (Fechas - Formato)
+    fechaRetiroHoy = 1
+    now = datetime.now()
+    formatoFechaRetiro = now.strftime('%d/%m/%Y')
+    fechaRetiroHoy = formatoFechaRetiro
+    
+    new_date = now + timedelta(days=3)
+    formatoFechaRetiroL2 = new_date.strftime('%d/%m/%Y')   
+    fechaRetiroL2 = formatoFechaRetiroL2
+
+    new_date = now + timedelta(days=6)
+    formatoFechaRetiroL3 = new_date.strftime('%d/%m/%Y')   
+    fechaRetiroL3 = formatoFechaRetiroL3
+
+    # Despacho Domicilio (Fechas - Formato)
+    fechaDespachoManana = 1
+    now = datetime.now()
+    new_date = now + timedelta(days=1)
+    formatoFechaDespacho = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoManana = formatoFechaDespacho
+    
+    new_date = now + timedelta(days=4)
+    formatoFechaDespachoL2 = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoL2 = formatoFechaDespachoL2
+
+    new_date = now + timedelta(days=7)
+    formatoFechaDespachoL3 = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoL3 = formatoFechaDespachoL3
+
+    # Si estoy recibiendo un formulario con method POST
+    if request.method == 'POST':
+        # Recibimos la información del formulario
+        fechaRetiro = request.POST.get('fechatmp')
+        rutReceptorRetiro = request.POST.get('rutReceptorRetiro')
+        sucursal = request.POST.get('sucursaltmp')
+        print (fechaRetiro)
+        print (rutReceptorRetiro)
+        print (sucursal)
+
+        fechaEntrega = request.POST.get('fechaEntregaTmp')
+        region = request.POST.get('regiontmp')
+        comuna = request.POST.get('comunatmp')
+        rutReceptorDomicilio = request.POST.get('rutReceptorDomicilio')
+        direccion = request.POST.get('direccion')
+        telefono = request.POST.get('telefono')
+        comentarios = request.POST.get('comentarios')
+
+        print (fechaEntrega)
+        print (rutReceptorDomicilio)
+        print (direccion)
+        print (telefono)
+        print (comentarios)
+        
+    else:
+        print ("else")
+
+    return render(request, 'tienda/tipo_despacho.html',
+                {
+                'fechaRetiroHoy': formatoFechaRetiro,
+                'fechaRetiroL2': formatoFechaRetiroL2,
+                'fechaRetiroL3': formatoFechaRetiroL3,
+                'fechaDespachoManana': formatoFechaDespacho,
+                'fechaDespachoL2': formatoFechaDespachoL2,
+                'fechaDespachoL3': formatoFechaDespachoL3 
+                })
+
+def pago(request):
+    return render(request, 'tienda/pago.html')    
+
 def home(request):
     return render(request, 'tienda/home.html')
+
+def ver_mis_ordenes(request):
+
+    fechaDespachoManana = 1
+    now = datetime.now()
+    new_date = now + timedelta(days=1)
+    formatoFechaDespacho = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoManana = formatoFechaDespacho
+
+    new_date = now + timedelta(days=4)
+    formatoFechaDespachoL2 = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoL2 = formatoFechaDespachoL2
+
+    return render(request, 'tienda/mis_ordenes.html',
+        {
+        'fechaDespachoManana': formatoFechaDespacho,
+        'fechaDespachoL2': formatoFechaDespachoL2
+
+        })
+   
 
 # ----- Inicio de Sesion ----- #
 def ver_inicio_sesion(request):
@@ -25,7 +205,6 @@ def ver_inicio_sesion(request):
 
 def ver_inicio_sesion_admin(request):
     return render(request, 'tienda/admin/inicio_sesion_admin.html')
-
 
 # Iniciar sesión
 def cliente_login(request):
@@ -287,107 +466,11 @@ def filtrar_catalogo(request):
                   })
 
 
-def ver_categoria(request, id):
-    """Retorna una lista de productos dependiendo de la categoria
-    seleccionada
-
-    Args:
-
-    Returns:
-        Una página
-        productos: Queryset con los productos
-    """
-    categoria = Categoria.objects.get(id=id)
-    productos_categoria = CategoriaProducto.objects.filter(categoria=categoria.id)
-    marcas = Marca.objects.all()
-    productos = []
-    aux = None;
-
-    for producto in productos_categoria:
-        aux = Producto.objects.get(producto_id=producto.producto.producto_id)
-        productos.append(aux)
-    
-    cantidad = len(productos)
-
-    return render(request, 'tienda/productos.html', {
-            'productos': productos,
-            'cantidad': cantidad,
-            'marcas': marcas,
-            'categoria': categoria
-        })
-
-# ---------- Carro de Compras ---------------------
-def ver_carro(request):
-    """Retorna una lista de productos que corresponden
-     a los que estan en el carro de compras del usuario
-
-    Args:
-
-    Returns:
-        Una página
-        productos: Queryset con los productos
-    """
-    if request.method == 'POST':
-        carro = Carro.objects.get(cliente=request.user)
-        carro.delete()
-        return redirect('home')
-    else:
-        carro = Carro.objects.get(cliente=request.user)
-        productos_carro = []
-        if carro is not None:
-            productos_carro = CarroProducto.objects.filter(carro=carro)
-        cantidad = len(productos_carro)
-        return render(request, 'tienda/carro_compras.html', 
-            {
-                'productos': productos_carro,
-                'cantidad': cantidad
-            })
-
-
-def agregar_carro(request, id):
-    """Agrega un producto al carro de compras.
-
-    Args:
-
-    Returns:
-        Una página
-    """
-    if request.user.is_authenticated:
-        usuario = request.user
-        producto = Producto.objects.get(producto_id=id)
-        cantidad = int(request.GET.get('cantidad'))
-        carro = Carro.objects.get(cliente=usuario.id)
-        precio = utils.formatear_numero_miles(producto.precio_normal * cantidad)
-        carro_producto = CarroProducto.objects.create(cantidad=cantidad, producto=producto, carro=carro, precio=precio)
-        messages.success(request, "Producto agregado correctamente al carrito de compras.")
-    else:
-        messages.error(request, "Antes de empezar a comprar, tiene que iniciar sesión.")
-
-        
-    return redirect(reverse('catalogo'))
-
-
-def eliminar_carro(request, id):
-    """Elimina un producto del carro de compras.
-
-    Args:
-
-    Returns:
-        Una página
-    """
-    producto = CarroProducto.objects.get(id=id)
-    producto.delete()
-    messages.success(request, f"{producto} fue eliminado de tu carro de compras.")
-    return redirect(reverse('carro'))
-
 # ======================== FERME ADMIN ========================
-@login_required(login_url='login_admin')
-@solo_admin
 def home_admin(request):
     return render(request, 'tienda/admin/home.html')
 
 # ------------ PRODUCTOS ------------
-@login_required(login_url='login_admin')
 def ver_productos_admin(request):
     """Muestra la página de gestión de Productos.
 
@@ -405,7 +488,7 @@ def ver_productos_admin(request):
                     'productos': productos
                   })
 
-@login_required(login_url='login_admin')
+
 def obtener_productos_admin(request):
     """Retorna una lista de productos dependiendo de los filtros
     ingresados
@@ -445,7 +528,7 @@ def obtener_productos_admin(request):
                     'marcas': obtener_marcas()
                   })
 
-@login_required(login_url='login_admin')
+
 def agregar_producto(request):
     """Agrega un producto a la base de datos
 
@@ -474,7 +557,7 @@ def agregar_producto(request):
                         'form': form
                       })
 
-@login_required(login_url='login_admin')
+
 def actualizar_producto(request, id):
     """Actualiza un producto segun su id
 
@@ -500,7 +583,7 @@ def actualizar_producto(request, id):
                           'edita': edita_producto
                       })
 
-@login_required(login_url='login_admin')
+
 def eliminar_producto(request, id):
     """Actualiza un producto segun su id
 
@@ -536,7 +619,7 @@ def obtener_marcas():
 
     return marcas
 
-@login_required(login_url='login_admin')
+
 def cancelar_producto(request):
     """Redirige a la página principal del módulo Productos.
 
@@ -1119,7 +1202,7 @@ def cancelar_vendedor_admin(request):
     return redirect(reverse('vendedor_admin'))
 
 # ------------------ Ordenes de Compra ------------------
-@login_required(login_url='login_admin')
+
 def cancelar_orden(request):
     """Redirige a la página principal del módulo Ordenes de Compra.
 
@@ -1131,7 +1214,6 @@ def cancelar_orden(request):
 
     return redirect(reverse('oc_admin'))
 
-@login_required(login_url='login_admin')
 def administrar_oc(request):
     """Muestra la página de gestión de ordenes de compra.
 
@@ -1158,7 +1240,6 @@ def administrar_oc(request):
                     'url_agregar': 'agregar_orden'
                 })
 
-@login_required(login_url='login_admin')
 def actualizar_orden(request, id):
     """Actualiza una orden segun su id
 
@@ -1206,7 +1287,6 @@ def actualizar_orden(request, id):
                           'items': itemForms
                       })
 
-@login_required(login_url='login_admin')
 def eliminar_orden(request, id):
     """Elimina una orden de compra segun su id
 
@@ -1228,7 +1308,6 @@ def eliminar_orden(request, id):
                       'orden': orden
                   })
 
-@login_required(login_url='login_admin')
 def agregar_orden(request):
     """Agrega una orden de compra a la base de datos
 
@@ -1256,7 +1335,6 @@ def agregar_orden(request):
                         'form': form
                       })
 
-@login_required(login_url='login_admin')
 def buscar_ordenes(request):
     """Retorna una lista de ordenes de compra dependiendo de los filtros
     ingresados
@@ -1285,7 +1363,6 @@ def buscar_ordenes(request):
                     'url_agregar': 'agregar_orden'
                 })
 
-@login_required(login_url='login_admin')
 def recibir_orden(request, id):
     orden = OrdenDeCompra.objects.get(id=id)
 
@@ -1317,7 +1394,6 @@ def eliminar_item(request, id, idOrden):
                   'orden': orden
               })
 
-@login_required(login_url='login_admin')
 def agregar_item(request, idOrden):
     orden = ProductoOc()
     oc = OrdenDeCompra.objects.get(id=idOrden)
@@ -1330,12 +1406,10 @@ def agregar_item(request, idOrden):
     logging.warning(orden)
     return redirect(reverse('actualizar_orden', kwargs={'id':idOrden}))
 
-@login_required(login_url='login_admin')
 def cancelar_item(request, id):
     return redirect(reverse('actualizar_orden', kwargs={'id':id}))
 # ------------------ Proveedores ------------------
 
-@login_required(login_url='login_admin')
 def cancelar_proveedor(request):
     """Redirige a la página principal del módulo proveedores.
 
@@ -1347,7 +1421,6 @@ def cancelar_proveedor(request):
 
     return redirect(reverse('administrar_proveedores'))
 
-@login_required(login_url='login_admin')
 def administrar_proveedores(request):
     """Muestra la página de gestión de proveedores.
 
@@ -1371,7 +1444,6 @@ def administrar_proveedores(request):
                     'url_agregar': 'agregar_proveedor'
                 })
 
-@login_required(login_url='login_admin')
 def buscar_proveedores(request):
 
     params = request.GET
@@ -1386,7 +1458,7 @@ def buscar_proveedores(request):
                     'url_agregar': 'agregar_proveedor'
                 })
 
-@login_required(login_url='login_admin')
+
 def actualizar_proveedor(request, id):
     """Actualiza una proveedor segun su id
 
@@ -1412,7 +1484,6 @@ def actualizar_proveedor(request, id):
                           'edita': edita_proveedor,
                       })
 
-@login_required(login_url='login_admin')
 def eliminar_proveedor(request, id):
     """Elimina una proveedor segun su id
 
@@ -1434,7 +1505,6 @@ def eliminar_proveedor(request, id):
                       'proveedor': proveedor
                   })
 
-@login_required(login_url='login_admin')
 def agregar_proveedor(request):
     """Agrega una proveedor a la base de datos
 
@@ -1461,122 +1531,3 @@ def agregar_proveedor(request):
                       {
                         'form': form
                       })
-
-# --------------------------------------------------------------------------------------------
-#   Prueba Autenticacion
-#---------------------------------------------------------------------------------------------
-def login_cliente(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-
-            user = authenticate(request, username=username, password=password)
-
-            if user is not None:
-                login(request, user)
-                messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {user.first_name}")
-                # Cada vez que un usuario logee, se creara una instancia de carrito.
-                carro = Carro.objects.filter(cliente=request.user.id).first()
-                if carro is None:
-                    fecha = datetime.now()
-                    carro_id = fecha.strftime("%d%m%y%H%M%S") + str(request.user.id);
-                    Carro.objects.create(carro_id=carro_id, cliente=request.user)
-
-                return redirect('home')
-            else:
-                messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
-                return redirect(reverse('login_cliente'))
-
-        else:
-            return render(request, 'tienda/auth/login.html', {})
-
-
-def logout_cliente(request):
-    # De momento, el carro se elimina al cerrar sesion
-    # carrito = Carro.objects.get(cliente=request.user)
-    # carrito.delete()
-    logout(request)
-    return redirect('home')
-
-@unauthenticated_user
-def login_admin(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            messages.success(request, f"Inicio de sesión exitoso.")
-            return redirect('admin')
-        else:
-            messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
-            return redirect(reverse('login_admin'))
-
-    else:
-        return render(request, 'tienda/admin/auth/login_admin.html', {})
-
-def logout_admin(request):
-    logout(request)
-    return redirect('login_admin')
-
-def registro(request):
-    
-    if request.user.is_authenticated:
-        return redirect('home')    
-    else:
-        if request.method == 'POST':
-            form = CrearUsuarioForm(request.POST)
-            if form.is_valid():
-                user = form.save()
-                nombre = form.cleaned_data.get('first_name')
-
-                # Se agrega automaticamente como cliente.
-                grupo = Group.objects.get(name='cliente')
-                user.groups.add(grupo)
-                # Se relaciona con un perfil
-                ClientePrueba.objects.create(user=user)
-
-                messages.success(request, f"{nombre}, la creación de tu cuenta ha sido exitosa." +
-                    " Ahora ya puedes iniciar sesión con tu nombre de usuario.")
-                return redirect('login_cliente')
-            else:
-                messages.error(request, "Error al crear una nueva cuenta.")
-                return redirect(reverse('registro_cliente'))
-        else:
-            form = CrearUsuarioForm()
-            return render(request, 'tienda/auth/registro_cliente.html',
-                            {
-                                'form': form
-                            })
-
-@login_required(login_url='login_admin')
-@autorizar_usuarios(roles_permitidos=['administrador'])
-def registro_admin(request):
-    if request.method == 'POST':
-        form = CrearUsuarioForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Usuario creado exitosamente.")
-            return redirect(reverse('registro_admin'))
-        else:
-            messages.error(request, "Error al crear nuevo usuario.")
-            return redirect(reverse('registro_admin'))
-    else:
-        form = CrearUsuarioForm()
-        return render(request, 'tienda/admin/auth/registro_admin.html',
-                        {
-                            'form': form
-                        })
-
-def perfil_cliente(request):
-    usuario = request.user
-    # id_cliente = request.user.id;
-    perfil = ClientePrueba.objects.get(user=usuario.id)
-    print("perfil: ", perfil.rut)
-    form = PerfilClienteForm(instance=perfil)
-    return render(request, 'tienda/perfil.html', {'form': form})
