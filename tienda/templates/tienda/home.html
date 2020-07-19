@@ -1,6 +1,7 @@
 {% extends 'tienda/base.html' %}
 {% load static %}
 {% block content %}
+    {% include "tienda/components/messages.html" %}
     <div id="carrusel" class="carousel slide mt-2" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carrusel" data-slide-to="0" class="active"></li>
@@ -16,7 +17,7 @@
         </div>
     </div>
     <div class="d-flex flex-wrap flex-column">
-        <div class="fila mt-3 d-flex flex-wrap justify-content-center">
+        <div class="mt-3 d-flex flex-wrap justify-content-center">
             <div class="img-panel mx-3 my-3">
                 <a href="{% url 'catalogo' %}">
                     <img class="rounded" src="{% static 'img/main/ver_catalogo.jpg' %}" alt="ver_catalogo">

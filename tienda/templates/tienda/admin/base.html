@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
         <link rel="stylesheet" href="{% static 'css/estilo_admin.css' %}">
         <link rel="icon" type="image/png" href="{% static 'favicon.png' %}"/>
-        <title>FERME ADMIN</title>
+        <title>FERME ADMIN - {% block titulo %} {% endblock titulo %}</title>
         <!-- Font awesome -->
         <script src="{% static 'fontawesome/js/all.js' %}"></script>
     </head>
@@ -30,54 +30,58 @@
             </button>
             <div class="collapse navbar-collapse " id="navbarAdmin">
                 <div class="flex-grow-1 navbar-nav">
-                    <row>
-                    <a class="nav-item nav-link nunito-bold {% block inicio_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'admin' %}">Inicio</a>
+                    {% if user.is_authenticated %}
+                        <row>
+                        <a class="nav-item nav-link nunito-bold {% block inicio_active %} {% endblock %}"
+                        style="font-size: 14pt;" href="{% url 'admin' %}">Inicio</a>
 
-                    <a class="nav-item nav-link nunito-bold {% block ventas_active %} inactivo {% endblock %}"
-                    style="font-size: 14pt;" href="#">Ventas</a>
-                    </row>
-                    <row>
-                    <a class="nav-item nav-link nunito-bold {% block productos_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'productos_admin' %}">Productos</a>
+                        <a class="nav-item nav-link nunito-bold {% block ventas_active %} inactivo {% endblock %}"
+                        style="font-size: 14pt;" href="#">Ventas</a>
+                        </row>
+                        <row>
+                        <a class="nav-item nav-link nunito-bold {% block productos_active %} {% endblock %}"
+                        style="font-size: 14pt;" href="{% url 'productos_admin' %}">Productos</a>
 
-                    <a class="nav-item nav-link nunito-bold {% block oc_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'oc_admin' %}">Órdenes de Compra</a>
-                    </row>
-                    <row>
-                    <a class="nav-item nav-link nunito-bold {% block proveedores_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'administrar_proveedores' %}">Proveedores</a>
+                        <a class="nav-item nav-link nunito-bold {% block oc_active %} {% endblock %}"
+                        style="font-size: 14pt;" href="{% url 'oc_admin' %}">Órdenes de Compra</a>
+                        </row>
+                        <row>
+                        <a class="nav-item nav-link nunito-bold {% block proveedores_active %} {% endblock %}"
+                        style="font-size: 14pt;" href="{% url 'administrar_proveedores' %}">Proveedores</a>
 
-                    <a class="nav-item nav-link nunito-bold {% block bolfac_active %} inactivo {% endblock %}" style="font-size: 14pt;" href="#">Boletas y Facturas</a>
-                    </row>
-                    <row>
+                        <a class="nav-item nav-link nunito-bold {% block bolfac_active %} inactivo {% endblock %}" style="font-size: 14pt;" href="#">Boletas y Facturas</a>
+                        </row>
+                        <row>
 
-                    <a class="nav-item nav-link nunito-bold {% block clientes_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'clientes_admin' %}">Clientes</a>
-                    <a class="nav-item nav-link nunito-bold {% block administrador_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'administrador_admin' %}">Administradores</a>
-                    </row>
-                    <row>
-                    <a class="nav-item nav-link nunito-bold {% block empleado_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'empleado_admin' %}">Empleados</a>
+                        <a class="nav-item nav-link nunito-bold {% block clientes_active %} {% endblock %}"
+                        style="font-size: 14pt;" href="{% url 'clientes_admin' %}">Clientes</a>
+                        <a class="nav-item nav-link nunito-bold {% block administrador_active %} {% endblock %}"
+                        style="font-size: 14pt;" href="{% url 'administrador_admin' %}">Administradores</a>
+                        </row>
+                        <row>
+                        <a class="nav-item nav-link nunito-bold {% block empleado_active %} {% endblock %}"
+                        style="font-size: 14pt;" href="{% url 'empleado_admin' %}">Empleados</a>
 
-                    <a class="nav-item nav-link nunito-bold {% block vendedor_active %} {% endblock %}"
-                    style="font-size: 14pt;" href="{% url 'vendedor_admin' %}">Vendedor</a>
-                    </row>
-                </div>
+                        <a class="nav-item nav-link nunito-bold {% block vendedor_active %} {% endblock %}"
+                        style="font-size: 14pt;" href="{% url 'vendedor_admin' %}">Vendedor</a>
+                        </row>
+                    </div>
+                {% endif %}
                 <div class="">
                     {% if user.is_authenticated %}
-                        <a class="nav-item nav-link icon-admin" href="#">
+                        <a class="nav-item nav-link icon-admin" href="{% url 'logout_admin' %}">
                             <div>
                                 <i class="icon-header fas fa-sign-out-alt" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"></i>
                             </div>
                         </a>
                     {% else %}
-                        <a class="nav-item nav-link icon-admin" href="{% url 'inicio_sesion_admin' %}">
-                            <div>
-                                <i class="icon-header fas fa-user" data-toggle="tooltip" data-placement="bottom" title="Inicia Sesión"></i>
-                            </div>
-                        </a>
+                        <div class="logout_admin">
+                            <a class="nav-item nav-link icon-admin" href="{% url 'login_admin' %}">
+                                <div>
+                                    <i class="icon-header fas fa-user" data-toggle="tooltip" data-placement="bottom" title="Inicia Sesión"></i>
+                                </div>
+                            </a>
+                        </div>
                     {% endif %}
                 </div>
             </div>
@@ -87,9 +91,9 @@
             {% endblock content %}
         </div>
         <script>
-        $(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-        });
+            $(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+            });
         </script>
     </body>
 </html>

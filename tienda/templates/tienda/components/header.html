@@ -20,31 +20,31 @@
     <!-- Botones Acciones -->
     <div class="botones-header d-flex flex-wrap">
         {% if user.is_authenticated %}
-            <a class="link-header" href="#">
+            <a class="link-header" href="{% url 'logout_cliente' %}">
                 <div style="display: inline-flex;">
                     <i class="icon-header fas fa-sign-out-alt"></i>
                     <div class="texto-boton nunito-bold">Cerrar <br> Sesión</div>
                 </div>
             </a>
-        {% else %}
-            <a class="link-header" href="{% url 'inicio_sesion' %}">
-                <div style="display: inline-flex;">
-                    <i class="icon-header fas fa-user"></i>
-                    <div class="texto-boton nunito-bold">Inicia <br> Sesión</div>
-                </div>
-            </a>
-            <a class="link-header" href="{% url 'mis_ordenes' %}">
+            <a class="link-header" href="#">
                 <div style="display: inline-flex;">
                     <i class="icon-header fas fa-shopping-bag"></i>
                     <span class="texto-boton nunito-bold">Mis <br> Ordenes</span>
                 </div>
             </a>
+            <a class="link-header" href="{% url 'carro' %}">
+                <div style="display: inline-flex;">
+                    <i class="icon-header fas fa-shopping-cart"></i>
+                    <span class="texto-boton nunito-bold">Carro de <br> Compras</span>
+                </div>
+            </a>
+        {% else %}
+            <a class="link-header" href="{% url 'login_cliente' %}">
+                <div style="display: inline-flex;">
+                    <i class="icon-header fas fa-user"></i>
+                    <div class="texto-boton nunito-bold">Inicia <br> Sesión</div>
+                </div>
+            </a>
         {% endif %}
-        <a class="link-header" href="#">
-            <div style="display: inline-flex;">
-                <i class="icon-header fas fa-shopping-cart"></i>
-                <span class="texto-boton nunito-bold">Carro de <br> Compras</span>
-            </div>
-        </a>
     </div>
 </header>
