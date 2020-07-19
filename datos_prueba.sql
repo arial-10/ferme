@@ -1,12 +1,18 @@
 -- EMPLEADO
-INSERT INTO empleado VALUES (1, '18454865-5', 'Fernando Agustin', 'Gomez', 'Valenzuela', TO_DATE('10/05/1993', 'DD/MM/YYYY'), 'M', 'fgomez@gmail.com', 956213148, 'fgomez', '12345', 'EMP101', 'CASA MATRIZ', TO_DATE('01/01/2020', 'DD/MM/YYYY'), 'Despacho');
-INSERT INTO empleado VALUES (2, '15451231-8', 'Clara Luisa', 'Encina', 'Carrasco', TO_DATE('05/08/1985', 'DD/MM/YYYY'), 'F', 'clara85@gmail.com', 936125489, 'cencina', '4561', 'EMP102', 'CASA MATRIZ', TO_DATE('08/06/2015', 'DD/MM/YYYY'), 'Ventas');
-INSERT INTO empleado VALUES (3, '16845123-5', 'Juan Antonio', 'Gonzalez', 'Soto', TO_DATE('22/08/1988', 'DD/MM/YYYY'), 'M', 'juantonio12@gmail.com', 965312487, 'jgonzalez', '8888', 'EMP103', 'CASA MATRIZ', TO_DATE('15/09/2019', 'DD/MM/YYYY'), 'Recepcion');
+INSERT INTO empleado
+VALUES (1, '18454865-5', 'Fernando Agustin', 'Gomez', 'Valenzuela', TO_DATE('10/05/1993', 'DD/MM/YYYY'), 'M', 'fgomez@gmail.com', 956213148, 'fgomez', '12345', 'EMP101', 'CASA MATRIZ', TO_DATE('01/01/2020', 'DD/MM/YYYY'), 'Despacho');
+INSERT INTO empleado
+VALUES (2, '15451231-8', 'Clara Luisa', 'Encina', 'Carrasco', TO_DATE('05/08/1985', 'DD/MM/YYYY'), 'F', 'clara85@gmail.com', 936125489, 'cencina', '4561', 'EMP102', 'CASA MATRIZ', TO_DATE('08/06/2015', 'DD/MM/YYYY'), 'Ventas');
+INSERT INTO empleado
+VALUES (3, '16845123-5', 'Juan Antonio', 'Gonzalez', 'Soto', TO_DATE('22/08/1988', 'DD/MM/YYYY'), 'M', 'juantonio12@gmail.com', 965312487, 'jgonzalez', '8888', 'EMP103', 'CASA MATRIZ', TO_DATE('15/09/2019', 'DD/MM/YYYY'), 'Recepcion');
 
 -- CLIENTE
-INSERT INTO cliente VALUES (1, '14098120-1', 'David Anthony', 'Copperfield', 'Johnson', TO_DATE('18/11/1978', 'DD/MM/YYYY'), 'M', 'davidtruquito@gmail.com', 978432164, 'david.cop', '12345', 'Los Alerces 20, Peñaflor');
-INSERT INTO cliente VALUES (2, '18347172-5', 'Ariel Bonifacio', 'Gonzalez', 'Torres', TO_DATE('10/03/1993', 'DD/MM/YYYY'), 'M', 'ariboni@gmail.com', 965448124, 'ariel1007', '1007', 'Los Puelches 928, Peñaflor');
-INSERT INTO cliente VALUES (3, '17512453-7', 'Cinthia Andrea', 'Gomez', 'Espinoza', TO_DATE('22/02/1988', 'DD/MM/YYYY'), 'F', 'dark1544@gmail.com', 956412316, 'cinthi10', '4800021', 'Neptuno 90, Talagante');
+INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
+VALUES (1, '14098120-1', 'David Anthony', 'Copperfield', 'Johnson', TO_DATE('18/11/1978', 'DD/MM/YYYY'), 'M', 'davidtruquito@gmail.com', 978432164, 'david.cop', '12345', 'Los Alerces 20, Peñaflor');
+INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
+VALUES (2, '18347172-5', 'Ariel Bonifacio', 'Gonzalez', 'Torres', TO_DATE('10/03/1993', 'DD/MM/YYYY'), 'M', 'ariboni@gmail.com', 965448124, 'ariel1007', '1007', 'Los Puelches 928, Peñaflor');
+INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
+VALUES (3, '17512453-7', 'Cinthia Andrea', 'Gomez', 'Espinoza', TO_DATE('22/02/1988', 'DD/MM/YYYY'), 'F', 'dark1544@gmail.com', 956412316, 'cinthi10', '4800021', 'Neptuno 90, Talagante');
 
 -- VENDEDOR
 INSERT INTO vendedor VALUES (1, '17556484-6', 'Jose Antonio', 'Sanhueza', 'Peña', TO_DATE('26/07/1989', 'DD/MM/YYYY'), 'M', 'joje876@gmail.com', 973647321, 'jsanhueza', 'jusi21', 'VEN101', 'CASA MATRIZ', TO_DATE('15/03/2019', 'DD/MM/YYYY'));
@@ -58,15 +64,15 @@ INSERT INTO categoriaproducto VALUES (6, 102, '3489451234542');
 INSERT INTO categoriaproducto VALUES (7, 101, '3026487542121');
 INSERT INTO categoriaproducto VALUES (8, 101, '5649754621448');
 
--- CARRO
-INSERT INTO carro VALUES (1, 1);
-INSERT INTO carro VALUES (2, 3);
-INSERT INTO carro VALUES (3, 2);
+-- -- CARRO
+-- INSERT INTO carro VALUES (1, 1);
+-- INSERT INTO carro VALUES (2, 3);
+-- INSERT INTO carro VALUES (3, 2);
 
---CARRO PRODUCTO
-INSERT INTO carroproducto VALUES (1, 2, 1, '2984646413121');
-INSERT INTO carroproducto VALUES (2, 4, 2, '2984646234234');
-INSERT INTO carroproducto VALUES (3, 1, 3, '2984646645334');
+-- --CARRO PRODUCTO
+-- INSERT INTO carroproducto VALUES (1, 2, 1, '2984646413121');
+-- INSERT INTO carroproducto VALUES (2, 4, 2, '2984646234234');
+-- INSERT INTO carroproducto VALUES (3, 1, 3, '2984646645334');
 
 --PRODUCTO COMPRA
 INSERT INTO productocompra VALUES (1, 4, 101, '2984646413121');

@@ -1525,7 +1525,6 @@ def logout_admin(request):
     return redirect('login_admin')
 
 def registro(request):
-    
     if request.user.is_authenticated:
         return redirect('home')    
     else:
@@ -1533,18 +1532,13 @@ def registro(request):
             form = CrearUsuarioForm(request.POST)
             if form.is_valid():
                 user = form.save()
-                nombre = form.cleaned_data.get('first_name')
-
-                # Se agrega automaticamente como cliente.
-                grupo = Group.objects.get(name='cliente')
-                user.groups.add(grupo)
-                # Se relaciona con un perfil
-                ClientePrueba.objects.create(user=user)
+                nombre = form.cleaned_data.get('nombres')
 
                 messages.success(request, f"{nombre}, la creación de tu cuenta ha sido exitosa." +
                     " Ahora ya puedes iniciar sesión con tu nombre de usuario.")
                 return redirect('login_cliente')
             else:
+                print(form.errors)
                 messages.error(request, "Error al crear una nueva cuenta.")
                 return redirect(reverse('registro_cliente'))
         else:

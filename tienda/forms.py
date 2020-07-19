@@ -149,7 +149,6 @@ class ClienteForm(ModelForm):
                     'direccion': forms.TextInput(attrs={
                         'class': 'form-control'
                     }),
-
     }
 
 
@@ -502,33 +501,102 @@ class ProductoOrdenForm(ModelForm):
                 })
         }
 
-class CrearUsuarioForm(UserCreationForm):
-    def __init__(self, *args, **kwargs):
-        super(CrearUsuarioForm, self).__init__(*args, **kwargs)
+# class CrearUsuarioForm(CreateUserForm):
+#     def __init__(self, *args, **kwargs):
+#         super(CrearUsuarioForm, self).__init__(*args, **kwargs)
 
-        self.fields['username'].required = True
-        self.fields['email'].required = True
-        self.fields['first_name'].required = True
-        self.fields['last_name'].required = True
-        self.fields['password1'].required = True
-        self.fields['password2'].required = True
+#         self.fields['username'].required = True
+#         self.fields['email'].required = True
+#         self.fields['first_name'].required = True
+#         self.fields['last_name'].required = True
+#         self.fields['password1'].required = True
+#         self.fields['password2'].required = True
+
+#     class Meta:
+#         model = User
+#         fields = ['username', 'email', 'first_name', 'last_name', 'password1',
+#                  'password2']
+
+class CrearUsuarioForm(ModelForm):
 
     class Meta:
-        model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1',
-                 'password2']
-
-class PerfilClienteForm(ModelForm):
-    class Meta:
-        model = ClientePrueba
-        fields = ['rut']
-
-        label = {
-            'rut': 'RUT'
-        }
-
+        model = Cliente
+        fields = ['run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
+                    'genero', 'email', 'telefono',
+                    'nombre_usuario', 'contrasena', 'direccion']
+        required = [
+                    'run',
+                    'nombres',
+                    'appaterno',
+                    'apmaterno',
+                    'fecha_nacimiento',
+                    'genero',
+                    'email',
+                    'telefono',
+                    'nombre_usuario',
+                    'contrasena',
+                    'direccion'
+        ]
+        labels = {  
+                    'run': 'run',
+                    'nombres': 'Nombres',
+                    'appaterno': 'Apellido paterno',
+                    'apmaterno': 'Apellido materno',
+                    'fecha_nacimiento': 'Fecha nacimiento',
+                    'genero': 'Genero',
+                    'email': 'Email',
+                    'telefono': 'Telefono',
+                    'nombre_usuario': 'Nombre usuario',
+                    'contrasena': 'Contrasena',
+                    'direccion': 'Direccion'
+                    }
         widgets = {
-            'rut': forms.TextInput(attrs={
-                    'class': 'form-control'
-                })
+                    'run': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 12
+                    }),
+                    'nombres': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 50
+                    }),
+                    'appaterno': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 50
+                    }),
+                    'apmaterno': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 50
+                    }),
+                    'fecha_nacimiento': forms.DateInput(attrs={
+                        'class': 'form-control',
+                        'id': 'datepicker'
+                    }),
+                    'genero': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 6
+                    }),
+                    'email': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'telefono': forms.NumberInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'nombre_usuario': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 50
+                    }),
+                    'contrasena': forms.PasswordInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'direccion': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
         }
+    def clean_confirm(self):
+        confirm = self.cleaned_data.get('confirm')
+        contrasena = self.cleaned_data.get('contrasena')
+        if contrasena != confirm:
+            raise forms.ValidationError("WOPS")
+        return contrasena
+
+

@@ -3,9 +3,11 @@ from django.utils import timezone
 from django.contrib.auth.models import User, Group
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
+from .validators import *
+
 
 class Administrador(models.Model):
-    usuario_id = models.IntegerField(primary_key=True)
+    usuario_id = models.AutoField(primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -26,7 +28,7 @@ class Administrador(models.Model):
 
 
 class Empleado(models.Model):
-    usuario_id = models.IntegerField(primary_key=True)
+    usuario_id = models.AutoField(primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -50,7 +52,7 @@ class Empleado(models.Model):
 
 
 class Cliente(models.Model):
-    usuario_id = models.IntegerField(primary_key=True)
+    usuario_id = models.AutoField(primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -71,7 +73,7 @@ class Cliente(models.Model):
         return self.nombres + ' ' + self.appaterno
 
 class Vendedor(models.Model):
-    usuario_id = models.IntegerField(primary_key=True)
+    usuario_id = models.AutoField(primary_key=True)
     run = models.CharField(max_length=12)
     nombres = models.CharField(max_length=50)
     appaterno = models.CharField(max_length=50)
@@ -264,6 +266,10 @@ class Boleta(models.Model):
     estado = models.CharField(max_length=20)
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
     rut_persona = models.CharField(max_length=12)
+    
+    @property
+    def sid(self):
+        return "B%05d" % self.id
 
     class Meta:
         db_table = 'Boleta'
@@ -319,17 +325,6 @@ class ProveedorProducto(models.Model):
     class Meta:
         db_table = 'ProveedorProducto'
 
-# ----------------------------------------------------------------------------
-#               PRUEBA AUNTENTICACION DISTINTOS USUARIOS
-# ----------------------------------------------------------------------------
-class ClientePrueba(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    rut = models.CharField(max_length=12)
-
-    class Meta:
-        db_table = 'ClientePrueba'
-
-
 # ----------------------------------------------------------------------------#
 #               AUNTENTICACION DISTINTOS USUARIOS                             #
 # ----------------------------------------------------------------------------#
@@ -354,7 +349,6 @@ def crear_usuario_empleado(sender, instance, **kwargs):
         )
     instance.user = user
     grupo, created = Group.objects.get_or_create(name='empleado')
-
     user.groups.add(grupo)
 
 @receiver(pre_save, sender=Administrador)
@@ -379,4 +373,10 @@ def crear_usuario_vendedor(sender, instance, **kwargs):
     instance.user = user
     grupo, created = Group.objects.get_or_create(name='vendedor')
     user.groups.add(grupo)
+
+@receiver(post_save, sender=User)
+def crear_grupo_superusuario(sender, instance, **kwargs):
+    if instance.is_superuser:
+        grupo, created = Group.objects.get_or_create(name='administrador')
+        instance.groups.add(grupo)
 
