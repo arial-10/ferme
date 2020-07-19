@@ -502,6 +502,14 @@ class ProductoOrdenForm(ModelForm):
         }
 
 class CrearUsuarioForm(ModelForm):
+    opciones_genero=[
+        ('M','Masculino'),
+        ('F','Femenino'),
+        ('N','Prefiero no decir')
+    ]
+    genero = forms.ChoiceField(
+        choices=opciones_genero
+    )
     class Meta:
         model = Cliente
         fields = ['run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
@@ -533,11 +541,7 @@ class CrearUsuarioForm(ModelForm):
                     'contrasena': 'Contrasena',
                     'direccion': 'Direccion'
                     }
-        opciones_genero=[
-            ('M','Masculino'),
-            ('F','Femenino'),
-            ('N','Prefiero no decir')
-        ]
+
         widgets = {
                     'run': forms.TextInput(attrs={
                         'class': 'form-control',
@@ -559,21 +563,13 @@ class CrearUsuarioForm(ModelForm):
                         'class': 'form-control',
                         'id': 'datepicker'
                     }),
-                    'genero': forms.TextInput(attrs={
+                    'genero': forms.RadioSelect(attrs={
                         'class': 'form-control'
                     }),
-
-                    # forms.ChoiceField(
-                    #     choices=opciones_genero, 
-                    #     widget=forms.RadioSelect,
-                    #     attrs={
-                    #     'class': 'form-control'
-                    #     },
-                        
                     'email': forms.TextInput(attrs={
                         'class': 'form-control'
                     }),
-                    'telefono': forms.NumberInput(attrs={
+                    'telefono': forms.TextInput(attrs={
                         'class': 'form-control'
                     }),
                     'nombre_usuario': forms.TextInput(attrs={
