@@ -14,6 +14,10 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .decorators import *
 from datetime import datetime
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
+from datetime import timedelta
 
 # ======================== FERME TIENDA ========================
 def home(request):
@@ -67,6 +71,184 @@ def cliente_login(request):
                 return render(request, 'tienda/admin/inicio_sesion_admin.html', {})
 
 
+# Recuperar contraseña
+def recuperar_contrasena_cliente(request):
+    # create message object instance
+    if request.method == 'POST':
+        msg = MIMEMultipart()
+
+        email = request.POST.get('email')
+        cliente = Cliente.objects.get(email=email)
+
+        message = "Hola " + cliente.nombres + ",\n" + "Has solicitado recuperar tu contraseña de acceso a FerreteriaFerme.com\n\n" + "Usa tu contraseña para poder iniciar sesión y realizar tus compras: " + "\n\n" + cliente.contrasena
+
+
+        # setup the parameters of the message
+        password = "ferreferme"
+        msg['From'] = "ferreteriasferme@gmail.com"
+        msg['To'] = email
+        msg['Subject'] = "Recuperación de Contraseña"
+
+        # add in the message body
+        msg.attach(MIMEText(message, 'plain'))
+
+        #create server
+        server = smtplib.SMTP('smtp.gmail.com:587')
+
+        server.starttls()
+
+        # Login Credentials for sending the mail
+        server.login(msg['From'], password)
+
+
+        # send the message via the server.
+        server.sendmail(msg['From'], msg['To'], msg.as_string())
+
+        server.quit()
+
+        return render(request, 'tienda/inicio_sesion.html')
+
+    else:
+        return render(request, 'tienda/recuperar_contrasena.html')
+
+
+def recuperar_contrasena_admin(request):
+    # create message object instance
+    if request.method == 'POST':
+        msg = MIMEMultipart()
+
+        email = request.POST.get('email')
+        administrador = Administrador.objects.get(email=email)
+
+        message = "Hola " + administrador.nombres + ",\n" + "Has solicitado recuperar tu contraseña de acceso a FerreteriaFerme.com\n\n" + "Usa tu contraseña para poder iniciar sesión y realizar tus compras: " + "\n\n" + administrador.contrasena
+
+
+        # setup the parameters of the message
+        password = "ferreferme"
+        msg['From'] = "ferreteriasferme@gmail.com"
+        msg['To'] = email
+        msg['Subject'] = "Recuperación de Contraseña"
+
+        # add in the message body
+        msg.attach(MIMEText(message, 'plain'))
+
+        #create server
+        server = smtplib.SMTP('smtp.gmail.com:587')
+
+        server.starttls()
+
+        # Login Credentials for sending the mail
+        server.login(msg['From'], password)
+
+
+        # send the message via the server.
+        server.sendmail(msg['From'], msg['To'], msg.as_string())
+
+        server.quit()
+
+        return render(request, 'tienda/admin/inicio_sesion_admin.html')
+
+    else:
+        return render(request, 'tienda/admin/recuperar_contrasena_admin.html')
+
+
+def tipo_despacho(request):
+    # Retiro tienda (Fechas - Formato)
+    fechaRetiroHoy = 1
+    now = datetime.now()
+    formatoFechaRetiro = now.strftime('%d/%m/%Y')
+    fechaRetiroHoy = formatoFechaRetiro
+
+    new_date = now + timedelta(days=3)
+    formatoFechaRetiroL2 = new_date.strftime('%d/%m/%Y')   
+    fechaRetiroL2 = formatoFechaRetiroL2
+
+    new_date = now + timedelta(days=6)
+    formatoFechaRetiroL3 = new_date.strftime('%d/%m/%Y')   
+    fechaRetiroL3 = formatoFechaRetiroL3
+
+    # Despacho Domicilio (Fechas - Formato)
+    fechaDespachoManana = 1
+    now = datetime.now()
+    new_date = now + timedelta(days=1)
+    formatoFechaDespacho = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoManana = formatoFechaDespacho
+
+    new_date = now + timedelta(days=4)
+    formatoFechaDespachoL2 = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoL2 = formatoFechaDespachoL2
+
+    new_date = now + timedelta(days=7)
+    formatoFechaDespachoL3 = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoL3 = formatoFechaDespachoL3
+
+    # Si estoy recibiendo un formulario con method POST
+    if request.method == 'POST':
+        # Recibimos la información del formulario
+        fechaRetiro = request.POST.get('fechatmp')
+        rutReceptorRetiro = request.POST.get('rutReceptorRetiro')
+        sucursal = request.POST.get('sucursaltmp')
+        print (fechaRetiro)
+        print (rutReceptorRetiro)
+        print (sucursal)
+
+        fechaEntrega = request.POST.get('fechaEntregaTmp')
+        region = request.POST.get('regiontmp')
+        comuna = request.POST.get('comunatmp')
+        rutReceptorDomicilio = request.POST.get('rutReceptorDomicilio')
+        direccion = request.POST.get('direccion')
+        telefono = request.POST.get('telefono')
+        comentarios = request.POST.get('comentarios')
+
+        print (fechaEntrega)
+        print (rutReceptorDomicilio)
+        print (direccion)
+        print (telefono)
+        print (comentarios)
+
+    else:
+        print ("else")
+
+    return render(request, 'tienda/tipo_despacho.html',
+                {
+                'fechaRetiroHoy': formatoFechaRetiro,
+                'fechaRetiroL2': formatoFechaRetiroL2,
+                'fechaRetiroL3': formatoFechaRetiroL3,
+                'fechaDespachoManana': formatoFechaDespacho,
+                'fechaDespachoL2': formatoFechaDespachoL2,
+                'fechaDespachoL3': formatoFechaDespachoL3 
+                })
+
+
+def pago(request):
+    return render(request, 'tienda/pago.html')
+
+
+def ver_mis_ordenes(request):
+
+    fechaDespachoManana = 1
+    now = datetime.now()
+    new_date = now + timedelta(days=1)
+    formatoFechaDespacho = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoManana = formatoFechaDespacho
+
+    new_date = now + timedelta(days=4)
+    formatoFechaDespachoL2 = new_date.strftime('%d/%m/%Y')   
+    fechaDespachoL2 = formatoFechaDespachoL2
+
+    return render(request, 'tienda/mis_ordenes.html',
+        {
+        'fechaDespachoManana': formatoFechaDespacho,
+        'fechaDespachoL2': formatoFechaDespachoL2
+
+        })
+
+# ======================== FERME EMPLEADO ========================
+def home_empleado(request):
+    return render(request, 'tienda/empleado_nc.html')
+
+def nota_credito(request):
+    return render(request, 'tienda/empleado_nc.html')
 
 # ------ Metodo cliente/portal ------ #
 def agregar_cliente(request):
@@ -329,8 +511,8 @@ def ver_carro(request):
     """
     if request.method == 'POST':
         carro = Carro.objects.get(cliente=request.user)
-        carro.delete()
-        return redirect('home')
+        # carro.delete()
+        return redirect('tipo_despacho')
     else:
         carro = Carro.objects.get(cliente=request.user)
         productos_carro = []

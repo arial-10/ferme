@@ -12,13 +12,27 @@ urlpatterns = static(settings.STATIC_URL,
     path('inicio-sesion/', views.ver_inicio_sesion, name='inicio_sesion'),
     path('inicio-sesion-admin/', views.ver_inicio_sesion_admin, name='inicio_sesion_admin'),
     path('login/', views.cliente_login, name='cliente_login'),
+    #Ruta modulo Mis Ordenes
+    path('mis-ordenes/', views.ver_mis_ordenes, name='mis_ordenes'),
+
+    #Modulo Recuperar Contraseña
+    path('recuperar-contraseña/', views.recuperar_contrasena_cliente, name='recuperar_contrasena_cliente'),
+    path('recuperar-contraseña-admin/', views.recuperar_contrasena_admin, name='recuperar_contrasena_admin'),
     #Ruta modulo Registro/ Portal
     path('registro-usuario/', views.agregar_cliente, name='registro_usuario'),
+    #Tipo despacho
+    path('tipo-despacho/', views.tipo_despacho, name='tipo_despacho'), 
+
+    #Pago
+    path('pago/', views.pago, name='pago'),
 
     path('catalogo/', views.catalogo, name='catalogo'),
     path('catalogo/categoria/<str:id>', views.ver_categoria, name='categoria'),
     path('catalogo/detalle/<str:id>', views.detalle_producto, name='detalle_producto'),
     path('catalogo/filtrado', views.filtrar_catalogo, name='filtrado'),
+    # ================== URLS Ferme Empleado ===========================
+    path('home-empleado/', views.home_empleado, name='home_empleado'),
+    path('nota-credito/', views.nota_credito, name='nota_credito'),
     path('cuenta/carro-compras', views.ver_carro, name='carro'),
     path('cuenta/carro-compras/eliminar/<str:id>', views.eliminar_carro, name='eliminar_carro'),
     path('catalogo/detalle/agregar_carro/<str:id>', views.agregar_carro, name='agregar_carro'),
