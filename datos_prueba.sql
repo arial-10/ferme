@@ -1,34 +1,34 @@
--- EMPLEADO
-INSERT INTO empleado
-VALUES (1, '18454865-5', 'Fernando Agustin', 'Gomez', 'Valenzuela', TO_DATE('10/05/1993', 'DD/MM/YYYY'), 'M', 'fgomez@gmail.com', 956213148, 'fgomez', '12345', 'EMP101', 'CASA MATRIZ', TO_DATE('01/01/2020', 'DD/MM/YYYY'), 'Despacho');
-INSERT INTO empleado
-VALUES (2, '15451231-8', 'Clara Luisa', 'Encina', 'Carrasco', TO_DATE('05/08/1985', 'DD/MM/YYYY'), 'F', 'clara85@gmail.com', 936125489, 'cencina', '4561', 'EMP102', 'CASA MATRIZ', TO_DATE('08/06/2015', 'DD/MM/YYYY'), 'Ventas');
-INSERT INTO empleado
-VALUES (3, '16845123-5', 'Juan Antonio', 'Gonzalez', 'Soto', TO_DATE('22/08/1988', 'DD/MM/YYYY'), 'M', 'juantonio12@gmail.com', 965312487, 'jgonzalez', '8888', 'EMP103', 'CASA MATRIZ', TO_DATE('15/09/2019', 'DD/MM/YYYY'), 'Recepcion');
+-- -- EMPLEADO
+-- INSERT INTO empleado
+-- VALUES (1, '18454865-5', 'Fernando Agustin', 'Gomez', 'Valenzuela', TO_DATE('10/05/1993', 'DD/MM/YYYY'), 'M', 'fgomez@gmail.com', 956213148, 'fgomez', '12345', 'EMP101', 'CASA MATRIZ', TO_DATE('01/01/2020', 'DD/MM/YYYY'), 'Despacho');
+-- INSERT INTO empleado
+-- VALUES (2, '15451231-8', 'Clara Luisa', 'Encina', 'Carrasco', TO_DATE('05/08/1985', 'DD/MM/YYYY'), 'F', 'clara85@gmail.com', 936125489, 'cencina', '4561', 'EMP102', 'CASA MATRIZ', TO_DATE('08/06/2015', 'DD/MM/YYYY'), 'Ventas');
+-- INSERT INTO empleado
+-- VALUES (3, '16845123-5', 'Juan Antonio', 'Gonzalez', 'Soto', TO_DATE('22/08/1988', 'DD/MM/YYYY'), 'M', 'juantonio12@gmail.com', 965312487, 'jgonzalez', '8888', 'EMP103', 'CASA MATRIZ', TO_DATE('15/09/2019', 'DD/MM/YYYY'), 'Recepcion');
 
--- CLIENTE
-INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
-VALUES (1, '14098120-1', 'David Anthony', 'Copperfield', 'Johnson', TO_DATE('18/11/1978', 'DD/MM/YYYY'), 'M', 'davidtruquito@gmail.com', 978432164, 'david.cop', '12345', 'Los Alerces 20, Peñaflor');
-INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
-VALUES (2, '18347172-5', 'Ariel Bonifacio', 'Gonzalez', 'Torres', TO_DATE('10/03/1993', 'DD/MM/YYYY'), 'M', 'ariboni@gmail.com', 965448124, 'ariel1007', '1007', 'Los Puelches 928, Peñaflor');
-INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
-VALUES (3, '17512453-7', 'Cinthia Andrea', 'Gomez', 'Espinoza', TO_DATE('22/02/1988', 'DD/MM/YYYY'), 'F', 'dark1544@gmail.com', 956412316, 'cinthi10', '4800021', 'Neptuno 90, Talagante');
+-- -- CLIENTE
+-- INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
+-- VALUES (1, '14098120-1', 'David Anthony', 'Copperfield', 'Johnson', TO_DATE('18/11/1978', 'DD/MM/YYYY'), 'M', 'davidtruquito@gmail.com', 978432164, 'david.cop', '12345', 'Los Alerces 20, Peñaflor');
+-- INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
+-- VALUES (2, '18347172-5', 'Ariel Bonifacio', 'Gonzalez', 'Torres', TO_DATE('10/03/1993', 'DD/MM/YYYY'), 'M', 'ariboni@gmail.com', 965448124, 'ariel1007', '1007', 'Los Puelches 928, Peñaflor');
+-- INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
+-- VALUES (3, '17512453-7', 'Cinthia Andrea', 'Gomez', 'Espinoza', TO_DATE('22/02/1988', 'DD/MM/YYYY'), 'F', 'dark1544@gmail.com', 956412316, 'cinthi10', '4800021', 'Neptuno 90, Talagante');
 
--- VENDEDOR
-INSERT INTO vendedor VALUES (1, '17556484-6', 'Jose Antonio', 'Sanhueza', 'Peña', TO_DATE('26/07/1989', 'DD/MM/YYYY'), 'M', 'joje876@gmail.com', 973647321, 'jsanhueza', 'jusi21', 'VEN101', 'CASA MATRIZ', TO_DATE('15/03/2019', 'DD/MM/YYYY'));
-INSERT INTO vendedor VALUES (2, '14320125-2', 'Josefa Belen', 'Romero', 'Veliz', TO_DATE('30/04/1980', 'DD/MM/YYYY'), 'F', 'josefa1111@gmail.com', 988974521, 'jromero', 'a1548', 'VEN102', 'CASA MATRIZ', TO_DATE('08/02/2005', 'DD/MM/YYYY'));
-INSERT INTO vendedor VALUES (3, '17556484-6', 'Gonzalo Ivan', 'Quintanilla', 'Ramos', TO_DATE('15/06/1992', 'DD/MM/YYYY'), 'M', 'gonzalohet6@gmail.com', 988745136, 'gquintanilla', 'gonzi12', 'VEN103', 'CASA MATRIZ', TO_DATE('02/04/2019', 'DD/MM/YYYY'));
+-- -- VENDEDOR
+-- INSERT INTO vendedor VALUES (1, '17556484-6', 'Jose Antonio', 'Sanhueza', 'Peña', TO_DATE('26/07/1989', 'DD/MM/YYYY'), 'M', 'joje876@gmail.com', 973647321, 'jsanhueza', 'jusi21', 'VEN101', 'CASA MATRIZ', TO_DATE('15/03/2019', 'DD/MM/YYYY'));
+-- INSERT INTO vendedor VALUES (2, '14320125-2', 'Josefa Belen', 'Romero', 'Veliz', TO_DATE('30/04/1980', 'DD/MM/YYYY'), 'F', 'josefa1111@gmail.com', 988974521, 'jromero', 'a1548', 'VEN102', 'CASA MATRIZ', TO_DATE('08/02/2005', 'DD/MM/YYYY'));
+-- INSERT INTO vendedor VALUES (3, '17556484-6', 'Gonzalo Ivan', 'Quintanilla', 'Ramos', TO_DATE('15/06/1992', 'DD/MM/YYYY'), 'M', 'gonzalohet6@gmail.com', 988745136, 'gquintanilla', 'gonzi12', 'VEN103', 'CASA MATRIZ', TO_DATE('02/04/2019', 'DD/MM/YYYY'));
 
 
--- COMPRA
-INSERT INTO compra VALUES (101, 20000, 1,1);
-INSERT INTO compra VALUES (102, 116700, 2,2);
-INSERT INTO compra VALUES (103, 154980, 3,3);
+-- -- COMPRA
+-- INSERT INTO compra VALUES (101, 20000, 1,1);
+-- INSERT INTO compra VALUES (102, 116700, 2,2);
+-- INSERT INTO compra VALUES (103, 154980, 3,3);
 
---RETIRO TIENDA
-INSERT INTO retirotienda VALUES (1, TO_DATE('15/01/2019', 'DD/MM/YYYY'), '21549330-1', 'ACEPTADO', 'CASA MATRIZ', 101, 1);
-INSERT INTO retirotienda VALUES (2, TO_DATE('16/01/2019', 'DD/MM/YYYY'), '7888720-6', 'CANCELADO', 'CASA MATRIZ', 102, 1);
-INSERT INTO retirotienda VALUES (3, TO_DATE('16/01/2019', 'DD/MM/YYYY'), '17643720-6', 'ENTREGADO', 'CASA MATRIZ', 103, 1);
+-- --RETIRO TIENDA
+-- INSERT INTO retirotienda VALUES (1, TO_DATE('15/01/2019', 'DD/MM/YYYY'), '21549330-1', 'ACEPTADO', 'CASA MATRIZ', 101, 1);
+-- INSERT INTO retirotienda VALUES (2, TO_DATE('16/01/2019', 'DD/MM/YYYY'), '7888720-6', 'CANCELADO', 'CASA MATRIZ', 102, 1);
+-- INSERT INTO retirotienda VALUES (3, TO_DATE('16/01/2019', 'DD/MM/YYYY'), '17643720-6', 'ENTREGADO', 'CASA MATRIZ', 103, 1);
 
 --MARCA
 INSERT INTO marca VALUES (101, 'Redline');
@@ -74,20 +74,20 @@ INSERT INTO categoriaproducto VALUES (8, 101, '5649754621448');
 -- INSERT INTO carroproducto VALUES (2, 4, 2, '2984646234234');
 -- INSERT INTO carroproducto VALUES (3, 1, 3, '2984646645334');
 
---PRODUCTO COMPRA
-INSERT INTO productocompra VALUES (1, 4, 101, '2984646413121');
-INSERT INTO productocompra VALUES (2, 30, 102, '2984646234234');
-INSERT INTO productocompra VALUES (3, 1, 103, '2984646645334');
+-- --PRODUCTO COMPRA
+-- INSERT INTO productocompra VALUES (1, 4, 101, '2984646413121');
+-- INSERT INTO productocompra VALUES (2, 30, 102, '2984646234234');
+-- INSERT INTO productocompra VALUES (3, 1, 103, '2984646645334');
 
--- ADMINISTRADOR
-INSERT INTO administrador VALUES (1, '16489546-K', 'Gustavo Andres', 'Figueroa', 'Romero', TO_DATE('20/10/1987', 'DD/MM/YYYY'), 'M', 'gustavock1@gmail.com', 945461234, 'gfigueroa', 'gas23123', 'ADM101');
-INSERT INTO administrador VALUES (2, '17894561-5', 'Francisca Javiera', 'Perez', 'Bustamante', TO_DATE('18/12/1990', 'DD/MM/YYYY'), 'F', 'fran.jav@gmail.com', 9458749965, 'fperez', '12548', 'ADM102');
-INSERT INTO administrador VALUES (3, '12356994-4', 'Gloria Esperanza', 'Campos', 'Videla', TO_DATE('02/03/1970', 'DD/MM/YYYY'), 'F', 'gloria.campos@gmail.com', 989458754, 'gcampos', '001215', 'ADM103');
+-- -- ADMINISTRADOR
+-- INSERT INTO administrador VALUES (1, '16489546-K', 'Gustavo Andres', 'Figueroa', 'Romero', TO_DATE('20/10/1987', 'DD/MM/YYYY'), 'M', 'gustavock1@gmail.com', 945461234, 'gfigueroa', 'gas23123', 'ADM101');
+-- INSERT INTO administrador VALUES (2, '17894561-5', 'Francisca Javiera', 'Perez', 'Bustamante', TO_DATE('18/12/1990', 'DD/MM/YYYY'), 'F', 'fran.jav@gmail.com', 9458749965, 'fperez', '12548', 'ADM102');
+-- INSERT INTO administrador VALUES (3, '12356994-4', 'Gloria Esperanza', 'Campos', 'Videla', TO_DATE('02/03/1970', 'DD/MM/YYYY'), 'F', 'gloria.campos@gmail.com', 989458754, 'gcampos', '001215', 'ADM103');
 
--- DESPACHO DOMICILIO
-INSERT INTO despachodomicilio VALUES (1, TO_DATE('10/05/2020', 'DD/MM/YYYY'), '14.098.120-1', 'ENTREGADO', 'Los Alerces 20', 978432164, 'Peñaflor', NULL, 101);
-INSERT INTO despachodomicilio VALUES (2, TO_DATE('12/05/2020', 'DD/MM/YYYY'), '14.098.120-1', 'ENTREGADO', 'Los Alerces 20', 978432164, 'Peñaflor', NULL, 102);
-INSERT INTO despachodomicilio VALUES (3, TO_DATE('28/04/2020', 'DD/MM/YYYY'), '18.347.172-5', 'ENTREGADO', 'Los Puelches 928', 965448124, 'Peñaflor', NULL, 103);
+-- -- DESPACHO DOMICILIO
+-- INSERT INTO despachodomicilio VALUES (1, TO_DATE('10/05/2020', 'DD/MM/YYYY'), '14.098.120-1', 'ENTREGADO', 'Los Alerces 20', 978432164, 'Peñaflor', NULL, 101);
+-- INSERT INTO despachodomicilio VALUES (2, TO_DATE('12/05/2020', 'DD/MM/YYYY'), '14.098.120-1', 'ENTREGADO', 'Los Alerces 20', 978432164, 'Peñaflor', NULL, 102);
+-- INSERT INTO despachodomicilio VALUES (3, TO_DATE('28/04/2020', 'DD/MM/YYYY'), '18.347.172-5', 'ENTREGADO', 'Los Puelches 928', 965448124, 'Peñaflor', NULL, 103);
 
 
 -- ACTIVIDAD
