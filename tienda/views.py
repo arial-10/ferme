@@ -489,6 +489,12 @@ def ver_categoria(request, id):
         aux = Producto.objects.get(producto_id=producto.producto.producto_id)
         productos.append(aux)
     
+    for producto in productos:
+        producto.precio_front = utils.formatear_numero_miles(
+            producto.precio_normal)
+        producto.poferta_front = utils.formatear_numero_miles(
+            producto.precio_oferta)
+
     cantidad = len(productos)
 
     return render(request, 'tienda/productos.html', {
