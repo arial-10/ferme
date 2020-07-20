@@ -6,7 +6,7 @@ from django.forms import formset_factory
 from django.forms import modelformset_factory
 from .models import *
 from .forms import *
-from querybuilder.query import Query
+#from querybuilder.query import Query
 from . import utils
 import logging
 from django.contrib.auth import authenticate, login, logout
@@ -182,15 +182,24 @@ def tipo_despacho(request):
     formatoFechaDespachoL3 = new_date.strftime('%d/%m/%Y')   
     fechaDespachoL3 = formatoFechaDespachoL3
 
+    #Este es el carro de compras
+    carro = request.GET.get('carro')
+    usuario = request.GET.get('usuario')
+    
+
     # Si estoy recibiendo un formulario con method POST
     if request.method == 'POST':
+
         # Recibimos la información del formulario
         fechaRetiro = request.POST.get('fechatmp')
         rutReceptorRetiro = request.POST.get('rutReceptorRetiro')
         sucursal = request.POST.get('sucursaltmp')
+        tipo_despacho = request.GET.get('tipo_despacho_tmp')
+
         print (fechaRetiro)
         print (rutReceptorRetiro)
         print (sucursal)
+        print (tipo_despacho)
 
         fechaEntrega = request.POST.get('fechaEntregaTmp')
         region = request.POST.get('regiontmp')
@@ -206,22 +215,83 @@ def tipo_despacho(request):
         print (telefono)
         print (comentarios)
 
+        return render(request, 'tienda/pago.html',
+                    {
+                    'fechaRetiro': fechaRetiro,
+                    'rutReceptorRetiro': rutReceptorRetiro,
+                    'sucursal': sucursal,
+                    'fechaEntrega': fechaEntrega,
+                    'rutReceptorDomicilio': rutReceptorDomicilio,
+                    'direccion': direccion,
+                    'telefono': telefono,
+                    'comentarios': comentarios,
+                    'tipo_despacho': tipo_despacho
+                    })
     else:
-        print ("else")
-
-    return render(request, 'tienda/tipo_despacho.html',
-                {
-                'fechaRetiroHoy': formatoFechaRetiro,
-                'fechaRetiroL2': formatoFechaRetiroL2,
-                'fechaRetiroL3': formatoFechaRetiroL3,
-                'fechaDespachoManana': formatoFechaDespacho,
-                'fechaDespachoL2': formatoFechaDespachoL2,
-                'fechaDespachoL3': formatoFechaDespachoL3 
-                })
+        return render(request, 'tienda/tipo_despacho.html',
+                    {
+                    'fechaRetiroHoy': formatoFechaRetiro,
+                    'fechaRetiroL2': formatoFechaRetiroL2,
+                    'fechaRetiroL3': formatoFechaRetiroL3,
+                    'fechaDespachoManana': formatoFechaDespacho,
+                    'fechaDespachoL2': formatoFechaDespachoL2,
+                    'fechaDespachoL3': formatoFechaDespachoL3,
+                    'carro': carro,
+                    'usuario': usuario
+                    })
 
 
 def pago(request):
-    return render(request, 'tienda/pago.html')
+    now = datetime.now()
+    id_compra = now.strftime('%m%y%I%M%S')  
+    total = 5550
+    id_usuario = 1
+    id_vendedor = 1
+
+    if request.method == 'POST':
+        #Se recupera el carro de compra, luego iterar el carro de compra para sacar el total de los productos
+        carro = request.POST.get('carro')
+        #Recuperar ID del usuario
+        usuario = request.POST.get('usuario')
+
+        compra = Compra()
+        compra.id_compra = id_compra
+        compra.monto_total = total
+        compra.cliente_id = id_usuario
+        compra.vendedor_id = id_vendedor
+        compra.save()  
+
+
+
+
+        tipo_despacho = request.POST.get('gtienda')
+        print(tipo_despacho)
+
+        #Si el tipo de despacho es retiro en tienda entro aca:
+        if tipo_despacho == '1':
+            #fechaRetiro = request.POST.get('fechatmp')
+            #sucursal = request.POST.get('sucursaltmp')
+            #rutReceptorRetiro = request.POST.get('rutReceptorRetiro')
+
+            retiroTienda = RetiroTienda()
+            retiroTienda.id = 1
+            retiroTienda.fecha_entrega = '12/05/12'
+            retiroTienda.rut_receptor = '11'
+            retiroTienda.estado = 'CONFIRMADO'
+            retiroTienda.sucursal = 'sucursal'
+            retiroTienda.compra_id = id_compra
+            retiroTienda.vendedor_id = id_vendedor
+            retiroTienda.save()
+
+
+        #Si el tipo de despacho es a domicilio entro aca:
+        #if tipo_despacho == '2':
+
+
+
+        print(id_compra) 
+    else:
+        return render(request, 'tienda/pago.html')
 
 
 def ver_mis_ordenes(request):
@@ -489,12 +559,6 @@ def ver_categoria(request, id):
         aux = Producto.objects.get(producto_id=producto.producto.producto_id)
         productos.append(aux)
     
-    for producto in productos:
-        producto.precio_front = utils.formatear_numero_miles(
-            producto.precio_normal)
-        producto.poferta_front = utils.formatear_numero_miles(
-            producto.precio_oferta)
-
     cantidad = len(productos)
 
     return render(request, 'tienda/productos.html', {
@@ -518,7 +582,11 @@ def ver_carro(request):
     if request.method == 'POST':
         carro = Carro.objects.get(cliente=request.user)
         # carro.delete()
-        return redirect('tipo_despacho')
+        return redirect('tipo_despacho',
+            {
+                'carro': carro,
+                'usuario': request.user
+            })
     else:
         carro = Carro.objects.get(cliente=request.user)
         productos_carro = []
@@ -1713,6 +1781,7 @@ def logout_admin(request):
     return redirect('login_admin')
 
 def registro(request):
+    
     if request.user.is_authenticated:
         return redirect('home')    
     else:
@@ -1720,13 +1789,18 @@ def registro(request):
             form = CrearUsuarioForm(request.POST)
             if form.is_valid():
                 user = form.save()
-                nombre = form.cleaned_data.get('nombres')
+                nombre = form.cleaned_data.get('first_name')
+
+                # Se agrega automaticamente como cliente.
+                grupo = Group.objects.get(name='cliente')
+                user.groups.add(grupo)
+                # Se relaciona con un perfil
+                ClientePrueba.objects.create(user=user)
 
                 messages.success(request, f"{nombre}, la creación de tu cuenta ha sido exitosa." +
                     " Ahora ya puedes iniciar sesión con tu nombre de usuario.")
                 return redirect('login_cliente')
             else:
-                print(form.errors)
                 messages.error(request, "Error al crear una nueva cuenta.")
                 return redirect(reverse('registro_cliente'))
         else:

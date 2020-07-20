@@ -24,7 +24,7 @@
         $('[data-toggle="tooltip"]').tooltip();
       });
 
-      function validar(){
+      function validarRetiro(){
         for (var i = 0; i < document.tipo_despacho.fecha_retiro.length; i++) {
           if (document.tipo_despacho.fecha_retiro[i].checked) {
             document.tipo_despacho.fechatmp.value = document.tipo_despacho.fecha_retiro[i].value;
@@ -32,10 +32,10 @@
         }
       }
 
-      function validar(){
+      function validarDespacho(){
         for (var i = 0; i < document.tipo_despacho.fecha_despacho.length; i++) {
           if (document.tipo_despacho.fecha_despacho[i].checked) {
-            document.tipo_despacho.fechaEntregatmp.value = document.tipo_despacho.fecha_despacho[i].value;
+            document.tipo_despacho.fechaEntregaTmp.value = document.tipo_despacho.fecha_despacho[i].value;
           }
         }
       }
@@ -53,6 +53,46 @@
        document.tipo_despacho.comunatmp.value = valor;
       }
 
+      function deshabilitar(valor){
+        document.tipo_despacho.tipo_despacho_tmp.value = valor;
+        document.getElementById('fechaDespacho').disabled=false;
+        document.getElementById('fechaDespachoL2').disabled=false;
+        document.getElementById('fechaDespachoL3').disabled=false;
+        document.getElementById('region').disabled=false;
+        document.getElementById('comuna').disabled=false;
+        document.tipo_despacho.rutReceptorDomicilio.disabled=false;
+        document.tipo_despacho.direccion.disabled=false;
+        document.tipo_despacho.telefono.disabled=false;
+        document.tipo_despacho.comentarios.disabled=false;
+        document.getElementById('fechaRetiro').disabled=false;
+        document.getElementById('fechaRetiroL2').disabled=false;
+        document.getElementById('fechaRetiroL3').disabled=false;
+        document.getElementById('sucursal').disabled=false;
+        document.tipo_despacho.rutReceptorRetiro.disabled=false;
+
+        if(valor==1){
+          document.getElementById('fechaDespacho').disabled=true;
+          document.getElementById('fechaDespachoL2').disabled=true;
+          document.getElementById('fechaDespachoL3').disabled=true;
+          document.getElementById('region').disabled=true;
+          document.getElementById('comuna').disabled=true;
+          document.tipo_despacho.rutReceptorDomicilio.disabled=true;
+          document.tipo_despacho.direccion.disabled=true;
+          document.tipo_despacho.telefono.disabled=true;
+          document.tipo_despacho.comentarios.disabled=true;
+        }
+
+        if(valor==2){
+          document.getElementById('fechaRetiro').disabled=true;
+          document.getElementById('fechaRetiroL2').disabled=true;
+          document.getElementById('fechaRetiroL3').disabled=true;
+          document.getElementById('sucursal').disabled=true;
+          document.tipo_despacho.rutReceptorRetiro.disabled=true;
+        }
+
+
+
+      }
 
     </script> 
   
@@ -88,6 +128,9 @@
                 <input type="hidden" name="sucursaltmp" >
                 <input type="hidden" name="regiontmp" >
                 <input type="hidden" name="comunatmp" >
+                <input type="text" name="carro" value="{{ carro }}">
+                <input type="text" name="usuario" value="{{ usuario }}">
+                <input type="text" name="tipo_despacho_tmp" >
                 
                 <article class="layout__article">
                     {% csrf_token %}
@@ -96,6 +139,21 @@
                     <h1 class="layout__title">
                         <span>Elige tu método de envío</span>
                         <br>
+                        <br>
+                        <div class="form-check">
+                          <input type="radio" class="form-check-input" id="gtienda" name="gtienda" value="1" onclick="deshabilitar(1)">
+                          <legend class="form__radio-group-title">
+                            <h3>&nbsp&nbspRetiro en tienda</h3>
+                            <br>
+                        </legend>
+                      </div>
+                      <div class="form-check">
+                        <input type="radio" class="form-check-input" id="gdespacho" name="gtienda" value="2" onclick="deshabilitar(2)">
+                        <legend class="form__radio-group-title">
+                          <h3>&nbsp&nbspDespacho domicilio</h3>
+                          <br>
+                      </legend>
+                    </div>
                     </h1>
 
                     <legend class="form__radio-group-title">
@@ -127,7 +185,7 @@
                             <td></td>
                             <td>GRATUITO</td>
                             <td></td>
-                            <td><input type="radio" id="fecha" name="fecha_retiro" value="{{ fechaRetiroHoy }}" onclick="validar()"></td>
+                            <td><input type="radio" id="fechaRetiro" name="fecha_retiro" value="{{ fechaRetiroHoy }}" onclick="validarRetiro()"></td>
                           </tr>
                           <tr>
                             <th scope="row">2</th>
@@ -138,7 +196,7 @@
                             <td></td>
                             <td>GRATUITO</td>
                             <td></td>
-                            <td><input type="radio" id="fecha2" name="fecha_retiro" value="{{ fechaRetiroL2 }} " onclick="validar()"></td>
+                            <td><input type="radio" id="fechaRetiroL2" name="fecha_retiro" value="{{ fechaRetiroL2 }} " onclick="validarRetiro()"></td>
                           </tr>
                           <tr>
                             <th scope="row">3</th>
@@ -149,7 +207,7 @@
                             <td></td>
                             <td>GRATUITO</td>
                             <td></td>
-                            <td><input type="radio" id="fecha3" name="fecha_retiro" value="{{ fechaRetiroL3 }} " onclick="validar()"></td>
+                            <td><input type="radio" id="fechaRetiroL3" name="fecha_retiro" value="{{ fechaRetiroL3 }} " onclick="validarRetiro()"></td>
                           </tr>
                           
                         </tbody>
@@ -168,7 +226,8 @@
                         <div class="form-group">
                             <br>
                             <label for="sel1">Sucursal</label>
-                            <select class="form-control" id="sel1" onclick="validarSucursal(this.value)">
+                            <select class="form-control" id="sucursal" onclick="validarSucursal(this.value)">
+                                <option value="">Seleccione una opcion</option>
                                 <option value="Maipu">Maipu</option>
                                 <option value="La Reina">La Reina</option>
                             </select>
@@ -210,7 +269,7 @@
                           <td></td>
                           <td>$ 1.990</td>
                           <td></td>
-                          <td><input type="radio" id="fecha" name="fecha_despacho" value="{{ fechaDespachoManana }}" onclick="validar()"></td>
+                          <td><input type="radio" id="fechaDespacho" name="fecha_despacho" value="{{ fechaDespachoManana }}" onclick="validarDespacho()"></td>
                         </tr>
                         <tr>
                           <th scope="row">2</th>
@@ -221,7 +280,7 @@
                           <td></td>
                           <td>$ 1.990</td>
                           <td></td>
-                          <td><input type="radio" id="fecha2" name="fecha_despacho" value="{{ fechaDespachoL2 }} " onclick="validar()"></td>
+                          <td><input type="radio" id="fechaDespachoL2" name="fecha_despacho" value="{{ fechaDespachoL2 }} " onclick="validarDespacho()"></td>
                         </tr>
                         <tr>
                           <th scope="row">3</th>
@@ -232,7 +291,7 @@
                           <td></td>
                           <td>$ 1.990</td>
                           <td></td>
-                          <td><input type="radio" id="fecha3" name="fecha_despacho" value="{{ fechaDespachoL3 }} " onclick="validar()"></td>
+                          <td><input type="radio" id="fechaDespachoL3" name="fecha_despacho" value="{{ fechaDespachoL3 }} " onclick="validarDespacho()"></td>
                         </tr>
                       </tbody>
                     </table>
@@ -250,15 +309,15 @@
                         <div class="form-group">
                             <br>
                             <label for="sel1">Región</label>
-                            <select class="form-control" id="sel1" onclick="validarRegion(this.value)"></select>
-                            <select class="form-control" id="sel1">
+                            <select class="form-control" id="region" onclick="validarRegion(this.value)">
+                              <option value="">Seleccione una opcion</option>
                               <option>Metropolitana de Santiago</option>
                             </select>
                           </div>
                           <div class="form-group">
                             <label for="sel1">Comuna</label>
-                            <select class="form-control" id="sel1" onclick="validarComuna(this.value)"></select>
-                            <select class="form-control" id="sel1">
+                            <select class="form-control" id="comuna" onclick="validarComuna(this.value)">
+                              <option value="">Seleccione una opcion</option>
                               <option>Santiago centro</option>
                               <option>Las Condes</option>
                             </select>
