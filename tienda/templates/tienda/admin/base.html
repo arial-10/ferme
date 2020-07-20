@@ -35,35 +35,41 @@
                         <a class="nav-item nav-link nunito-bold {% block inicio_active %} {% endblock %}"
                         style="font-size: 14pt;" href="{% url 'admin' %}">Inicio</a>
 
-                        <a class="nav-item nav-link nunito-bold {% block ventas_active %} inactivo {% endblock %}"
-                        style="font-size: 14pt;" href="#">Ventas</a>
+                        {% if user.groups.all.0.name == 'administrador' or user.groups.all.0.name == 'vendedor' %}
+                            <a class="nav-item nav-link nunito-bold {% block ventas_active %} inactivo {% endblock %}"
+                            style="font-size: 14pt;" href="#">Ventas</a>
+                        {% endif %}
                         </row>
                         <row>
-                        <a class="nav-item nav-link nunito-bold {% block productos_active %} {% endblock %}"
-                        style="font-size: 14pt;" href="{% url 'productos_admin' %}">Productos</a>
+                        {% if user.groups.all.0.name == 'administrador' or user.groups.all.0.name == 'empleado' %}
+                            <a class="nav-item nav-link nunito-bold {% block productos_active %} {% endblock %}"
+                            style="font-size: 14pt;" href="{% url 'productos_admin' %}">Productos</a>
 
-                        <a class="nav-item nav-link nunito-bold {% block oc_active %} {% endblock %}"
-                        style="font-size: 14pt;" href="{% url 'oc_admin' %}">Órdenes de Compra</a>
+                            <a class="nav-item nav-link nunito-bold {% block oc_active %} {% endblock %}"
+                            style="font-size: 14pt;" href="{% url 'oc_admin' %}">Órdenes de Compra</a>
+                            </row>
+                            <row>
+                            <a class="nav-item nav-link nunito-bold {% block proveedores_active %} {% endblock %}"
+                            style="font-size: 14pt;" href="{% url 'administrar_proveedores' %}">Proveedores</a>
+                        {% endif %}
+                        {% if user.groups.all.0.name == 'administrador' or user.groups.all.0.name == 'empleado' or user.groups.all.0.name == 'vendedor' %}
+                            <a class="nav-item nav-link nunito-bold {% block bolfac_active %} inactivo {% endblock %}" style="font-size: 14pt;" href="#">Boletas y Facturas</a>
+                        {% endif %}
                         </row>
                         <row>
-                        <a class="nav-item nav-link nunito-bold {% block proveedores_active %} {% endblock %}"
-                        style="font-size: 14pt;" href="{% url 'administrar_proveedores' %}">Proveedores</a>
+                        {% if user.groups.all.0.name == 'administrador' %}
+                            <a class="nav-item nav-link nunito-bold {% block clientes_active %} {% endblock %}"
+                            style="font-size: 14pt;" href="{% url 'clientes_admin' %}">Clientes</a>
+                            <a class="nav-item nav-link nunito-bold {% block administrador_active %} {% endblock %}"
+                            style="font-size: 14pt;" href="{% url 'administrador_admin' %}">Administradores</a>
+                            </row>
+                            <row>
+                            <a class="nav-item nav-link nunito-bold {% block empleado_active %} {% endblock %}"
+                            style="font-size: 14pt;" href="{% url 'empleado_admin' %}">Empleados</a>
 
-                        <a class="nav-item nav-link nunito-bold {% block bolfac_active %} inactivo {% endblock %}" style="font-size: 14pt;" href="#">Boletas y Facturas</a>
-                        </row>
-                        <row>
-
-                        <a class="nav-item nav-link nunito-bold {% block clientes_active %} {% endblock %}"
-                        style="font-size: 14pt;" href="{% url 'clientes_admin' %}">Clientes</a>
-                        <a class="nav-item nav-link nunito-bold {% block administrador_active %} {% endblock %}"
-                        style="font-size: 14pt;" href="{% url 'administrador_admin' %}">Administradores</a>
-                        </row>
-                        <row>
-                        <a class="nav-item nav-link nunito-bold {% block empleado_active %} {% endblock %}"
-                        style="font-size: 14pt;" href="{% url 'empleado_admin' %}">Empleados</a>
-
-                        <a class="nav-item nav-link nunito-bold {% block vendedor_active %} {% endblock %}"
-                        style="font-size: 14pt;" href="{% url 'vendedor_admin' %}">Vendedor</a>
+                            <a class="nav-item nav-link nunito-bold {% block vendedor_active %} {% endblock %}"
+                            style="font-size: 14pt;" href="{% url 'vendedor_admin' %}">Vendedor</a>
+                        {% endif %}
                         </row>
                     </div>
                 {% endif %}
