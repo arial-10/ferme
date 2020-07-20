@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
+from .utils import *
 from django import forms
 
 
@@ -590,4 +591,59 @@ class CrearUsuarioForm(ModelForm):
             raise forms.ValidationError("WOPS")
         return contrasena
 
+class DespachoForm(ModelForm):       
+    comuna = forms.ChoiceField(
+        choices=[(tag, tag.value) for tag in ComunasRM]
+    )
+    class Meta:
+        model = DespachoDomicilio
+        fields = [ 'fecha_entrega', 'rut_receptor', 'estado', 'direccion', 'telefono_contacto', 'comuna', 'descripcion', 'compra' ]
+        
+        required = [
+            'fecha_entrega',
+            'rut_receptor',
+            'estado',
+            'direccion',
+            'telefono_contacto',
+            'comuna',
+            'descripcion',
+            'compra'
+        ]        
 
+        labels = {
+            'fecha_entrega': 'Fecha Entrega',
+            'rut_receptor': 'Rut Receptor',
+            'estado': 'Estado',
+            'direccion': 'Direccion',
+            'telefono_contacto': 'Telefono Contacto',
+            'comuna': 'Comuna',
+            'descripcion': 'Descripcion',
+            'compra': 'Compra'
+        }
+
+        widgets = {
+            'fecha_entrega': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'rut_receptor': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'estado': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'direccion': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'telefono_contacto': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'comuna': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'descripcion': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'compra': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+        }
