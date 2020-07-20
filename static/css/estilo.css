@@ -50,6 +50,54 @@ html, body {
     padding-left: 2rem;
 }
 
+.logo-placeholder{
+    font-size: 15vw!important;
+    justify-content: center;
+    background: var(--white);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 1s; /* Firefox < 16 */
+        -ms-animation: fadein 1s; /* Internet Explorer */
+         -o-animation: fadein 1s; /* Opera < 12.1 */
+            animation: fadein 1s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.logo-placeholder>a:hover{
+    text-decoration: none;
+}
+
+.opciones-despacho{
+    border: 0px;
+}
+
+.opcion-despacho{
+    color: var(--blue);
+    border-radius: 0px;
+    padding: none;
+    margin: none;
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+}
+
+.opcion-despacho:hover{
+    background-color: var(--strong_yellow);
+    color: var(--light);
+}
+
+.formulario-despacho{
+    justify-content: center;
+    width: 40%;
+    margin: auto;
+    padding-bottom: 25px;
+}
+
 /* ========================== Fuentes ======================= */
 
 .hepta {
@@ -397,4 +445,15 @@ footer {
     color: var(--blue);
     text-align: center;
     margin: 2rem 0 0 0;
+}
+
+.btn-despacho{
+    min-width: 8vw;
+}
+
+.form__radio-group-title{
+    padding-left: 5px;
+    padding-top: 2%;
+    border-bottom-style: dashed;
+    border-bottom-width: 2px;
 }

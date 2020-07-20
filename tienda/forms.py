@@ -597,16 +597,13 @@ class DespachoForm(ModelForm):
     )
     class Meta:
         model = DespachoDomicilio
-        fields = [ 'fecha_entrega', 'rut_receptor', 'estado', 'direccion', 'telefono_contacto', 'comuna', 'descripcion', 'compra' ]
+        fields = [ 'fecha_entrega','rut_receptor', 'estado', 'direccion', 'telefono_contacto', 'comuna', 'descripcion', 'compra' ]
         
         required = [
-            'fecha_entrega',
             'rut_receptor',
-            'estado',
             'direccion',
             'telefono_contacto',
             'comuna',
-            'descripcion',
             'compra'
         ]        
 
@@ -622,13 +619,7 @@ class DespachoForm(ModelForm):
         }
 
         widgets = {
-            'fecha_entrega': forms.TextInput(attrs={
-                    'class': 'form-control'
-                }),
             'rut_receptor': forms.TextInput(attrs={
-                    'class': 'form-control'
-                }),
-            'estado': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
             'direccion': forms.TextInput(attrs={
@@ -643,7 +634,46 @@ class DespachoForm(ModelForm):
             'descripcion': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
-            'compra': forms.TextInput(attrs={
+            'compra': forms.HiddenInput(),
+            'fecha_entrega': forms.HiddenInput(),
+            'estado': forms.HiddenInput(),
+        }
+
+class RetiroForm(ModelForm):
+    sucursal = forms.ChoiceField(
+        choices=[(tag, tag.value) for tag in Sucursales]
+    )
+    class Meta:
+        model = RetiroTienda
+        fields = [ 'fecha_entrega', 'rut_receptor', 'estado', 'sucursal', 'empleado', 'compra' ]
+        
+        required = [
+            'fecha_entrega',
+            'rut_receptor',
+            'estado',
+            'sucursal',
+            'empleado',
+            'compra'
+        ]
+
+        labels = {
+            'fecha_entrega': 'Fecha entrega',
+            'rut_receptor': 'Rut receptor',
+            'estado': 'Estado',
+            'sucursal': 'Sucursal',
+            'empleado': 'Empleado',
+            'compra': 'Compra'
+        }
+
+        widgets = {
+            'rut_receptor': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
+            'sucursal': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'compra': forms.HiddenInput(),
+            'fecha_entrega': forms.HiddenInput(),
+            'estado': forms.HiddenInput(),
+            'empleado': forms.HiddenInput(),
         }
