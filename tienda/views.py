@@ -284,6 +284,7 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
 def pago(request, despacho=''):
     despacho = DespachoDomicilio.objects.get(id=despacho)
     if request.method == 'POST':
+        print('something something')
     else:
         compra = despacho.compra
         print(compra.id_compra)
