@@ -1,11 +1,12 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.models import User, Group
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from .validators import *
 from .utils import *
-import datetime
+from datetime import datetime, timedelta
 
 
 class Administrador(models.Model):
@@ -400,3 +401,10 @@ def crear_grupo_superusuario(sender, instance, **kwargs):
                 contrasena = instance.password
             )
             print("Se ha creado un usuario administrador para este usuario de django, con campos provisorios, por favor revise su panel de administracion")
+
+@receiver(user_logged_in)
+def login_logger(request, user, **kwargs):
+    Actividad.objects.create(
+            fecha_hora = datetime.now(),
+            usuario = user
+        )
