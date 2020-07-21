@@ -1969,3 +1969,7 @@ def registro_admin(request):
                         {
                             'form': form
                         })
+
+# ----------------------- REPORTE ------------------------------------------------
+def ver_reporte(request):
+    return render(request, 'tienda/admin/reporte/reporte.html', {})
