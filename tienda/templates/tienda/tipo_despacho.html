@@ -11,41 +11,6 @@
 </style>
 {% endblock %}
 
-<<<<<<< HEAD
-        <div class="layout__content">
-            <main class="layout__main" id="main" style="">
-              <form accept-charset="UTF-8" action="{% url 'tipo_despacho' %}" role="form" id="tipo_despacho" method="post" name="tipo_despacho"> 
-                <input type="hidden" name="fechatmp" > 
-                <input type="hidden" name="fechaEntregaTmp" >
-                <input type="hidden" name="sucursaltmp" >
-                <input type="hidden" name="regiontmp" >
-                <input type="hidden" name="comunatmp" >
-                <input type="hidden" name="carro" value="{{ carro }}">
-                <input type="text" name="usuario" value="{{ usuario }}">
-                <input type="text" name="tipo_despacho_tmp" >
-                
-                <article class="layout__article">
-                    {% csrf_token %}
-                    <br>
-                    <br>
-                    <h1 class="layout__title">
-                        <span>Elige tu método de envío</span>
-                        <br>
-                        <br>
-                        <div class="form-check">
-                          <input type="radio" class="form-check-input" id="gtienda" name="gtienda" value="1" onclick="deshabilitar(1)">
-                          <legend class="form__radio-group-title">
-                            <h3>&nbsp&nbspRetiro en tienda</h3>
-                            <br>
-                        </legend>
-                      </div>
-                      <div class="form-check">
-                        <input type="radio" class="form-check-input" id="gdespacho" name="gtienda" value="2" onclick="deshabilitar(2)">
-                        <legend class="form__radio-group-title">
-                          <h3>&nbsp&nbspDespacho domicilio</h3>
-                          <br>
-                      </legend>
-=======
 {% block content %}
 <div class="container">
   <div class="layout__content">
@@ -100,7 +65,11 @@
                     <div class="form-group d-flex flex-column">
                       <label for="">{{ field.label_tag }}</label>
                       {{ field }}
->>>>>>> da03cf8e0fed2d31c7c9686bca37f61ce5d52731
+                    </div>
+                  {% endfor %}
+                  {% for field in form_retiro.hidden_fields %}
+                    <div class="form-group d-flex flex-column">
+                      {{ field }}
                     </div>
                   {% endfor %}
                 </div>

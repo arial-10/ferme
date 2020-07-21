@@ -184,7 +184,11 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
         monto_total = calcular_total(carro),
         cliente = cliente
     )
-    compra = Compra.objects.latest('id_compra')
+    try:
+        compra = Compra.objects.latest('id_compra')
+    except Exception as e:
+        compra = 0
+    
     # Si estoy recibiendo un formulario con method POST
     if request.method == 'POST':
         if seleccion_despacho != '':

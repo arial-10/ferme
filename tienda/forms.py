@@ -609,6 +609,7 @@ class DespachoForm(ModelForm):
             'descripcion': 'Descripcion',
             'compra': 'Compra'
         }
+
         widgets = {
             'rut_receptor': forms.TextInput(attrs={
                     'class': 'form-control'
@@ -616,28 +617,19 @@ class DespachoForm(ModelForm):
             'direccion': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
+            'telefono_contacto': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
             'comuna': forms.TextInput(attrs={
-                'class': 'form-control'
-                }),
-            'fecha_compra': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
-            'terminal': forms.TextInput(attrs={
+            'descripcion': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
-            'tipo_pago': forms.TextInput(attrs={
-                    'class': 'form-control'
-                }),
-            'anulada': forms.TextInput(attrs={
-                    'class': 'form-control'
-                }),
-            'compra': forms.TextInput(attrs={ 
-                    'class': 'form-control'
-                }),
-            'rut_persona': forms.TextInput(attrs={
-                'class': 'form-control'
-                })      
-            }
+            'compra': forms.HiddenInput(),
+            'fecha_entrega': forms.HiddenInput(),
+            'estado': forms.HiddenInput(),
+        }
 
 class RetiroForm(ModelForm):
     sucursal = forms.ChoiceField(
