@@ -379,4 +379,4 @@ def crear_grupo_superusuario(sender, instance, **kwargs):
     if instance.is_superuser:
         grupo, created = Group.objects.get_or_create(name='administrador')
         instance.groups.add(grupo)
-
+    

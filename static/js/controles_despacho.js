@@ -32,6 +32,7 @@ function validarComuna(valor){
 }
 
 function ocultar(control){
+  
   if(document.getElementById('logo-placeholder').style.display != "none") {
     $("#logo-placeholder").fadeOut(400);
   }
