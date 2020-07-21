@@ -457,3 +457,8 @@ footer {
     border-bottom-style: dashed;
     border-bottom-width: 2px;
 }
+
+.formulario-pago{
+    width: 50%;
+    margin: auto;
+}

@@ -336,12 +336,14 @@ class ProveedorProducto(models.Model):
 
 @receiver(pre_save, sender=Cliente)
 def crear_usuario_cliente(sender, instance, **kwargs):
+    print('Creando grupo usuario para el cliente...')
     user = User.objects.create_user(
             instance.nombre_usuario,
             instance.email,
             instance.contrasena
         )
     instance.user = user
+    print('Agregando al grupo...')
     grupo, created = Group.objects.get_or_create(name='cliente')
     user.groups.add(grupo)
 
@@ -380,14 +382,6 @@ def crear_usuario_vendedor(sender, instance, **kwargs):
     instance.user = user
     grupo, created = Group.objects.get_or_create(name='vendedor')
     user.groups.add(grupo)
-
-def generar_fecha(delta=0, formato='%d/%m/%Y'):
-    hoy = datetime.now()
-
-    fecha_delta = hoy + timedelta(days=delta)
-    fecha_formateada = fecha_delta.strftime(formato)   
-    
-    return fecha_formateada
 
 @receiver(post_save, sender=User)
 def crear_grupo_superusuario(sender, instance, **kwargs):

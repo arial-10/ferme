@@ -196,11 +196,24 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
             if seleccion_despacho == 'envio' and despachoForm is not None:
                 if despachoForm.is_valid():
                     despachoForm.save()
-                    return render(request, 'tienda/pago.html')
+                    for producto in CarroProducto.objects.filter(carro=carro_cliente.carro_id):
+                        print(compra.id_compra)
+                        print(producto.producto)
+                        print(producto.cantidad)
+                        ProductoCompra.objects.create(
+                                compra = compra,
+                                producto = producto.producto,
+                                cantidad = producto.cantidad
+                            )
+                    return render(request, 'tienda/pago.html',{
+                            'despacho': despachoForm.instance
+                        })
             elif seleccion_despacho == 'retiro' and retiroForm is not None:
                 if retiroForm.is_valid():
                     retiroForm.save()
-                    return render(request, 'tienda/pago.html')
+                    return render(request, 'tienda/pago.html',{
+                            'despacho': retiroForm.instance
+                        })
             else:
                 compra.delete()
             
@@ -272,57 +285,20 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
                     })
 
 
-def pago(request):
-    now = datetime.now()
-    id_compra = now.strftime('%m%y%I%M%S')  
-    total = 5550
-    id_usuario = 1
-    id_vendedor = 1
-
+def pago(request, despacho=''):
+    despacho = DespachoDomicilio.objects.get(id=despacho)
     if request.method == 'POST':
-        #Se recupera el carro de compra, luego iterar el carro de compra para sacar el total de los productos
-        carro = request.POST.get('carro')
-        #Recuperar ID del usuario
-        usuario = request.POST.get('usuario')
-
-        compra = Compra()
-        compra.id_compra = id_compra
-        compra.monto_total = total
-        compra.cliente_id = id_usuario
-        compra.vendedor_id = id_vendedor
-        compra.save()  
-
-
-
-
-        tipo_despacho = request.POST.get('gtienda')
-        print(tipo_despacho)
-
-        #Si el tipo de despacho es retiro en tienda entro aca:
-        if tipo_despacho == '1':
-            #fechaRetiro = request.POST.get('fechatmp')
-            #sucursal = request.POST.get('sucursaltmp')
-            #rutReceptorRetiro = request.POST.get('rutReceptorRetiro')
-
-            retiroTienda = RetiroTienda()
-            retiroTienda.id = 1
-            retiroTienda.fecha_entrega = '12/05/12'
-            retiroTienda.rut_receptor = '11'
-            retiroTienda.estado = 'CONFIRMADO'
-            retiroTienda.sucursal = 'sucursal'
-            retiroTienda.compra_id = id_compra
-            retiroTienda.vendedor_id = id_vendedor
-            retiroTienda.save()
-
-
-        #Si el tipo de despacho es a domicilio entro aca:
-        #if tipo_despacho == '2':
-
-
-
-        print(id_compra) 
+        print('helo')
     else:
-        return render(request, 'tienda/pago.html')
+        compra = despacho.compra
+        print(compra.id_compra)
+        items = ProductoCompra.objects.filter(compra=compra.id_compra)
+        print(items)
+        return render(request, 'tienda/pago.html', {
+                'despacho': despacho,
+                'compra': compra,
+                'items': items
+            })
 
 
 def ver_mis_ordenes(request):
@@ -612,11 +588,9 @@ def ver_carro(request):
     """
     if request.method == 'POST':
         carro_usuario = Carro.objects.get(cliente=request.user)
-        # carro.delete()
         return render(request, 'tienda/tipo_despacho.html', {
                 'carro': carro_usuario.carro_id
             })
-        #return redirect(reverse('tipo_despacho', kwargs={'carro':carro.carro_id}))
     else:
         carro = Carro.objects.get(cliente=request.user)
         productos_carro = []
