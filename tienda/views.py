@@ -152,92 +152,98 @@ def recuperar_contrasena_admin(request):
         return render(request, 'tienda/admin/recuperar_contrasena_admin.html')
 
 
-def tipo_despacho(request):
-    # Retiro tienda (Fechas - Formato)
-    fechaRetiroHoy = 1
-    now = datetime.now()
-    formatoFechaRetiro = now.strftime('%d/%m/%Y')
-    fechaRetiroHoy = formatoFechaRetiro
+def tipo_despacho(request, carro, seleccion_despacho=''):
+    # Generadas en el código porque el manejo de estas fechas
+    # Está fuera del scope del sistema
+    # son tuplas en la forma (fecha, precio)
+    fechas_retiro = [
+        (generar_fecha(0), 0),
+        (generar_fecha(3), 0),
+        (generar_fecha(6), 0)
+    ]
 
-    new_date = now + timedelta(days=3)
-    formatoFechaRetiroL2 = new_date.strftime('%d/%m/%Y')   
-    fechaRetiroL2 = formatoFechaRetiroL2
-
-    new_date = now + timedelta(days=6)
-    formatoFechaRetiroL3 = new_date.strftime('%d/%m/%Y')   
-    fechaRetiroL3 = formatoFechaRetiroL3
-
-    # Despacho Domicilio (Fechas - Formato)
-    fechaDespachoManana = 1
-    now = datetime.now()
-    new_date = now + timedelta(days=1)
-    formatoFechaDespacho = new_date.strftime('%d/%m/%Y')   
-    fechaDespachoManana = formatoFechaDespacho
-
-    new_date = now + timedelta(days=4)
-    formatoFechaDespachoL2 = new_date.strftime('%d/%m/%Y')   
-    fechaDespachoL2 = formatoFechaDespachoL2
-
-    new_date = now + timedelta(days=7)
-    formatoFechaDespachoL3 = new_date.strftime('%d/%m/%Y')   
-    fechaDespachoL3 = formatoFechaDespachoL3
+    fechas_envio = [
+        (generar_fecha(1), 2990),
+        (generar_fecha(4), 1990),
+        (generar_fecha(7), 1990)
+    ]
 
     #Este es el carro de compras
-    carro = request.GET.get('carro')
-    usuario = request.GET.get('usuario')
-    
+    carro_cliente = Carro.objects.get(carro_id=carro)
+    usuario = carro_cliente.cliente
+    cliente = Cliente.objects.get(nombre_usuario=usuario.username)
 
     # Si estoy recibiendo un formulario con method POST
     if request.method == 'POST':
-
-        # Recibimos la información del formulario
-        fechaRetiro = request.POST.get('fechatmp')
-        rutReceptorRetiro = request.POST.get('rutReceptorRetiro')
-        sucursal = request.POST.get('sucursaltmp')
-        tipo_despacho = request.GET.get('tipo_despacho_tmp')
-
-        print (fechaRetiro)
-        print (rutReceptorRetiro)
-        print (sucursal)
-        print (tipo_despacho)
-
-        fechaEntrega = request.POST.get('fechaEntregaTmp')
-        region = request.POST.get('regiontmp')
-        comuna = request.POST.get('comunatmp')
-        rutReceptorDomicilio = request.POST.get('rutReceptorDomicilio')
-        direccion = request.POST.get('direccion')
-        telefono = request.POST.get('telefono')
-        comentarios = request.POST.get('comentarios')
-
-        print (fechaEntrega)
-        print (rutReceptorDomicilio)
-        print (direccion)
-        print (telefono)
-        print (comentarios)
-
-        return render(request, 'tienda/pago.html',
-                    {
-                    'fechaRetiro': fechaRetiro,
-                    'rutReceptorRetiro': rutReceptorRetiro,
-                    'sucursal': sucursal,
-                    'fechaEntrega': fechaEntrega,
-                    'rutReceptorDomicilio': rutReceptorDomicilio,
-                    'direccion': direccion,
-                    'telefono': telefono,
-                    'comentarios': comentarios,
-                    'tipo_despacho': tipo_despacho
+        if seleccion_despacho != '':
+            despachoForm = request.POST.get('form_despacho')
+            retiroForm = request.POST.get('form_retiro')
+            if seleccion_despacho == 'envio' and despachoForm is not None:
+                if despachoForm.is_valid():
+                    #form_despacho.save()
+                    return render(request, 'tienda/pago.html')
+            elif seleccion_despacho == 'retiro' and retiroForm is not None:
+                if retiroForm.is_valid():
+                    #form_retiro.save()
+                    return render(request, 'tienda/pago.html')
+            else:
+                despachoForm = DespachoForm({
+                        'rut_receptor': cliente.run,
+                        'direccion': cliente.direccion,
+                        'telefono_contacto': cliente.telefono
                     })
+                retiroForm = RetiroForm({
+                        'rut_receptor': cliente.run,
+                        'empleado': 1
+                    })
+                return render(request, 'tienda/tipo_despacho.html',
+                            {
+                                'fechas_retiro': fechas_retiro,
+                                'fechas_envio': fechas_envio,
+                                'carro': carro,
+                                'usuario': usuario,
+                                'form_despacho': despachoForm,
+                                'form_retiro': retiroForm
+                            })
+        else:
+            despachoForm = DespachoForm({
+                    'rut_receptor': cliente.run,
+                    'direccion': cliente.direccion,
+                    'telefono_contacto': cliente.telefono
+                })
+            retiroForm = RetiroForm({
+                    'rut_receptor': cliente.run,
+                    'empleado': 1
+                })
+            return render(request, 'tienda/tipo_despacho.html',
+                        {
+                            'fechas_retiro': fechas_retiro,
+                            'fechas_envio': fechas_envio,
+                            'carro': carro,
+                            'usuario': usuario,
+                            'form_despacho': despachoForm,
+                            'form_retiro': retiroForm
+                        })
     else:
+        despachoForm = DespachoForm({
+                'rut_receptor': cliente.run,
+                'direccion': cliente.direccion,
+                'telefono_contacto': cliente.telefono
+            })
+        retiroForm = RetiroForm({
+                'rut_receptor': cliente.run,
+                'empleado': 1
+            })
+        seleccion_despacho = ''
         return render(request, 'tienda/tipo_despacho.html',
                     {
-                    'fechaRetiroHoy': formatoFechaRetiro,
-                    'fechaRetiroL2': formatoFechaRetiroL2,
-                    'fechaRetiroL3': formatoFechaRetiroL3,
-                    'fechaDespachoManana': formatoFechaDespacho,
-                    'fechaDespachoL2': formatoFechaDespachoL2,
-                    'fechaDespachoL3': formatoFechaDespachoL3,
-                    'carro': carro,
-                    'usuario': usuario
+                        'fechas_retiro': fechas_retiro,
+                        'fechas_envio': fechas_envio,
+                        'carro': carro,
+                        'usuario': usuario,
+                        'form_despacho': despachoForm,
+                        'form_retiro': retiroForm,
+                        'seleccion_despacho': seleccion_despacho
                     })
 
 
@@ -676,13 +682,12 @@ def ver_carro(request):
         productos: Queryset con los productos
     """
     if request.method == 'POST':
-        carro = Carro.objects.get(cliente=request.user)
+        carro_usuario = Carro.objects.get(cliente=request.user)
         # carro.delete()
-        return redirect('tipo_despacho',
-            {
-                'carro': carro,
-                'usuario': request.user
+        return render(request, 'tienda/tipo_despacho.html', {
+                'carro': carro_usuario.carro_id
             })
+        #return redirect(reverse('tipo_despacho', kwargs={'carro':carro.carro_id}))
     else:
         carro = Carro.objects.get(cliente=request.user)
         productos_carro = []
@@ -692,7 +697,8 @@ def ver_carro(request):
         return render(request, 'tienda/carro_compras.html', 
             {
                 'productos': productos_carro,
-                'cantidad': cantidad
+                'cantidad': cantidad,
+                'carro': carro
             })
 
 
@@ -736,7 +742,35 @@ def eliminar_carro(request, id):
 @login_required(login_url='login_admin')
 @solo_admin
 def home_admin(request):
-    return render(request, 'tienda/admin/home.html')
+    es_admin = False
+    es_vendedor = False
+    es_empleado = False
+    rol = ''
+
+    user = request.user
+    usuario = Administrador.objects.filter(user=user).first()
+
+    if usuario is not None:
+        es_admin = True
+        rol = 'Administrador'
+    if es_admin is False:
+        usuario = Empleado.objects.filter(user=user).first()
+
+        if usuario is not None:
+            rol = 'Empleado'
+            es_empleado = True
+    if es_admin is False and es_empleado is False:
+        usuario = Vendedor.objects.filter(user=user).first()
+        
+        if usuario is not None:
+            rol = 'Vendedor'
+            es_vendedor = True
+
+    return render(request, 'tienda/admin/home.html', 
+        {
+            'usuario': usuario,
+            'rol': rol
+        })
 
 # ------------ PRODUCTOS ------------
 @login_required(login_url='login_admin')
@@ -1098,30 +1132,30 @@ def obtener_administrador_admin(request):
     run = request.GET.get('run')
     appaterno= request.GET.get('appaterno')
     genero = request.GET.get('genero')
-    administrador = Administrador.objects.all()
+    administradores = Administrador.objects.all()
 
     # Busca tres campos
     if run != '' and appaterno != '' and genero != '':
-        administrador = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno, genero__icontains=genero)
+        administradores = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno, genero__icontains=genero)
     # Busca solo dos campos
     elif run != '' and appaterno != '':
-        administrador = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno)
+        administradores = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno)
     elif run != '' and genero != '':
-        administrador = Administrador.objects.filter(run__icontains=run, genero__icontains=genero)
+        administradores = Administrador.objects.filter(run__icontains=run, genero__icontains=genero)
     elif appaterno != '' and genero != '':
-        administrador = Administrador.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)
+        administradores = Administrador.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)
     # Busca solo un campo
     elif run != '':
-        administrador = Administrador.objects.filter(run__icontains=run)
+        administradores = Administrador.objects.filter(run__icontains=run)
     elif appaterno != '':
-        administrador = Administrador.objects.filter(appaterno__icontains=appaterno)
+        administradores = Administrador.objects.filter(appaterno__icontains=appaterno)
     elif genero != '':
-        administrador = Administrador.objects.filter(genero__icontains=genero)
+        administradores = Administrador.objects.filter(genero__icontains=genero)
 
 
     return render(request, 'tienda/admin/usuarios/administrador.html',
                 {
-                'administrador': administrador
+                'administrador': administradores
                 })
 
 
@@ -1822,11 +1856,16 @@ def login_cliente(request):
             password = request.POST.get('password')
 
             user = authenticate(request, username=username, password=password)
+
             
 
             if user is not None:
+
+                cliente = Cliente.objects.filter(user=user).first()
+            if user is not None and cliente is not None:
+
                 login(request, user)
-                messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {user.first_name}")
+                messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {cliente.nombres} {cliente.appaterno}")
                 # Cada vez que un usuario logee, se creara una instancia de carrito.
                 carro = Carro.objects.filter(cliente=request.user.id).first()
                 # A una variable de seccion le asigno el id del cliente
@@ -1838,6 +1877,8 @@ def login_cliente(request):
                     Carro.objects.create(carro_id=carro_id, cliente=request.user)
 
                 return redirect('home')
+            elif user.groups.all()[0].name == 'administrador':
+                return redirect('login_admin')
             else:
                 messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
                 return redirect(reverse('login_cliente'))
@@ -1887,12 +1928,6 @@ def registro(request):
                 user = form.save()
                 nombre = form.cleaned_data.get('first_name')
 
-                # Se agrega automaticamente como cliente.
-                grupo = Group.objects.get(name='cliente')
-                user.groups.add(grupo)
-                # Se relaciona con un perfil
-                ClientePrueba.objects.create(user=user)
-
                 messages.success(request, f"{nombre}, la creación de tu cuenta ha sido exitosa." +
                     " Ahora ya puedes iniciar sesión con tu nombre de usuario.")
                 return redirect('login_cliente')
@@ -1924,11 +1959,3 @@ def registro_admin(request):
                         {
                             'form': form
                         })
-
-def perfil_cliente(request):
-    usuario = request.user
-    # id_cliente = request.user.id;
-    perfil = ClientePrueba.objects.get(user=usuario.id)
-    print("perfil: ", perfil.rut)
-    form = PerfilClienteForm(instance=perfil)
-    return render(request, 'tienda/perfil.html', {'form': form})

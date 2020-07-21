@@ -1,125 +1,17 @@
+{% extends 'tienda/base.html' %}
 {% load static %}
-{% block content %}
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <!--Bootstrap con Jquery -->
-        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-        <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
-        <script src="{% static 'js/popper.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <!--CSS propio-->
-        <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
-        <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
-        <title>FERME</title>
-        <!-- Font awesome -->
-        <script src="{% static 'fontawesome/js/all.js' %}"></script>
-    </head>
+{% load tienda_extras %}
 
-    <script>
-      $(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-      });
+{% block custom_headers %}
+<script src="{% static 'js/controles_despacho.js' %}"></script>
+<style type="text/css">
+  .container{
+    min-height: 80vh;
+  }
+</style>
+{% endblock %}
 
-      function validarRetiro(){
-        for (var i = 0; i < document.tipo_despacho.fecha_retiro.length; i++) {
-          if (document.tipo_despacho.fecha_retiro[i].checked) {
-            document.tipo_despacho.fechatmp.value = document.tipo_despacho.fecha_retiro[i].value;
-          }
-        }
-      }
-
-      function validarDespacho(){
-        for (var i = 0; i < document.tipo_despacho.fecha_despacho.length; i++) {
-          if (document.tipo_despacho.fecha_despacho[i].checked) {
-            document.tipo_despacho.fechaEntregaTmp.value = document.tipo_despacho.fecha_despacho[i].value;
-          }
-        }
-      }
-
-      function validarSucursal(valor){
-       //alert(document.tipo_despacho.sucursal.value)
-       document.tipo_despacho.sucursaltmp.value = valor;
-      }
-
-      function validarRegion(valor){
-       document.tipo_despacho.regiontmp.value = valor;
-      }
-
-      function validarComuna(valor){
-       document.tipo_despacho.comunatmp.value = valor;
-      }
-
-      function deshabilitar(valor){
-        document.tipo_despacho.tipo_despacho_tmp.value = valor;
-        document.getElementById('fechaDespacho').disabled=false;
-        document.getElementById('fechaDespachoL2').disabled=false;
-        document.getElementById('fechaDespachoL3').disabled=false;
-        document.getElementById('region').disabled=false;
-        document.getElementById('comuna').disabled=false;
-        document.tipo_despacho.rutReceptorDomicilio.disabled=false;
-        document.tipo_despacho.direccion.disabled=false;
-        document.tipo_despacho.telefono.disabled=false;
-        document.tipo_despacho.comentarios.disabled=false;
-        document.getElementById('fechaRetiro').disabled=false;
-        document.getElementById('fechaRetiroL2').disabled=false;
-        document.getElementById('fechaRetiroL3').disabled=false;
-        document.getElementById('sucursal').disabled=false;
-        document.tipo_despacho.rutReceptorRetiro.disabled=false;
-
-        if(valor==1){
-          document.getElementById('fechaDespacho').disabled=true;
-          document.getElementById('fechaDespachoL2').disabled=true;
-          document.getElementById('fechaDespachoL3').disabled=true;
-          document.getElementById('region').disabled=true;
-          document.getElementById('comuna').disabled=true;
-          document.tipo_despacho.rutReceptorDomicilio.disabled=true;
-          document.tipo_despacho.direccion.disabled=true;
-          document.tipo_despacho.telefono.disabled=true;
-          document.tipo_despacho.comentarios.disabled=true;
-        }
-
-        if(valor==2){
-          document.getElementById('fechaRetiro').disabled=true;
-          document.getElementById('fechaRetiroL2').disabled=true;
-          document.getElementById('fechaRetiroL3').disabled=true;
-          document.getElementById('sucursal').disabled=true;
-          document.tipo_despacho.rutReceptorRetiro.disabled=true;
-        }
-
-
-
-      }
-
-    </script> 
-  
-
-    <body>
-        <!-- Header -->
-        {% include "tienda/components/header.html" %}
-        
-        <div id="contenedor">
-            <div id="main">
-                
-
-               
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-            
-                <div class="col-md-6 col-md-offset-3"></div>
-
-                <div style="padding: 20px;" id="form-olvidado">
-
-            </div>    
-
-        </div>            
-
+<<<<<<< HEAD
         <div class="layout__content">
             <main class="layout__main" id="main" style="">
               <form accept-charset="UTF-8" action="{% url 'tipo_despacho' %}" role="form" id="tipo_despacho" method="post" name="tipo_despacho"> 
@@ -153,201 +45,135 @@
                           <h3>&nbsp&nbspDespacho domicilio</h3>
                           <br>
                       </legend>
+=======
+{% block content %}
+<div class="container">
+  <div class="layout__content">
+    <main class="layout__main" id="main" style="">
+        <article class="layout__article">
+          <h1 class="layout__title p-4">
+            <span>Elige tu método de envío</span>
+          </h1>
+          <ul class="nav nav-tabs flex-column flex-sm-row opciones-despacho">
+            <li class="flex-sm-fill text-sm-center nav-link opcion-despacho" onclick="ocultar('envio')">
+                Retiro en tienda
+            </li>
+            <li class="flex-sm-fill text-sm-center nav-link opcion-despacho" onclick="ocultar('retiro')">
+              Despacho domicilio
+            </li>
+          </ul>
+          <!-- Formulario de retiro -->
+          <div id="retiro" style="display: none">  
+            <form accept-charset="UTF-8" action="{% url 'tipo_despacho' carro %}retiro/" role="form" id="tipo_despacho" method="POST" name="tipo_despacho"> 
+              {% csrf_token %} 
+              <section>  
+                <legend class="form__radio-group-title">
+                    <h3>Recoger en tienda</h3>
+                </legend>
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Fecha Entrega</th>
+                      <th scope="col">Costo</th>
+                      <th scope="col">Selección</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for fecha, precio in fechas_retiro %}
+                      <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ fecha }}</td>
+                        <td>$ {% firstof precio 'Gratuito' %}</td>
+                        <td>
+                          <input type="radio" id="fechaRetiro" name="fecha_retiro">
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <legend class="form__radio-group-title">
+                    <h3>Datos de retiro</h3>
+                </legend>  
+                <div class="formulario-despacho">  
+                  {% for field in form_retiro.visible_fields %}
+                    <div class="form-group d-flex flex-column">
+                      <label for="">{{ field.label_tag }}</label>
+                      {{ field }}
+>>>>>>> da03cf8e0fed2d31c7c9686bca37f61ce5d52731
                     </div>
-                    </h1>
-
-                    <legend class="form__radio-group-title">
-                        <h3>Recoger en tienda</h3>
-                        <br>
-                    </legend>
-
-                    <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col">Fecha Entrega</th>
-                            <th scope="col"></th>
-                            <th scope="col">Costo</th>
-                            <th scope="col"></th>
-                            <th scope="col">Selección</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{{ fechaRetiroHoy }} </td>
-                            <td></td>
-                            <td>GRATUITO</td>
-                            <td></td>
-                            <td><input type="radio" id="fechaRetiro" name="fecha_retiro" value="{{ fechaRetiroHoy }}" onclick="validarRetiro()"></td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{{ fechaRetiroL2 }}</td>
-                            <td></td>
-                            <td>GRATUITO</td>
-                            <td></td>
-                            <td><input type="radio" id="fechaRetiroL2" name="fecha_retiro" value="{{ fechaRetiroL2 }} " onclick="validarRetiro()"></td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{{ fechaRetiroL3 }}</td>
-                            <td></td>
-                            <td>GRATUITO</td>
-                            <td></td>
-                            <td><input type="radio" id="fechaRetiroL3" name="fecha_retiro" value="{{ fechaRetiroL3 }} " onclick="validarRetiro()"></td>
-                          </tr>
-                          
-                        </tbody>
-                    </table>
-
-                    <legend class="form__radio-group-title">
-                        <br>
-                        <h3>Datos de retiro</h3>
-                    </legend>  
-
-                    <fieldset>
-                        <span class="help-block">    
-                        Selecciona sucursal donde quieres retirar
-                        <br>
-                        </span>
-                        <div class="form-group">
-                            <br>
-                            <label for="sel1">Sucursal</label>
-                            <select class="form-control" id="sucursal" onclick="validarSucursal(this.value)">
-                                <option value="">Seleccione una opcion</option>
-                                <option value="Maipu">Maipu</option>
-                                <option value="La Reina">La Reina</option>
-                            </select>
-                        </div>
-                        <hr color="blue" size=3>
-                        <div class="form-group input-group">
-                            <input type="text" class="form-control" name="rutReceptorRetiro" placeholder="Rut Receptor (12345678-9)">
-                        </div>
-                        <br>
-                    </fieldset>
-
-                    <legend class="form__radio-group-title">
-                        <br>
-                        <h3>Envío a domicilio</h3>
-                        <br>
-                    </legend>
-
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col"></th>
-                          <th scope="col"></th>
-                          <th scope="col"></th>
-                          <th scope="col">Fecha Entrega</th>
-                          <th scope="col"></th>
-                          <th scope="col">Costo</th>
-                          <th scope="col"></th>
-                          <th scope="col">Selección</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>{{ fechaDespachoManana }} </td>
-                          <td></td>
-                          <td>$ 1.990</td>
-                          <td></td>
-                          <td><input type="radio" id="fechaDespacho" name="fecha_despacho" value="{{ fechaDespachoManana }}" onclick="validarDespacho()"></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>{{ fechaDespachoL2 }}</td>
-                          <td></td>
-                          <td>$ 1.990</td>
-                          <td></td>
-                          <td><input type="radio" id="fechaDespachoL2" name="fecha_despacho" value="{{ fechaDespachoL2 }} " onclick="validarDespacho()"></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>{{ fechaDespachoL3 }}</td>
-                          <td></td>
-                          <td>$ 1.990</td>
-                          <td></td>
-                          <td><input type="radio" id="fechaDespachoL3" name="fecha_despacho" value="{{ fechaDespachoL3 }} " onclick="validarDespacho()"></td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                    <legend class="form__radio-group-title">
-                        <br>
-                        <h3>Datos de envío</h3>
-                    </legend>   
-
-                    <fieldset>
-                        <span class="help-block">    
-                        Selecciona región y comuna donde quieres despachar
-                        <br>
-                        </span>
-                        <div class="form-group">
-                            <br>
-                            <label for="sel1">Región</label>
-                            <select class="form-control" id="region" onclick="validarRegion(this.value)">
-                              <option value="">Seleccione una opcion</option>
-                              <option>Metropolitana de Santiago</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="sel1">Comuna</label>
-                            <select class="form-control" id="comuna" onclick="validarComuna(this.value)">
-                              <option value="">Seleccione una opcion</option>
-                              <option>Santiago centro</option>
-                              <option>Las Condes</option>
-                            </select>
-                          </div>
-                          <hr color="blue" size=3>
-                          <div class="form-group input-group">
-                            <input type="text" class="form-control" name="rutReceptorDomicilio" placeholder="Rut Receptor (12345678-9)">
-                          </div>
-                          <div class="form-group input-group">
-                            <input type="text" class="form-control" name="direccion" placeholder="Dirección">
-                          </div>
-                          <div class="form-group input-group">
-                            <input type="text" class="form-control" name="telefono" placeholder="Número Telefonico ">
-                          </div>
-                          <div class="form-group input-group">
-                            <input type="text" class="form-control" name="comentarios" placeholder="Comentarios (Opcional)">
-                          </div>
-                          <br>
-                        <button type="submit" class="btn btn-primary btn-block" id="btn-olvidado" >
-                        Continue
-                        </button>
-                    </fieldset>
-                    
-                </article>
-              </form>  
-            </main>
-        </div>
-
-
-        <!---{% include "tienda/components/footer.html" %}--->
-    </body>
-</html>
+                  {% endfor %}
+                </div>
+              </section>
+              <div class="d-flex justify-content-around">
+                <button type="submit" class="btn btn-primary btn-despacho p-2" id="btn-continuar" >
+                  Continuar
+                </button>
+                <a class="btn btn-primary btn-despacho p-2" id="btn-volver"  href="/cuenta/carro-compras">
+                  Volver
+                </a>
+              </div>
+            </form> 
+          </div>
+          <!-- Formulario de envío -->
+          <div id="envio" style="display: none">                    
+          <form accept-charset="UTF-8" action="{% url 'tipo_despacho' carro %}envio/" role="form" id="tipo_despacho" method="POST" name="tipo_despacho">
+            {% csrf_token %} 
+            <section>
+              <legend class="form__radio-group-title">
+                  <h3>Envío a domicilio</h3>
+              </legend>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha Entrega</th>
+                    <th scope="col">Costo</th>
+                    <th scope="col">Selección</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for fecha, precio in fechas_envio %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td>{{ fecha }}</td>
+                      <td>$ {% firstof precio 'Gratuito' %}</td>
+                      <td>
+                        <input type="radio" id="fechaEnvio" name="fecha_retiro">
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <legend class="form__radio-group-title">
+                  <h3>Datos de envío</h3>
+              </legend>
+              <div class="formulario-despacho">  
+                {% for field in form_despacho.visible_fields %}
+                  <div class="form-group d-flex flex-column">
+                    <label for="">{{ field.label_tag }}</label>
+                    {{ field }}
+                  </div>
+                {% endfor %}
+              </div>
+            </section>
+            <div class="d-flex justify-content-around">
+              <button type="submit" class="btn btn-primary btn-despacho p-2" id="btn-continuar">
+                Continuar
+              </button>
+              <a class="btn btn-primary btn-despacho p-2" id="btn-volver" href="/cuenta/carro-compras">
+                Volver
+              </a>
+            </div>
+          </form>
+          </div>
+          <div class="logo-type logo-placeholder" id="logo-placeholder">
+              <a href="/">
+                  <span>FERME</span>
+              </a>
+          </div>
+        </article>
+    </main>
+  </div>
+</div>
 {% endblock content %}
