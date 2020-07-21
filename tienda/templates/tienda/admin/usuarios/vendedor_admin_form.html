@@ -3,6 +3,19 @@
 {% block vendedor_active %} active {% endblock %}
 
 {% block content %}
+    <script>
+        $( function() {
+            $.datepicker.setDefaults( $.datepicker.regional['es'] );
+            $( "#datepicker" ).datepicker({
+                changeMonth: true,
+                changeYear: true
+            });
+            $( "#datepicker2" ).datepicker({
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+    </script>
     <div class="sub-contenedor d-flex justify-content-center">
         <div class="card" >
             <div class="card-title">
@@ -12,10 +25,6 @@
                     {% csrf_token %}
                     <h4 class="subtitulo ml-3 mb-4" class="nunito-bold">Agregar Vendedor:</h4>
                     <div class="fila-form">
-                        <div class="form-group d-flex flex-column ml-3">
-                            <label for=""><span style="color: var(--accent_1)">*</span>ID:</label>
-                            {{ form.usuario_id }}
-                        </div>
                         <div class="form-group d-flex flex-column ml-3">
                             <label for=""><span style="color: var(--accent_1)">*</span>Run:</label>
                             {{ form.run }}
@@ -37,7 +46,7 @@
                             {{ form.fecha_nacimiento }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for=""><span style="color: var(--accent_1)">*</span>Genero:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>G&eacute;nero:</label>
                             {{ form.genero }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
@@ -48,7 +57,7 @@
 
                     <div class="fila-form">
                         <div class="form-group d-flex flex-column ml-3">
-                            <label for=""><span style="color: var(--accent_1)">*</span>Telefono:</label>
+                            <label for=""><span style="color: var(--accent_1)">*</span>Tel&eacute;fono:</label>
                             {{ form.telefono }}
                         </div>
                         <div class="form-group d-flex flex-column ml-3">
@@ -58,18 +67,6 @@
                         <div class="form-group d-flex flex-column ml-3">
                             <label for=""><span style="color: var(--accent_1)">*</span>Contraseña:</label>
                             {{ form.contrasena }}
-                        </div>
-                        <div class="form-group d-flex flex-column ml-3">
-                            <label for="">Codigo vendedor:</label>
-                            {{ form.cod_vendedor }}
-                        </div>
-                        <div class="form-group d-flex flex-column ml-3">
-                            <label for=""><span style="color: var(--accent_1)">*</span>Sucursal:</label>
-                            {{ form.sucursal }}
-                        </div>
-                        <div class="form-group d-flex flex-column ml-3">
-                            <label for=""><span style="color: var(--accent_1)">*</span>Fecha contrato:</label>
-                            {{ form.fecha_contrato }}
                         </div>
                     </div>
 
