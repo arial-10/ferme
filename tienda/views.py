@@ -180,6 +180,7 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
     cliente = Cliente.objects.get(nombre_usuario=usuario.username)
     vendedor = Vendedor.objects.get(nombre_usuario='tienda_virtual')
     compra = Compra(
+        id = objects.latest('id'),
         vendedor = vendedor,
         monto_total = calcular_total(carro),
         cliente = cliente
@@ -187,19 +188,14 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
     # Si estoy recibiendo un formulario con method POST
     if request.method == 'POST':
         if seleccion_despacho != '':
-            print('------------------------------')
-            compra.save()
-            request.POST.compra = compra
             despachoForm = DespachoForm(request.POST)
             retiroForm = RetiroForm(request.POST)
             print(despachoForm.errors)
             if seleccion_despacho == 'envio' and despachoForm is not None:
                 if despachoForm.is_valid():
+                    compra.save()
                     despachoForm.save()
                     for producto in CarroProducto.objects.filter(carro=carro_cliente.carro_id):
-                        print(compra.id_compra)
-                        print(producto.producto)
-                        print(producto.cantidad)
                         ProductoCompra.objects.create(
                                 compra = compra,
                                 producto = producto.producto,
