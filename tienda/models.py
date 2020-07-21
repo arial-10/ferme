@@ -19,6 +19,7 @@ class Administrador(models.Model):
     nombre_usuario = models.CharField(max_length=40)
     contrasena = models.CharField(max_length=50)
     cod_admin = models.CharField(max_length=6)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Administrador'
@@ -43,6 +44,7 @@ class Empleado(models.Model):
     sucursal = models.CharField(max_length=55)
     fecha_contrato = models.DateField()
     area = models.CharField(max_length=20)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Empleado'
@@ -87,6 +89,7 @@ class Vendedor(models.Model):
     cod_vendedor = models.CharField(max_length=6)
     sucursal = models.CharField(max_length=55)
     fecha_contrato = models.DateField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Vendedor'

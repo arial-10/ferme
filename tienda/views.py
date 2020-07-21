@@ -654,16 +654,16 @@ def home_admin(request):
 
     if usuario is not None:
         es_admin = True
-    if es_admin is not True:
+    if es_admin is False:
         usuario = Vendedor.objects.filter(user=request.user).first()
         es_vendedor = True
-    if es_admin is not True and es_vendedor is not True:
+    if es_admin is False and es_vendedor is False:
         usuario = Empleado.objects.filter(user=request.user).first()
         es_empleado = True
-
+    print("Usuario: ", es_empleado)
     return render(request, 'tienda/admin/home.html', 
         {
-            'user': usuario
+            'usuario': usuario
         })
 
 # ------------ PRODUCTOS ------------
