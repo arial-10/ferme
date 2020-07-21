@@ -27,15 +27,21 @@ function obtenerFecha(control){
       valores = radios[i].value.split(";");
     }
   }
+
   if (Array.isArray(valores)){  
     var fecha_despacho = valores[0];
     var precio_despacho = valores[1];
 
-    fecha_field = document.getElementById('id_fecha_entrega');
-    estado_field = document.getElementById('id_estado');
+    fecha_fields = document.getElementsByName('fecha_entrega');
+    estado_fields = document.getElementsByName('estado');
 
-    fecha_field.value = fecha_despacho;
-    estado_field.value = "Activo"
+    //Existen dos campos de grupos de fecha/estado
+    //Por lo tanto asignamos dos veces
+    fecha_fields[0].value = fecha_despacho;
+    estado_fields[0].value = "Activo"
+    //Una vez para cada uno de los grupos de radios
+    fecha_fields[1].value = fecha_despacho;
+    estado_fields[1].value = "Activo"
   }
 }
 
@@ -53,7 +59,6 @@ function validarComuna(valor){
 }
 
 function ocultar(control){
-  console.log('im in');
   if(document.getElementById('logo-placeholder').style.display != "none") {
     $("#logo-placeholder").fadeOut(400);
   }

@@ -408,3 +408,7 @@ def login_logger(request, user, **kwargs):
             fecha_hora = datetime.now(),
             usuario = user
         )
+
+@receiver(post_save, sender=Boleta)
+def generar_id_boleta(sender, instance, **kwargs):
+    instance.documento_id = 'B' + str(instance.id)

@@ -1,5 +1,6 @@
 {% extends 'tienda/base.html' %}
 {% load static %}
+{% load tienda_extras %}
 
 {% block content %}
  <script>
@@ -27,27 +28,29 @@
                 RUT Receptor: {{ despacho.rut_receptor }} <br>
                 Dirección: {{ despacho.direccion }} <br>
                 <hr style="width:50%"> 
+                Detalle: <br>
                 {% for item in items %}
-                    {{ item.precio }}
+                    {{ item.producto.nombre }} ({{ item.cantidad }}): 
+                    {{ item.cantidad|multiplicar:item.producto.precio_normal }}<br>
                 {% endfor %}
-                TOTAL: {{ despacho.comuna }}
+                TOTAL: {{ compra.monto_total }}
               </div>
             </div>
         </div>
         <div class="formulario-pago"> 
             <div class="card p-4">
-                <form accept-charset="UTF-8" action="{% url 'pago' %}" role="form" id="pago" method="post" name="pago"> 
+                <form accept-charset="UTF-8" action="{% url 'pago' despacho.id %}" role="form" id="pago" method="post" name="pago"> 
                 {% csrf_token %}
                 
                 <div class="form-check">
-                    <input type="radio" class="form-check-input" id="radioDebito" name="radiosPago" checked>
+                    <input type="radio" class="form-check-input" id="radioDebito" name="radiosPago" value="debito" checked>
                     <label class="form-check-label" for="radioDebito">Tarjeta Débito </label>
                 </div>
                 <img alt="webpay-tarjeta debito" src="{% static 'img/webpay/03_Webpay.cl-800px.png' %}" width="100%" height="auto" onclick="checkRadio('radioDebito')">
                 
                 
                 <div class="form-check">
-                    <input type="radio" class="form-check-input" id="radioCredito" name="radiosPago">
+                    <input type="radio" class="form-check-input" id="radioCredito" name="radiosPago" value="credito">
                     <label class="form-check-label" for="radioCredito">Tarjeta Crédito</label>
                 </div>
                 <img alt="tarjeta-credito" src="{% static 'img/webpay/04_Logo_tarjetas-800px.png' %}" width="100%" height="auto" onclick="checkRadio('radioCredito')">
