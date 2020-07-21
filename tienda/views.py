@@ -284,38 +284,6 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
 def pago(request, despacho=''):
     despacho = DespachoDomicilio.objects.get(id=despacho)
     if request.method == 'POST':
-<<<<<<< HEAD
-        #Se recupera el carro de compra, luego iterar el carro de compra para sacar el total de los productos
-        carro = request.POST.get('carro')
-        #Recuperar ID del usuario
-        usuario = request.POST.get('usuario')
-
-        compra = Compra()
-        compra.id_compra = id_compra
-        compra.monto_total = total
-        compra.cliente_id = id_usuario
-        compra.vendedor_id = id_vendedor
-        compra.save()  
-
-        tipo_despacho = request.POST.get('gtienda')
-        print(tipo_despacho)
-
-        #Si el tipo de despacho es retiro en tienda entro aca:
-        if tipo_despacho == '1':
-
-            retiroTienda = RetiroTienda()
-            retiroTienda.id = 1
-            retiroTienda.fecha_entrega = '12/05/12'
-            retiroTienda.rut_receptor = '11'
-            retiroTienda.estado = 'CONFIRMADO'
-            retiroTienda.sucursal = 'sucursal'
-            retiroTienda.compra_id = id_compra
-            retiroTienda.vendedor_id = id_vendedor
-            retiroTienda.save()
-
-=======
-        print('helo')
->>>>>>> c68c8d493699d4713d57290eecf6b3debe54d9de
     else:
         compra = despacho.compra
         print(compra.id_compra)
