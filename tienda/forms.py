@@ -411,10 +411,7 @@ class VendedorForm(ModelForm):
                     'fecha_contrato': forms.DateInput(attrs={
                         'class': 'form-control',
                         'id': 'datepicker2'
-                    }),
-                    'fecha_contrato': forms.TextInput(attrs={
-                        'class': 'form-control'
-                    }),
+                    })
 
     }
 

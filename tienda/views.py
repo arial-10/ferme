@@ -649,21 +649,31 @@ def home_admin(request):
     es_admin = False
     es_vendedor = False
     es_empleado = False
+    rol = ''
 
-    usuario = Administrador.objects.filter(user=request.user).first()
+    user = request.user
+    usuario = Administrador.objects.filter(user=user).first()
 
     if usuario is not None:
         es_admin = True
+        rol = 'Administrador'
     if es_admin is False:
-        usuario = Vendedor.objects.filter(user=request.user).first()
-        es_vendedor = True
-    if es_admin is False and es_vendedor is False:
-        usuario = Empleado.objects.filter(user=request.user).first()
-        es_empleado = True
-    print("Usuario: ", es_empleado)
+        usuario = Empleado.objects.filter(user=user).first()
+
+        if usuario is not None:
+            rol = 'Empleado'
+            es_empleado = True
+    if es_admin is False and es_empleado is False:
+        usuario = Vendedor.objects.filter(user=user).first()
+        
+        if usuario is not None:
+            rol = 'Vendedor'
+            es_vendedor = True
+
     return render(request, 'tienda/admin/home.html', 
         {
-            'usuario': usuario
+            'usuario': usuario,
+            'rol': rol
         })
 
 # ------------ PRODUCTOS ------------
@@ -1754,8 +1764,8 @@ def login_cliente(request):
             password = request.POST.get('password')
 
             user = authenticate(request, username=username, password=password)
-            cliente = Cliente.objects.get(user=user)
-            if user is not None:
+            cliente = Cliente.objects.filter(user=user).first()
+            if user is not None and cliente is not None:
                 login(request, user)
                 messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {cliente.nombres} {cliente.appaterno}")
                 # Cada vez que un usuario logee, se creara una instancia de carrito.
@@ -1766,6 +1776,8 @@ def login_cliente(request):
                     Carro.objects.create(carro_id=carro_id, cliente=request.user)
 
                 return redirect('home')
+            elif user.groups.all()[0].name == 'administrador':
+                return redirect('login_admin')
             else:
                 messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
                 return redirect(reverse('login_cliente'))
