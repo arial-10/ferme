@@ -74,6 +74,12 @@
                             style="font-size: 14pt;" href="{% url 'vendedor_admin' %}">Vendedor</a>
                         {% endif %}
                         </row>
+                        <row>
+                            {% if user.groups.all.0.name == 'administrador' or user.groups.all.0.name == 'empleado' %}
+                                <a class="nav-item nav-link nunito-bold {% block reporte_active %} {% endblock %}"
+                                style="font-size: 14pt;" href="{% url 'reporte' %}">Reporte</a>
+                            {% endif %}
+                        </row>
                     </div>
                 {% endif %}
                 <div class="">
