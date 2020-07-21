@@ -1062,7 +1062,7 @@ def obtener_administrador_admin(request):
 
     return render(request, 'tienda/admin/usuarios/administrador.html',
                 {
-                'administrador': administradores
+                'administradores': administradores
                 })
 
 
