@@ -16,7 +16,6 @@
   <div class="layout__content">
     <main class="layout__main" id="main" style="">
         <article class="layout__article">
-          {% csrf_token %}
           <h1 class="layout__title p-4">
             <span>Elige tu método de envío</span>
           </h1>
@@ -28,9 +27,10 @@
               Despacho domicilio
             </li>
           </ul>
-          <!-- Formulario de retiro -->                  
+          <!-- Formulario de retiro -->
           <div id="retiro" style="display: none">  
-            <form accept-charset="UTF-8" action="{% url 'tipo_despacho' carro %}/retiro" role="form" id="tipo_despacho" method="POST" name="tipo_despacho"> 
+            <form accept-charset="UTF-8" action="{% url 'tipo_despacho' carro %}retiro/" role="form" id="tipo_despacho" method="POST" name="tipo_despacho"> 
+              {% csrf_token %} 
               <section>  
                 <legend class="form__radio-group-title">
                     <h3>Recoger en tienda</h3>
@@ -81,7 +81,8 @@
           </div>
           <!-- Formulario de envío -->
           <div id="envio" style="display: none">                    
-          <form accept-charset="UTF-8" action="{% url 'tipo_despacho' carro %}/envio" role="form" id="tipo_despacho" method="POST" name="tipo_despacho"> 
+          <form accept-charset="UTF-8" action="{% url 'tipo_despacho' carro %}envio/" role="form" id="tipo_despacho" method="POST" name="tipo_despacho">
+            {% csrf_token %} 
             <section>
               <legend class="form__radio-group-title">
                   <h3>Envío a domicilio</h3>

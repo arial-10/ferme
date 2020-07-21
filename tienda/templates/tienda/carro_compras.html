@@ -42,7 +42,7 @@
                 <div class="botones-carrito d-flex justify-content-end">
                     <a href="{% url 'catalogo' %}" class="btn boton-seguir-carrito mr-2">Seguir comprando</a>
                     {% if cantidad > 0 %}
-                        <form action="" method="POST">
+                        <form action="{% url 'tipo_despacho' carro %}" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="btn boton-compra-carrito">Finalizar Compra...</button>
                         </form>

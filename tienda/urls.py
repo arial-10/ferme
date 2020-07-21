@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
@@ -21,7 +21,8 @@ urlpatterns = static(settings.STATIC_URL,
     #Ruta modulo Registro/ Portal
     path('registro-usuario/', views.agregar_cliente, name='registro_usuario'),
     #Tipo despacho
-    path('tipo-despacho/<str:carro>(?P<str:seleccion_despacho>\w+)', views.tipo_despacho, name='tipo_despacho'), 
+    path('tipo-despacho/<str:carro>/', views.tipo_despacho, name='tipo_despacho'),
+    path('tipo-despacho/<str:carro>/<str:seleccion_despacho>/', views.tipo_despacho, name='tipo_despacho'), 
 
     #Pago
     path('pago/', views.pago, name='pago'),
