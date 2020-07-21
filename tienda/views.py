@@ -6,7 +6,7 @@ from django.forms import formset_factory
 from django.forms import modelformset_factory
 from .models import *
 from .forms import *
-#from querybuilder.query import Query
+from querybuilder.query import Query
 from . import utils
 import logging
 from django.contrib.auth import authenticate, login, logout
@@ -1006,30 +1006,30 @@ def obtener_administrador_admin(request):
     run = request.GET.get('run')
     appaterno= request.GET.get('appaterno')
     genero = request.GET.get('genero')
-    administrador = Administrador.objects.all()
+    administradores = Administrador.objects.all()
 
     # Busca tres campos
     if run != '' and appaterno != '' and genero != '':
-        administrador = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno, genero__icontains=genero)
+        administradores = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno, genero__icontains=genero)
     # Busca solo dos campos
     elif run != '' and appaterno != '':
-        administrador = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno)
+        administradores = Administrador.objects.filter(run__icontains=run, appaterno__icontains=appaterno)
     elif run != '' and genero != '':
-        administrador = Administrador.objects.filter(run__icontains=run, genero__icontains=genero)
+        administradores = Administrador.objects.filter(run__icontains=run, genero__icontains=genero)
     elif appaterno != '' and genero != '':
-        administrador = Administrador.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)
+        administradores = Administrador.objects.filter(appaterno__icontains=appaterno, genero__icontains=genero)
     # Busca solo un campo
     elif run != '':
-        administrador = Administrador.objects.filter(run__icontains=run)
+        administradores = Administrador.objects.filter(run__icontains=run)
     elif appaterno != '':
-        administrador = Administrador.objects.filter(appaterno__icontains=appaterno)
+        administradores = Administrador.objects.filter(appaterno__icontains=appaterno)
     elif genero != '':
-        administrador = Administrador.objects.filter(genero__icontains=genero)
+        administradores = Administrador.objects.filter(genero__icontains=genero)
 
 
     return render(request, 'tienda/admin/usuarios/administrador.html',
                 {
-                'administrador': administrador
+                'administrador': administradores
                 })
 
 
@@ -1730,10 +1730,10 @@ def login_cliente(request):
             password = request.POST.get('password')
 
             user = authenticate(request, username=username, password=password)
-
+            cliente = Cliente.objects.get(user=user)
             if user is not None:
                 login(request, user)
-                messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {user.first_name}")
+                messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {cliente.nombres} {cliente.appaterno}")
                 # Cada vez que un usuario logee, se creara una instancia de carrito.
                 carro = Carro.objects.filter(cliente=request.user.id).first()
                 if carro is None:
