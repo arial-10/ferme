@@ -599,7 +599,33 @@ class DespachoForm(ModelForm):
             'compra'
         ]        
 
-        labels = {
+
+class BoletaForm(ModelForm):
+    class Meta:
+        model = Boleta
+        fields = ['documento_id', 'sucursal', 'direccion',
+        'comuna', 'fecha_compra', 'terminal', 'tipo_pago', 'anulada',
+        'compra', 'rut_persona']
+
+        label = {
+            'documento_id': 'ID Documento',
+            'sucursal': 'Sucursal',
+            'direccion': 'Direccion',
+            'comuna': 'Comuna',
+            'fecha_compra': 'Fecha de compra',
+            'terminal': 'Terminal',
+            'tipo_pago': 'Tipo de pago',
+            'anulada': 'Anulada',
+            'compra': 'ID Compra',
+            'rut_persona': 'Rut cliente'
+        }
+
+        widgets = {
+            'documento_id': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'sucursal': forms.TextInput(attrs={
+            labels = {
             'fecha_entrega': 'Fecha Entrega',
             'rut_receptor': 'Rut Receptor',
             'estado': 'Estado',
@@ -612,11 +638,37 @@ class DespachoForm(ModelForm):
 
         widgets = {
             'rut_receptor': forms.TextInput(attrs={
+>>>>>>> da03cf8e0fed2d31c7c9686bca37f61ce5d52731
                     'class': 'form-control'
                 }),
             'direccion': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
+            'comuna': forms.TextInput(attrs={
+                'class': 'form-control'
+                }),
+            'fecha_compra': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'terminal': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'tipo_pago': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'anulada': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'compra': forms.TextInput(attrs={ 
+                    'class': 'form-control'
+                }),
+            'rut_persona': forms.TextInput(attrs={
+                'class': 'form-control'
+                })      
+            }
+    
+
+=======
             'telefono_contacto': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
@@ -669,3 +721,4 @@ class RetiroForm(ModelForm):
             'estado': forms.HiddenInput(),
             'empleado': forms.HiddenInput(),
         }
+>>>>>>> da03cf8e0fed2d31c7c9686bca37f61ce5d52731

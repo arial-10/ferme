@@ -34,7 +34,11 @@ urlpatterns = static(settings.STATIC_URL,
     path('catalogo/filtrado', views.filtrar_catalogo, name='filtrado'),
     # ================== URLS Ferme Empleado ===========================
     path('home-empleado/', views.home_empleado, name='home_empleado'),
-    path('nota-credito/', views.nota_credito, name='nota_credito'),
+    path('ferme-empleado/boleta/', views.ver_boleta, name='ver_boleta'),
+    path('ferme-empleado/obtener-boleta/', views.obtener_boleta, name='obtener_boleta'),
+    path('ferme-empleado/nota-credito/<str:id>', views.nota_credito, name='nota_credito'),
+    path('ferme-empleado/nota-credito/', views.agregar_notaCredito, name='agregar_notaCredito'),
+
     path('cuenta/carro-compras', views.ver_carro, name='carro'),
     path('cuenta/carro-compras/eliminar/<str:id>', views.eliminar_carro, name='eliminar_carro'),
     path('catalogo/detalle/agregar_carro/<str:id>', views.agregar_carro, name='agregar_carro'),

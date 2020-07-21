@@ -284,7 +284,38 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
 def pago(request, despacho=''):
     despacho = DespachoDomicilio.objects.get(id=despacho)
     if request.method == 'POST':
+<<<<<<< HEAD
+        #Se recupera el carro de compra, luego iterar el carro de compra para sacar el total de los productos
+        carro = request.POST.get('carro')
+        #Recuperar ID del usuario
+        usuario = request.POST.get('usuario')
+
+        compra = Compra()
+        compra.id_compra = id_compra
+        compra.monto_total = total
+        compra.cliente_id = id_usuario
+        compra.vendedor_id = id_vendedor
+        compra.save()  
+
+        tipo_despacho = request.POST.get('gtienda')
+        print(tipo_despacho)
+
+        #Si el tipo de despacho es retiro en tienda entro aca:
+        if tipo_despacho == '1':
+
+            retiroTienda = RetiroTienda()
+            retiroTienda.id = 1
+            retiroTienda.fecha_entrega = '12/05/12'
+            retiroTienda.rut_receptor = '11'
+            retiroTienda.estado = 'CONFIRMADO'
+            retiroTienda.sucursal = 'sucursal'
+            retiroTienda.compra_id = id_compra
+            retiroTienda.vendedor_id = id_vendedor
+            retiroTienda.save()
+
+=======
         print('helo')
+>>>>>>> c68c8d493699d4713d57290eecf6b3debe54d9de
     else:
         compra = despacho.compra
         print(compra.id_compra)
@@ -298,6 +329,7 @@ def pago(request, despacho=''):
 
 
 def ver_mis_ordenes(request):
+    usuario = request.session.get('usuario_id')
 
     fechaDespachoManana = 1
     now = datetime.now()
@@ -309,19 +341,127 @@ def ver_mis_ordenes(request):
     formatoFechaDespachoL2 = new_date.strftime('%d/%m/%Y')   
     fechaDespachoL2 = formatoFechaDespachoL2
 
+    numOrden= now.strftime('%m%y%I%M%S') 
+    numDespacho= now.strftime('%H%m%I%M%H') 
+
+    compra = Compra.objects.get(cliente_id = usuario)
+    compra_id = compra.id_compra
+    monto_total = compra.monto_total
+
+    productoCompra = ProductoCompra.objects.get(compra_id = compra_id)
+    producto_id = productoCompra.producto_id
+    cantidad = productoCompra.cantidad
+
+    producto = Producto.objects.get(producto_id = producto_id)
+    url_img = producto.url_img
+    nombre = producto.nombre
+    descripcion = producto.descripcion
+
     return render(request, 'tienda/mis_ordenes.html',
         {
         'fechaDespachoManana': formatoFechaDespacho,
-        'fechaDespachoL2': formatoFechaDespachoL2
-
+        'fechaDespachoL2': formatoFechaDespachoL2,
+        'numOrden': numOrden,
+        'numDespacho': numDespacho,
+        'productoId': producto_id,
+        'urlImg': url_img,
+        'nombre': nombre,
+        'monto_total': monto_total,
+        'descripcion': descripcion,
+        'cantidad': cantidad
         })
 
 # ======================== FERME EMPLEADO ========================
 def home_empleado(request):
-    return render(request, 'tienda/empleado_nc.html')
+    return render(request, 'tienda/home_empleado.html')
 
-def nota_credito(request):
-    return render(request, 'tienda/empleado_nc.html')
+def ver_boleta(request):
+    """Muestra la página de gestión de Clientes.
+
+    Args:
+
+    Returns:
+        Una página
+    """
+    documento_id = Boleta.objects.all()
+
+    return render(request, 'tienda/emp_boletas.html',
+                  {
+                    'documento_id': documento_id
+                  })    
+                
+
+def obtener_boleta(request):
+    """Retorna la boleta respecto a los datos ingresados 
+
+    Args:
+
+    Returns:
+        Una página
+    """
+    documento_id = request.GET.get('documento_id')    
+    query = Query().from_table(Boleta)
+
+    if documento_id != '':
+        query = query.where(documento_id=documento_id)
+
+    boletas = query.select()
+
+    return render(request, 'tienda/emp_boletas.html',
+                {
+                'boletas': boletas
+                })
+
+
+def nota_credito(request, id):
+    query = Query().from_table(Boleta)
+    query = query.where(documento_id=id)
+    boletas = query.select()
+
+    return render(request, 'tienda/nota_credito.html',
+                    {
+                        'boletas': boleta
+                    })
+
+
+def agregar_notaCredito(request):
+    now = datetime.now()
+    id = now.strftime('%m%y%I%M%S') 
+    sucursal = request.POST.get('sucursal')
+    direccion = request.POST.get('direccion')
+    comuna = request.POST.get('comuna')
+    fecha_compra = request.POST.get('fecha_compra')
+    terminal = request.POST.get('terminal')
+    tipo_pago = request.POST.get('tipo_pago')
+    estado = request.POST.get('estado')
+    fecha_anulacion = request.POST.get('fecha_anulacion')
+    doc_asociado = request.POST.get('doc_asociado')
+    desc_motivo = request.POST.get('desc_motivo')
+    compra_id = request.POST.get('compra_id')
+    empleado_id = request.POST.get('empleado_id')
+
+    if request.method == 'POST':
+
+        notaCredito = NotaCredito()
+        notaCredito.id = id
+        notaCredito.sucursal = sucursal
+        notaCredito.direccion = direccion
+        notaCredito.comuna = comuna
+        notaCredito.fecha_compra = fecha_compra
+        notaCredito.terminal = terminal
+        notaCredito.tipo_pago = tipo_pago
+        notaCredito.estado = estado
+        notaCredito.fecha_anulacion = fecha_anulacion
+        notaCredito.doc_asociado = doc_asociado
+        notaCredito.desc_motivo = desc_motivo
+        notaCredito.compra_id = compra_id
+        notaCredito.empleado_id = empleado_id
+        notaCredito.save()
+
+        messages.success(request, 'Nota de credito creada exitosamente.')
+
+    return render(request, 'tienda/emp_boletas.html')
+
 
 # ------ Metodo cliente/portal ------ #
 def agregar_cliente(request):
@@ -833,10 +973,6 @@ def cancelar_producto(request):
 
     return redirect(reverse('productos_admin'))
 
-
-
-def home_empleado(request):
-    return render(request, 'tienda/empleado/home.html')
 
 # ----- Clientes ------
 def ver_clientes_admin(request):
@@ -1759,12 +1895,21 @@ def login_cliente(request):
             password = request.POST.get('password')
 
             user = authenticate(request, username=username, password=password)
-            cliente = Cliente.objects.filter(user=user).first()
+
+            
+
+            if user is not None:
+
+                cliente = Cliente.objects.filter(user=user).first()
             if user is not None and cliente is not None:
+
                 login(request, user)
                 messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {cliente.nombres} {cliente.appaterno}")
                 # Cada vez que un usuario logee, se creara una instancia de carrito.
                 carro = Carro.objects.filter(cliente=request.user.id).first()
+                # A una variable de seccion le asigno el id del cliente
+                request.session['usuario_id'] = request.user.id
+
                 if carro is None:
                     fecha = datetime.now()
                     carro_id = fecha.strftime("%d%m%y%H%M%S") + str(request.user.id);
@@ -1786,6 +1931,7 @@ def logout_cliente(request):
     # carrito = Carro.objects.get(cliente=request.user)
     # carrito.delete()
     logout(request)
+    messages.info(request, "Cierre de sesión exitoso.")
     return redirect('home')
 
 @unauthenticated_user
@@ -1809,6 +1955,7 @@ def login_admin(request):
 
 def logout_admin(request):
     logout(request)
+    messages.info(request, "Cierre de sesión exitoso.")
     return redirect('login_admin')
 
 def registro(request):
@@ -1820,7 +1967,7 @@ def registro(request):
             form = CrearUsuarioForm(request.POST)
             if form.is_valid():
                 user = form.save()
-                nombre = form.cleaned_data.get('first_name')
+                nombre = form.cleaned_data.get('nombres')
 
                 messages.success(request, f"{nombre}, la creación de tu cuenta ha sido exitosa." +
                     " Ahora ya puedes iniciar sesión con tu nombre de usuario.")
