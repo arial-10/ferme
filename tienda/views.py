@@ -1816,6 +1816,7 @@ def logout_cliente(request):
     # carrito = Carro.objects.get(cliente=request.user)
     # carrito.delete()
     logout(request)
+    messages.info(request, "Cierre de sesión exitoso.")
     return redirect('home')
 
 @unauthenticated_user
@@ -1839,6 +1840,7 @@ def login_admin(request):
 
 def logout_admin(request):
     logout(request)
+    messages.info(request, "Cierre de sesión exitoso.")
     return redirect('login_admin')
 
 def registro(request):
@@ -1850,7 +1852,7 @@ def registro(request):
             form = CrearUsuarioForm(request.POST)
             if form.is_valid():
                 user = form.save()
-                nombre = form.cleaned_data.get('first_name')
+                nombre = form.cleaned_data.get('nombres')
 
                 messages.success(request, f"{nombre}, la creación de tu cuenta ha sido exitosa." +
                     " Ahora ya puedes iniciar sesión con tu nombre de usuario.")
