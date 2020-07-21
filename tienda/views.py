@@ -633,7 +633,25 @@ def eliminar_carro(request, id):
 @login_required(login_url='login_admin')
 @solo_admin
 def home_admin(request):
-    return render(request, 'tienda/admin/home.html')
+    es_admin = False
+    es_vendedor = False
+    es_empleado = False
+
+    usuario = Administrador.objects.filter(user=request.user).first()
+
+    if usuario is not None:
+        es_admin = True
+    if es_admin is not True:
+        usuario = Vendedor.objects.filter(user=request.user).first()
+        es_vendedor = True
+    if es_admin is not True and es_vendedor is not True:
+        usuario = Empleado.objects.filter(user=request.user).first()
+        es_empleado = True
+
+    return render(request, 'tienda/admin/home.html', 
+        {
+            'user': usuario
+        })
 
 # ------------ PRODUCTOS ------------
 @login_required(login_url='login_admin')
