@@ -67,6 +67,11 @@
                       {{ field }}
                     </div>
                   {% endfor %}
+                  {% for field in form_retiro.hidden_fields %}
+                    <div class="form-group d-flex flex-column">
+                      {{ field }}
+                    </div>
+                  {% endfor %}
                 </div>
               </section>
               <div class="d-flex justify-content-around">
