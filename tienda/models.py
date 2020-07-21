@@ -381,6 +381,14 @@ def crear_usuario_vendedor(sender, instance, **kwargs):
     grupo, created = Group.objects.get_or_create(name='vendedor')
     user.groups.add(grupo)
 
+def generar_fecha(delta=0, formato='%d/%m/%Y'):
+    hoy = datetime.now()
+
+    fecha_delta = hoy + timedelta(days=delta)
+    fecha_formateada = fecha_delta.strftime(formato)   
+    
+    return fecha_formateada
+
 @receiver(post_save, sender=User)
 def crear_grupo_superusuario(sender, instance, **kwargs):
     if instance.is_superuser:

@@ -151,6 +151,12 @@ def recuperar_contrasena_admin(request):
     else:
         return render(request, 'tienda/admin/recuperar_contrasena_admin.html')
 
+def calcular_total(carro_id):
+    productos = CarroProducto.objects.filter(carro=carro_id)
+    total = 0
+    for producto in productos:
+        total += precioAsInt(producto.precio)
+    return total
 
 def tipo_despacho(request, carro, seleccion_despacho=''):
     # Generadas en el código porque el manejo de estas fechas
@@ -172,48 +178,42 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
     carro_cliente = Carro.objects.get(carro_id=carro)
     usuario = carro_cliente.cliente
     cliente = Cliente.objects.get(nombre_usuario=usuario.username)
-
+    vendedor = Vendedor.objects.get(nombre_usuario='tienda_virtual')
+    compra = Compra(
+        vendedor = vendedor,
+        monto_total = calcular_total(carro),
+        cliente = cliente
+    )
     # Si estoy recibiendo un formulario con method POST
     if request.method == 'POST':
         if seleccion_despacho != '':
-            despachoForm = request.POST.get('form_despacho')
-            retiroForm = request.POST.get('form_retiro')
+            print('------------------------------')
+            compra.save()
+            request.POST.compra = compra
+            despachoForm = DespachoForm(request.POST)
+            retiroForm = RetiroForm(request.POST)
+            print(despachoForm.errors)
             if seleccion_despacho == 'envio' and despachoForm is not None:
                 if despachoForm.is_valid():
-                    #form_despacho.save()
+                    despachoForm.save()
                     return render(request, 'tienda/pago.html')
             elif seleccion_despacho == 'retiro' and retiroForm is not None:
                 if retiroForm.is_valid():
-                    #form_retiro.save()
+                    retiroForm.save()
                     return render(request, 'tienda/pago.html')
             else:
-                despachoForm = DespachoForm({
-                        'rut_receptor': cliente.run,
-                        'direccion': cliente.direccion,
-                        'telefono_contacto': cliente.telefono
-                    })
-                retiroForm = RetiroForm({
-                        'rut_receptor': cliente.run,
-                        'empleado': 1
-                    })
-                return render(request, 'tienda/tipo_despacho.html',
-                            {
-                                'fechas_retiro': fechas_retiro,
-                                'fechas_envio': fechas_envio,
-                                'carro': carro,
-                                'usuario': usuario,
-                                'form_despacho': despachoForm,
-                                'form_retiro': retiroForm
-                            })
-        else:
+                compra.delete()
+            
             despachoForm = DespachoForm({
                     'rut_receptor': cliente.run,
                     'direccion': cliente.direccion,
-                    'telefono_contacto': cliente.telefono
+                    'telefono_contacto': cliente.telefono,
+                    'compra': compra
                 })
             retiroForm = RetiroForm({
                     'rut_receptor': cliente.run,
-                    'empleado': 1
+                    'empleado': 1,
+                    'compra': compra
                 })
             return render(request, 'tienda/tipo_despacho.html',
                         {
@@ -224,15 +224,40 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
                             'form_despacho': despachoForm,
                             'form_retiro': retiroForm
                         })
+        else:
+            seleccion_despacho = ''
+            despachoForm = DespachoForm({
+                    'rut_receptor': cliente.run,
+                    'direccion': cliente.direccion,
+                    'telefono_contacto': cliente.telefono,
+                    'compra': compra
+                })
+            retiroForm = RetiroForm({
+                    'rut_receptor': cliente.run,
+                    'empleado': 1,
+                    'compra': compra
+                })
+            return render(request, 'tienda/tipo_despacho.html',
+                        {
+                            'fechas_retiro': fechas_retiro,
+                            'fechas_envio': fechas_envio,
+                            'carro': carro,
+                            'usuario': usuario,
+                            'form_despacho': despachoForm,
+                            'form_retiro': retiroForm,
+                            'seleccion_despacho': seleccion_despacho
+                        })
     else:
         despachoForm = DespachoForm({
                 'rut_receptor': cliente.run,
                 'direccion': cliente.direccion,
-                'telefono_contacto': cliente.telefono
+                'telefono_contacto': cliente.telefono,
+                'compra': compra
             })
         retiroForm = RetiroForm({
                 'rut_receptor': cliente.run,
-                'empleado': 1
+                'empleado': 1,
+                'compra': compra
             })
         seleccion_despacho = ''
         return render(request, 'tienda/tipo_despacho.html',

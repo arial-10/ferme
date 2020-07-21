@@ -45,6 +45,10 @@ def generar_fecha(delta=0, formato='%d/%m/%Y'):
     
     return fecha_formateada
 
+def precioAsInt(precio):
+    return int(precio.replace(".",""))
+
+########### ENUMERACIONES
 class ComunasRM(Enum):
     Cerrillos = 'Cerrillos'
     CerroNavia = 'Cerro Navia'

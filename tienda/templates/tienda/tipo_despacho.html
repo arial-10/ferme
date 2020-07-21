@@ -51,7 +51,7 @@
                         <td>{{ fecha }}</td>
                         <td>$ {% firstof precio 'Gratuito' %}</td>
                         <td>
-                          <input type="radio" id="fechaRetiro" name="fecha_retiro">
+                          <input type="radio" id="fechaRetiro" name="fecha_retiro" value="{{ fecha }};{{ precio }}" onclick="obtenerFecha('fecha_envio')">
                         </td>
                       </tr>
                     {% endfor %}
@@ -80,9 +80,7 @@
             </form> 
           </div>
           <!-- Formulario de envío -->
-          <div id="envio" style="display: none">                    
-          <form accept-charset="UTF-8" action="{% url 'tipo_despacho' carro %}envio/" role="form" id="tipo_despacho" method="POST" name="tipo_despacho">
-            {% csrf_token %} 
+          <div id="envio" style="display: none">
             <section>
               <legend class="form__radio-group-title">
                   <h3>Envío a domicilio</h3>
@@ -103,7 +101,7 @@
                       <td>{{ fecha }}</td>
                       <td>$ {% firstof precio 'Gratuito' %}</td>
                       <td>
-                        <input type="radio" id="fechaEnvio" name="fecha_retiro">
+                        <input type="radio" id="fechaEnvio" name="fecha_envio" value="{{ fecha }};{{ precio }}" onclick="obtenerFecha('fecha_envio')">
                       </td>
                     </tr>
                   {% endfor %}
@@ -112,27 +110,37 @@
               <legend class="form__radio-group-title">
                   <h3>Datos de envío</h3>
               </legend>
+              <!-- ModelForm Despacho -->
               <div class="formulario-despacho">  
+              <form accept-charset="UTF-8" action="{% url 'tipo_despacho' carro %}envio/" id="tipo_despacho" method="POST" name="tipo_despacho">
+                {% csrf_token %} 
+                <!-- Campos visibles -->
                 {% for field in form_despacho.visible_fields %}
                   <div class="form-group d-flex flex-column">
                     <label for="">{{ field.label_tag }}</label>
                     {{ field }}
                   </div>
                 {% endfor %}
+                <!-- Campos invisibles -->
+                {% for field in form_despacho.hidden_fields %}
+                  <div class="form-group d-flex flex-column">
+                    {{ field }}
+                  </div>
+                {% endfor %}
+                <div class="d-flex justify-content-around">
+                  <button type="submit" class="btn btn-primary btn-despacho p-2" id="btn-continuar">
+                    Continuar
+                  </button>
+                  <a class="btn btn-primary btn-despacho p-2" id="btn-volver" href="/cuenta/carro-compras">
+                    Volver
+                  </a>
               </div>
             </section>
-            <div class="d-flex justify-content-around">
-              <button type="submit" class="btn btn-primary btn-despacho p-2" id="btn-continuar">
-                Continuar
-              </button>
-              <a class="btn btn-primary btn-despacho p-2" id="btn-volver" href="/cuenta/carro-compras">
-                Volver
-              </a>
             </div>
           </form>
           </div>
           <div class="logo-type logo-placeholder" id="logo-placeholder">
-              <a href="/">
+              <a href="#">
                   <span>FERME</span>
               </a>
           </div>
