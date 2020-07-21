@@ -179,12 +179,12 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
     usuario = carro_cliente.cliente
     cliente = Cliente.objects.get(nombre_usuario=usuario.username)
     vendedor = Vendedor.objects.get(nombre_usuario='tienda_virtual')
-    compra = Compra(
-        id = objects.latest('id'),
+    nueva_compra = Compra(
         vendedor = vendedor,
         monto_total = calcular_total(carro),
         cliente = cliente
     )
+    compra = Compra.objects.latest('id_compra')
     # Si estoy recibiendo un formulario con method POST
     if request.method == 'POST':
         if seleccion_despacho != '':
