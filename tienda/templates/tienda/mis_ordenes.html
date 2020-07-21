@@ -52,63 +52,75 @@
             </div>
         </div>    
 
-                
-        <div class="container">
-            <div class="row">
-            
-                <div class="col-md-6 col-md-offset-3">
-                    <h4 style="border-bottom: 1px solid #c5c5c5;">
-                        <i class="glyphicon glyphicon-user">
-                        </i>
-                        <br>
-                        <br>
-                        <br>
-                        Mis Ordenes
-                    </h4>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <div class="progress">
-                        <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                        <span id="current-progress"></span>
+        <div class="sub-contenedor d-flex justify-content-center">
+            <div id="carrito" class="card col-lg-6">
+                <div class="card-body">
+                    <h2 class="titulo-carrito"><i class="icon-header fas fa-shopping-bag mr-2"></i>
+                        Mis Ordenes</h2>
+                    <hr>
+                    <h6 class="titulo-carrito">Número de Orden:  {{ numOrden }}</h6>
+                    <h6 style="font-weight: bold; color: blue;" class="titulo-carrito">Número de Despacho:  {{ numDespacho }}</h6>
+                        
+
+                    <div class="producto-carrito card">
+                        <div class="d-flex flex-wrap" style="width: 100%;">
+                            <a href="">
+                                <img class="img-carrito img-fluid rounded m-3" src="/static/{{ urlImg }}" alt="img_producto" width="200" height="290">
+                            </a>
+                            <div class="info-carrito d-flex flex-wrap">
+                                <div class="">
+                                    <div class="text-wrap" style="width: 10rem;">
+                                        <a class="nombre-carrito" href="">
+                                            <p style="font-weight: bold;">{{ nombre }}</p>
+                                        </a>
+                                    </div>
+                                    <p style="font-weight: bold; color: gray;">{{ descripcion }}</p>
+                                    <p style="font-weight: bold; color: red;">$  {{ monto_total }}</p>
+                                    <p style="font-weight: bold; color: gray;"> {{ cantidad }}  unidad</p>
+                                </div>
+                                
+                            </div>
+                            <div class="progress">
+                                <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                <span id="current-progress"></span>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="carro" value="{{ carro }}">
+
+                            <div style="display: none;" id="form-olvidado"></div>
+                            <form accept-charset="UTF-8" action="{% url 'mis_ordenes' %}" role="form" id="mis_ordenes" method="post" name="mis_ordenes"> 
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr>
+                                        <th><p style="font-weight: bold; color: blue;">FECHA</p></th>
+                                        <th><p style="font-weight: bold; color: blue;">ESTADO ORDEN DE COMPRA</p></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <br>
+                                        <td><p style="font-weight: bold; color: gray;">{{ fechaDespachoManana }}</p></td>
+                                        <td><p style="font-weight: bold; color: gray;">Hemos recibido tu solicitud de orden de compra</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p style="font-weight: bold; color: gray;">{{ fechaDespachoManana }}</p></td>
+                                        <td><p style="font-weight: bold; color: gray;">Tu orden de compra ha sido comfirmada</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p style="font-weight: bold; color: gray;">{{ fechaDespachoL2 }}</p></td>
+                                        <td><p style="font-weight: bold; color: gray;">Tu orden esta en camino al centro de distribución</p></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>  
                         </div>
                     </div>
-                    <br>
-                    <br>
-                    <div style="display: none;" id="form-olvidado"></div>
-                    <form accept-charset="UTF-8" action="{% url 'mis_ordenes' %}" role="form" id="mis_ordenes" method="post" name="mis_ordenes"> 
-                        <table class="table table-borderless">
-                            <thead>
-                            <tr>
-                                <th scope="col">Fecha</th>
-                                <th scope="col">Estado</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>{{ fechaDespachoManana }}</td>
-                                <td>Hemos recibido tu solicitud de orden de compra</td>
-                            </tr>
-                            <tr>
-                                <td>{{ fechaDespachoManana }}</td>
-                                <td>Tu orden de compra ha sido comfirmada</td>
-                            </tr>
-                            <tr>
-                                <td>{{ fechaDespachoL2 }}</td>
-                                <td>Tu orden esta en camino al centro de distribución</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </form>    
-            
                 </div>
-             </div>
+            </div>
+        </div>        
                 
-        </div>
+        
  
         <!---{% include "tienda/components/footer.html" %}--->
     </body>

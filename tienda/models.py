@@ -257,13 +257,14 @@ class DespachoDomicilio(models.Model):
 
 
 class Boleta(models.Model):
+    documento_id = models.CharField(max_length=38)
     sucursal = models.CharField(max_length=100)
     direccion = models.CharField(max_length=100)
     comuna = models.CharField(max_length=45)
     fecha_compra = models.DateField()
     terminal = models.IntegerField()
     tipo_pago = models.CharField(max_length=11)
-    estado = models.CharField(max_length=20)
+    anulada = models.CharField(max_length=20)
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
     rut_persona = models.CharField(max_length=12)
     

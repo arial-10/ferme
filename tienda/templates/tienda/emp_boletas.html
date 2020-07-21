@@ -1,0 +1,82 @@
+{% extends 'tienda/admin/base_empleado.html' %}
+{% load static %}
+{% block nota_credito_active %} active {% endblock nota_credito_active %}
+{% block content %}
+<div class="sub-contenedor d-flex justify-content-center">
+    <!-- Acordion -->
+    <div id="accordion" role="tablist" class="col-lg-7">
+        <div class="card tarjeta">
+            <div class="card-header tarjeta-header d-flex justify-content-between" role="tab" id="headingOne">
+                <h4><strong>Gestión Notas de Crédito</strong></h4>
+                <a class="collapsed" data-toggle="collapse" href="#" aria-expanded="true" aria-controls="">
+                    <i class="icon fas fa-chevron-down"></i>
+                </a>
+            </div>
+            <div id="nota_credito" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                    <!-- ====== CONTENIDO ====== -->
+                    {% include "tienda/components/messages.html" %}
+
+                    <div class="d-flex justify-content-between">
+                        <!-- Filtros -->
+                        <form action="{% url 'obtener_boleta' %}" method="GET" class="form-inline" style="display: inline-flex; align-items: flex-end;">
+                            <div class="filtro-producto-admin mb-2">
+                                <h6>ID Boleta</h6>
+                                <input type="text" class="form-control" name="documento_id">
+                            </div>
+
+                            <button type="submit" class="btn boton-admin-primary mb-2 ml-3" >Buscar</button>
+                        </form>
+                    </div>
+                    <!-- Tabla -->
+                    <table id="boleta" class="table table-responsive table-hover table-bordered my-3">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="header-tabla">Id</th>
+                                <th class="header-tabla">Sucursal</th>
+                                <th class="header-tabla">Dirección</th>
+                                <th class="header-tabla">Comuna</th>
+                                <th class="header-tabla">Fecha Compra</th>
+                                <th class="header-tabla">Terminal</th>
+                                <th class="header-tabla">Tipo Pago</th>
+                                <th class="header-tabla">Anulada</th> 
+                                <th class="header-tabla">ID Compra</th>
+                                <th class="header-tabla">Rut Cliente</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for boleta in boletas %}
+                            <tr>
+                                <th scope="row">{{ boleta.DOCUMENTO_ID }}</th>
+                                <td>{{ boleta.SUCURSAL }}</td>
+                                <td>{{ boleta.DIRECCION }}</td>
+                                <td>{{ boleta.COMUNA }}</td>
+                                <td>{{ boleta.FECHA_COMPRA }}</td>
+                                <td>{{ boleta.TERMINAL }}</td>
+                                <td>{{ boleta.TIPO_PAGO }}</td>
+                                <td>{{ boleta.ANULADA }}</td>
+                                <td>{{ boleta.COMPRA_ID }}</td>
+                                <td>{{ boleta.RUT_PERSONA }}</td>
+                                <td>
+                                    <div class="d-flex flex-row">
+                                        <a href="{% url 'nota_credito' boleta.DOCUMENTO_ID%}" class="btn btn-warning"
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Nota de Crédito">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

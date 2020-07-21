@@ -591,3 +591,57 @@ class CrearUsuarioForm(ModelForm):
         return contrasena
 
 
+class BoletaForm(ModelForm):
+    class Meta:
+        model = Boleta
+        fields = ['documento_id', 'sucursal', 'direccion',
+        'comuna', 'fecha_compra', 'terminal', 'tipo_pago', 'anulada',
+        'compra', 'rut_persona']
+
+        label = {
+            'documento_id': 'ID Documento',
+            'sucursal': 'Sucursal',
+            'direccion': 'Direccion',
+            'comuna': 'Comuna',
+            'fecha_compra': 'Fecha de compra',
+            'terminal': 'Terminal',
+            'tipo_pago': 'Tipo de pago',
+            'anulada': 'Anulada',
+            'compra': 'ID Compra',
+            'rut_persona': 'Rut cliente'
+        }
+
+        widgets = {
+            'documento_id': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'sucursal': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'direccion': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'comuna': forms.TextInput(attrs={
+                'class': 'form-control'
+                }),
+            'fecha_compra': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'terminal': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'tipo_pago': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'anulada': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'compra': forms.TextInput(attrs={ 
+                    'class': 'form-control'
+                }),
+            'rut_persona': forms.TextInput(attrs={
+                'class': 'form-control'
+                })      
+            }
+    
+
