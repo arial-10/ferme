@@ -4,6 +4,8 @@ from django.contrib.auth.models import User, Group
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from .validators import *
+from .utils import *
+import datetime
 
 
 class Administrador(models.Model):
@@ -17,7 +19,7 @@ class Administrador(models.Model):
     email = models.CharField(max_length=50)
     telefono = models.CharField(default='+569 ', max_length=12)
     nombre_usuario = models.CharField(max_length=40)
-    contrasena = models.CharField(max_length=50)
+    contrasena = models.CharField(max_length=150)
     cod_admin = models.CharField(max_length=6)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -356,14 +358,16 @@ def crear_usuario_empleado(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Administrador)
 def crear_usuario_administrador(sender, instance, **kwargs):
-    user = User.objects.create_user(
-            instance.nombre_usuario,
-            instance.email,
-            instance.contrasena
-        )
-    instance.user = user
+    if instance.user is None:
+        user = User.objects.create_user(
+                instance.nombre_usuario,
+                instance.email,
+                instance.contrasena
+            )
+        instance.user = user
+    print('Creando grupo de administradores')
     grupo, created = Group.objects.get_or_create(name='administrador')
-    user.groups.add(grupo)
+    instance.user.groups.add(grupo)
 
     
 @receiver(pre_save, sender=Vendedor)
@@ -382,4 +386,14 @@ def crear_grupo_superusuario(sender, instance, **kwargs):
     if instance.is_superuser:
         grupo, created = Group.objects.get_or_create(name='administrador')
         instance.groups.add(grupo)
-    
+        admin = Administrador.objects.filter(nombre_usuario=instance.username).first()
+        if admin is None:
+            admin = Administrador.objects.create(
+                user=instance, 
+                fecha_nacimiento=generar_fecha(0, '%Y-%m-%d'),
+                run = 9999999,
+                nombres = instance.username,
+                nombre_usuario = instance.username,
+                contrasena = instance.password
+            )
+            print("Se ha creado un usuario administrador para este usuario de django, con campos provisorios, por favor revise su panel de administracion")

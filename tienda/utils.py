@@ -37,11 +37,11 @@ def filtrar_equals(params, class_):
             coleccion = class_.objects.filter(**kwargs)
     return coleccion
 
-def generar_fecha(delta=0):
+def generar_fecha(delta=0, formato='%d/%m/%Y'):
     hoy = datetime.now()
 
     fecha_delta = hoy + timedelta(days=delta)
-    fecha_formateada = fecha_delta.strftime('%d/%m/%Y')   
+    fecha_formateada = fecha_delta.strftime(formato)   
     
     return fecha_formateada
 
