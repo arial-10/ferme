@@ -1,6 +1,7 @@
 ## Archivo para dejar funciones de ambito general.
 import logging
 from enum import Enum
+from datetime import datetime, timedelta
 
 def formatear_numero_miles(entero):
     """Formatea un número entero con separadores de miles.
@@ -35,6 +36,14 @@ def filtrar_equals(params, class_):
             }
             coleccion = class_.objects.filter(**kwargs)
     return coleccion
+
+def generar_fecha(delta=0):
+    hoy = datetime.now()
+
+    fecha_delta = hoy + timedelta(days=delta)
+    fecha_formateada = fecha_delta.strftime('%d/%m/%Y')   
+    
+    return fecha_formateada
 
 class ComunasRM(Enum):
     Cerrillos = 'Cerrillos'
@@ -89,3 +98,7 @@ class ComunasRM(Enum):
     IsladeMaipo = 'Isla de Maipo'
     PadreHurtado = 'Padre Hurtado'
     Penaflor = 'Peñaflor'
+
+class Sucursales(Enum):
+    Maipu = 'Maipú'
+    LaReina = 'La Reina'

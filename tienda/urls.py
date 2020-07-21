@@ -21,7 +21,7 @@ urlpatterns = static(settings.STATIC_URL,
     #Ruta modulo Registro/ Portal
     path('registro-usuario/', views.agregar_cliente, name='registro_usuario'),
     #Tipo despacho
-    path('tipo-despacho/', views.tipo_despacho, name='tipo_despacho'), 
+    path('tipo-despacho/<str:carro>(?P<str:seleccion_despacho>\w+)', views.tipo_despacho, name='tipo_despacho'), 
 
     #Pago
     path('pago/', views.pago, name='pago'),
@@ -136,5 +136,4 @@ urlpatterns = static(settings.STATIC_URL,
     path('logout-admin/', views.logout_admin, name='logout_admin'),
     path('registro/', views.registro, name='registro_cliente'),
     path('ferme-admin/registro-admin/', views.registro_admin, name='registro_admin'),
-    path('perfil/', views.perfil_cliente, name='perfil_cliente'),
 ]

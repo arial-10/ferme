@@ -1,3 +1,10 @@
+-- -- COMPRA DE PRUEBA --
+-- -- COMPRA
+-- INSERT INTO compra(monto_total, vendedor_id, cliente_id) VALUES (20000, 1,1);
+-- -- PRODUCTO COMPRA
+-- INSERT INTO productocompra(ID, CANTIDAD, COMPRA_ID, PRODUCTO_ID) 
+-- VALUES (1, 4, 1, '2984646413121');
+
 -- -- EMPLEADO
 -- INSERT INTO empleado
 -- VALUES (1, '18454865-5', 'Fernando Agustin', 'Gomez', 'Valenzuela', TO_DATE('10/05/1993', 'DD/MM/YYYY'), 'M', 'fgomez@gmail.com', 956213148, 'fgomez', '12345', 'EMP101', 'CASA MATRIZ', TO_DATE('01/01/2020', 'DD/MM/YYYY'), 'Despacho');
@@ -20,8 +27,9 @@
 -- INSERT INTO vendedor VALUES (3, '17556484-6', 'Gonzalo Ivan', 'Quintanilla', 'Ramos', TO_DATE('15/06/1992', 'DD/MM/YYYY'), 'M', 'gonzalohet6@gmail.com', 988745136, 'gquintanilla', 'gonzi12', 'VEN103', 'CASA MATRIZ', TO_DATE('02/04/2019', 'DD/MM/YYYY'));
 
 
--- -- COMPRA
--- INSERT INTO compra VALUES (101, 20000, 1,1);
+-- COMPRA
+-- INSERT INTO compra(monto_total, vendedor_id, cliente_id) VALUES (20000, 1,1);
+
 -- INSERT INTO compra VALUES (102, 116700, 2,2);
 -- INSERT INTO compra VALUES (103, 154980, 3,3);
 
@@ -75,7 +83,8 @@ INSERT INTO categoriaproducto VALUES (8, 101, '5649754621448');
 -- INSERT INTO carroproducto VALUES (3, 1, 3, '2984646645334');
 
 -- --PRODUCTO COMPRA
--- INSERT INTO productocompra VALUES (1, 4, 101, '2984646413121');
+-- INSERT INTO productocompra(ID, CANTIDAD, COMPRA_ID, PRODUCTO_ID) 
+-- VALUES (1, 4, 1, '2984646413121');
 -- INSERT INTO productocompra VALUES (2, 30, 102, '2984646234234');
 -- INSERT INTO productocompra VALUES (3, 1, 103, '2984646645334');
 

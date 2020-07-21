@@ -96,8 +96,8 @@ class Vendedor(models.Model):
 
 
 class Compra(models.Model):
+    id_compra = models.AutoField(primary_key=True)
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE)
-    id_compra = models.IntegerField(primary_key=True)
     monto_total = models.IntegerField()
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
@@ -249,7 +249,7 @@ class DespachoDomicilio(models.Model):
     direccion = models.CharField(max_length=60)
     telefono_contacto = models.CharField(max_length=12)
     comuna = models.CharField(max_length=20)
-    descripcion = models.CharField(max_length=20)
+    descripcion = models.CharField(max_length=20, blank = True, null = True,)
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
 
     class Meta:

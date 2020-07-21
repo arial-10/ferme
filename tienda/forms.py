@@ -74,20 +74,14 @@ class ProductoForm(ModelForm):
 
 
 class ClienteForm(ModelForm):
-    opciones_genero=[
-        ('M','Masculino'),
-        ('F','Femenino'),
-        ('N','Prefiero no decir')
-    ]
-    genero = forms.ChoiceField(
-        choices=opciones_genero
-    )
+
     class Meta:
         model = Cliente
-        fields = ['run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
+        fields = ['usuario_id', 'run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
                     'genero', 'email', 'telefono',
                     'nombre_usuario', 'contrasena', 'direccion']
         required = [
+                    'usuario_id',
                     'run',
                     'nombres',
                     'appaterno',
@@ -100,7 +94,8 @@ class ClienteForm(ModelForm):
                     'contrasena',
                     'direccion'
         ]
-        labels = {  'run': 'Run',
+        labels = {  'usuario_id': 'usuario_id',
+                    'run': 'run',
                     'nombres': 'Nombres',
                     'appaterno': 'Apellido paterno',
                     'apmaterno': 'Apellido materno',
@@ -111,86 +106,6 @@ class ClienteForm(ModelForm):
                     'nombre_usuario': 'Nombre usuario',
                     'contrasena': 'Contrasena',
                     'direccion': 'Direccion'
-                    }
-                    
-        widgets = {'run': forms.TextInput(attrs={
-                        'class': 'form-control',
-                        'max-length': 12
-                    }),
-                    'nombres': forms.TextInput(attrs={
-                        'class': 'form-control',
-                        'max-length': 50
-                    }),
-                    'appaterno': forms.TextInput(attrs={
-                        'class': 'form-control',
-                        'max-length': 50
-                    }),
-                    'apmaterno': forms.TextInput(attrs={
-                        'class': 'form-control',
-                        'max-length': 50
-                    }),
-                    'fecha_nacimiento': forms.DateInput(attrs={
-                        'class': 'form-control',
-                        'id': 'datepicker'
-                    }),
-                    'genero': forms.RadioSelect(attrs={
-                        'class': 'form-control'
-                    }),
-                    'email': forms.TextInput(attrs={
-                        'class': 'form-control'
-                    }),
-                    'telefono': forms.TextInput(attrs={
-                        'class': 'form-control'
-                    }),
-                    'nombre_usuario': forms.TextInput(attrs={
-                        'class': 'form-control',
-                        'max-length': 50
-                    }),
-                    'contrasena': forms.PasswordInput(attrs={
-                        'class': 'form-control'
-                    }),
-                    'direccion': forms.TextInput(attrs={
-                        'class': 'form-control'
-                    }),
-    }
-
-
-class AdministradorForm(ModelForm):
-    opciones_genero=[
-        ('M','Masculino'),
-        ('F','Femenino'),
-        ('N','Prefiero no decir')
-    ]
-    genero = forms.ChoiceField(
-        choices=opciones_genero
-    )
-    class Meta:
-        model = Administrador
-        fields = ['run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
-                    'genero', 'email', 'telefono',
-                    'nombre_usuario', 'contrasena']
-        required = [
-                    'run',
-                    'nombres',
-                    'appaterno',
-                    'apmaterno',
-                    'fecha_nacimiento',
-                    'genero',
-                    'email',
-                    'telefono',
-                    'nombre_usuario',
-                    'contrasena'
-        ]
-        labels = {  'run': 'run',
-                    'nombres': 'Nombres',
-                    'appaterno': 'Apellido paterno',
-                    'apmaterno': 'Apellido materno',
-                    'fecha_nacimiento': 'Fecha nacimiento',
-                    'genero': 'Genero',
-                    'email': 'Email',
-                    'telefono': 'Telefono',
-                    'nombre_usuario': 'Nombre usuario',
-                    'contrasena': 'Contrasena'
                     }
         widgets = {
                     'usuario_id': forms.NumberInput(attrs={
@@ -213,44 +128,40 @@ class AdministradorForm(ModelForm):
                         'max-length': 50
                     }),
                     'fecha_nacimiento': forms.DateInput(attrs={
-                        'class': 'form-control',
-                        'id': 'datepicker'
-                    }),
-                    'genero': forms.RadioSelect(attrs={
                         'class': 'form-control'
+                    }),
+                    'genero': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 6
                     }),
                     'email': forms.TextInput(attrs={
                         'class': 'form-control'
                     }),
-                    'telefono': forms.TextInput(attrs={
+                    'telefono': forms.NumberInput(attrs={
                         'class': 'form-control'
                     }),
                     'nombre_usuario': forms.TextInput(attrs={
                         'class': 'form-control',
                         'max-length': 50
                     }),
-                    'contrasena': forms.PasswordInput(attrs={
+                    'contrasena': forms.TextInput(attrs={
                         'class': 'form-control'
-                    })
-
+                    }),
+                    'direccion': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
     }
 
 
-class EmpleadoForm(ModelForm):
-    opciones_genero=[
-        ('M','Masculino'),
-        ('F','Femenino'),
-        ('N','Prefiero no decir')
-    ]
-    genero = forms.ChoiceField(
-        choices=opciones_genero
-    )
+class AdministradorForm(ModelForm):
+
     class Meta:
-        model = Empleado
-        fields = ['run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
+        model = Administrador
+        fields = ['usuario_id', 'run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
                     'genero', 'email', 'telefono',
-                    'nombre_usuario', 'contrasena', 'fecha_contrato', 'area']
+                    'nombre_usuario', 'contrasena', 'cod_admin']
         required = [
+                    'usuario_id',
                     'run',
                     'nombres',
                     'appaterno',
@@ -261,10 +172,9 @@ class EmpleadoForm(ModelForm):
                     'telefono',
                     'nombre_usuario',
                     'contrasena',
-                    'fecha_contrato',
-                    'area'
+                    'cod_admin'
         ]
-        labels = {
+        labels = {  'usuario_id': 'usuario_id',
                     'run': 'run',
                     'nombres': 'Nombres',
                     'appaterno': 'Apellido paterno',
@@ -275,6 +185,92 @@ class EmpleadoForm(ModelForm):
                     'telefono': 'Telefono',
                     'nombre_usuario': 'Nombre usuario',
                     'contrasena': 'Contrasena',
+                    'cod_admin': 'Codigo admin'
+                    }
+        widgets = {
+                    'usuario_id': forms.NumberInput(attrs={
+                    'class': 'form-control'
+                    }),
+                    'run': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 12
+                    }),
+                    'nombres': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 50
+                    }),
+                    'appaterno': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 50
+                    }),
+                    'apmaterno': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 50
+                    }),
+                    'fecha_nacimiento': forms.DateInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'genero': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 6
+                    }),
+                    'email': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'telefono': forms.NumberInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'nombre_usuario': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 50
+                    }),
+                    'contrasena': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'cod_admin': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+
+    }
+
+
+class EmpleadoForm(ModelForm):
+
+    class Meta:
+        model = Empleado
+        fields = ['usuario_id', 'run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
+                    'genero', 'email', 'telefono',
+                    'nombre_usuario', 'contrasena', 'cod_empleado', 'sucursal', 'fecha_contrato', 'area']
+        required = [
+                    'usuario_id',
+                    'run',
+                    'nombres',
+                    'appaterno',
+                    'apmaterno',
+                    'fecha_nacimiento',
+                    'genero',
+                    'email',
+                    'telefono',
+                    'nombre_usuario',
+                    'contrasena',
+                    'cod_empleado',
+                    'sucursal',
+                    'fecha_contrato',
+                    'area'
+        ]
+        labels = {  'usuario_id': 'usuario_id',
+                    'run': 'run',
+                    'nombres': 'Nombres',
+                    'appaterno': 'Apellido paterno',
+                    'apmaterno': 'Apellido materno',
+                    'fecha_nacimiento': 'Fecha nacimiento',
+                    'genero': 'Genero',
+                    'email': 'Email',
+                    'telefono': 'Telefono',
+                    'nombre_usuario': 'Nombre usuario',
+                    'contrasena': 'Contrasena',
+                    'cod_empleado': 'Codigo empleado',
+                    'sucursal': 'Sucursal',
                     'fecha_contrato': 'Fecha contrato',
                     'area': 'Area'
                     }
@@ -299,28 +295,33 @@ class EmpleadoForm(ModelForm):
                         'max-length': 50
                     }),
                     'fecha_nacimiento': forms.DateInput(attrs={
-                        'class': 'form-control',
-                        'id': 'datepicker'
-                    }),
-                    'genero': forms.RadioSelect(attrs={
                         'class': 'form-control'
+                    }),
+                    'genero': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 6
                     }),
                     'email': forms.TextInput(attrs={
                         'class': 'form-control'
                     }),
-                    'telefono': forms.TextInput(attrs={
+                    'telefono': forms.NumberInput(attrs={
                         'class': 'form-control'
                     }),
                     'nombre_usuario': forms.TextInput(attrs={
                         'class': 'form-control',
                         'max-length': 50
                     }),
-                    'contrasena': forms.PasswordInput(attrs={
+                    'contrasena': forms.TextInput(attrs={
                         'class': 'form-control'
                     }),
-                    'fecha_contrato': forms.DateInput(attrs={
-                        'class': 'form-control',
-                        'id': 'datepicker2'
+                    'cod_empleado': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'sucursal': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'fecha_contrato': forms.TextInput(attrs={
+                        'class': 'form-control'
                     }),
                     'area': forms.TextInput(attrs={
                         'class': 'form-control'
@@ -331,20 +332,14 @@ class EmpleadoForm(ModelForm):
 
 
 class VendedorForm(ModelForm):
-    opciones_genero=[
-        ('M','Masculino'),
-        ('F','Femenino'),
-        ('N','Prefiero no decir')
-    ]
-    genero = forms.ChoiceField(
-        choices=opciones_genero
-    )
+
     class Meta:
         model = Vendedor
-        fields = ['run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
+        fields = ['usuario_id', 'run', 'nombres', 'appaterno', 'apmaterno', 'fecha_nacimiento',
                     'genero', 'email', 'telefono',
-                    'nombre_usuario', 'contrasena', 'fecha_contrato']
+                    'nombre_usuario', 'contrasena', 'cod_vendedor', 'sucursal', 'fecha_contrato']
         required = [
+                    'usuario_id',
                     'run',
                     'nombres',
                     'appaterno',
@@ -352,25 +347,34 @@ class VendedorForm(ModelForm):
                     'fecha_nacimiento',
                     'genero',
                     'email',
+                    'telefono',
                     'nombre_usuario',
                     'contrasena',
+                    'cod_vendedor',
+                    'sucursal',
                     'fecha_contrato'
-            ]
 
-        labels = {  'run': 'Run',
+        ]
+        labels = {  'usuario_id': 'usuario_id',
+                    'run': 'run',
                     'nombres': 'Nombres',
-                    'appaterno': 'Apellido Paterno',
-                    'apmaterno': 'Apellido Materno',
+                    'appaterno': 'Apellido paterno',
+                    'apmaterno': 'Apellido materno',
                     'fecha_nacimiento': 'Fecha nacimiento',
                     'genero': 'Genero',
                     'email': 'Email',
                     'telefono': 'Telefono',
                     'nombre_usuario': 'Nombre usuario',
                     'contrasena': 'Contrasena',
+                    'cod_vendedor': 'Codigo empleado',
+                    'sucursal': 'Sucursal',
                     'fecha_contrato': 'Fecha contrato'
-                    }
 
+                    }
         widgets = {
+                    'usuario_id': forms.NumberInput(attrs={
+                    'class': 'form-control'
+                    }),
                     'run': forms.TextInput(attrs={
                         'class': 'form-control',
                         'max-length': 12
@@ -388,28 +392,33 @@ class VendedorForm(ModelForm):
                         'max-length': 50
                     }),
                     'fecha_nacimiento': forms.DateInput(attrs={
-                        'class': 'form-control',
-                        'id': 'datepicker'
-                    }),
-                    'genero': forms.RadioSelect(attrs={
                         'class': 'form-control'
+                    }),
+                    'genero': forms.TextInput(attrs={
+                        'class': 'form-control',
+                        'max-length': 6
                     }),
                     'email': forms.TextInput(attrs={
                         'class': 'form-control'
                     }),
-                    'telefono': forms.TextInput(attrs={
+                    'telefono': forms.NumberInput(attrs={
                         'class': 'form-control'
                     }),
                     'nombre_usuario': forms.TextInput(attrs={
                         'class': 'form-control',
                         'max-length': 50
                     }),
-                    'contrasena': forms.PasswordInput(attrs={
+                    'contrasena': forms.TextInput(attrs={
                         'class': 'form-control'
                     }),
-                    'fecha_contrato': forms.DateInput(attrs={
-                        'class': 'form-control',
-                        'id': 'datepicker2'
+                    'cod_vendedor': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'sucursal': forms.TextInput(attrs={
+                        'class': 'form-control'
+                    }),
+                    'fecha_contrato': forms.TextInput(attrs={
+                        'class': 'form-control'
                     }),
 
     }
@@ -588,16 +597,13 @@ class DespachoForm(ModelForm):
     )
     class Meta:
         model = DespachoDomicilio
-        fields = [ 'fecha_entrega', 'rut_receptor', 'estado', 'direccion', 'telefono_contacto', 'comuna', 'descripcion', 'compra' ]
+        fields = [ 'fecha_entrega','rut_receptor', 'estado', 'direccion', 'telefono_contacto', 'comuna', 'descripcion', 'compra' ]
         
         required = [
-            'fecha_entrega',
             'rut_receptor',
-            'estado',
             'direccion',
             'telefono_contacto',
             'comuna',
-            'descripcion',
             'compra'
         ]        
 
@@ -613,13 +619,7 @@ class DespachoForm(ModelForm):
         }
 
         widgets = {
-            'fecha_entrega': forms.TextInput(attrs={
-                    'class': 'form-control'
-                }),
             'rut_receptor': forms.TextInput(attrs={
-                    'class': 'form-control'
-                }),
-            'estado': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
             'direccion': forms.TextInput(attrs={
@@ -634,7 +634,46 @@ class DespachoForm(ModelForm):
             'descripcion': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
-            'compra': forms.TextInput(attrs={
+            'compra': forms.HiddenInput(),
+            'fecha_entrega': forms.HiddenInput(),
+            'estado': forms.HiddenInput(),
+        }
+
+class RetiroForm(ModelForm):
+    sucursal = forms.ChoiceField(
+        choices=[(tag, tag.value) for tag in Sucursales]
+    )
+    class Meta:
+        model = RetiroTienda
+        fields = [ 'fecha_entrega', 'rut_receptor', 'estado', 'sucursal', 'empleado', 'compra' ]
+        
+        required = [
+            'fecha_entrega',
+            'rut_receptor',
+            'estado',
+            'sucursal',
+            'empleado',
+            'compra'
+        ]
+
+        labels = {
+            'fecha_entrega': 'Fecha entrega',
+            'rut_receptor': 'Rut receptor',
+            'estado': 'Estado',
+            'sucursal': 'Sucursal',
+            'empleado': 'Empleado',
+            'compra': 'Compra'
+        }
+
+        widgets = {
+            'rut_receptor': forms.TextInput(attrs={
                     'class': 'form-control'
                 }),
+            'sucursal': forms.TextInput(attrs={
+                    'class': 'form-control'
+                }),
+            'compra': forms.HiddenInput(),
+            'fecha_entrega': forms.HiddenInput(),
+            'estado': forms.HiddenInput(),
+            'empleado': forms.HiddenInput(),
         }
