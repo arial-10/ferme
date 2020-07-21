@@ -1,42 +1,107 @@
--- -- COMPRA DE PRUEBA --
--- -- COMPRA
--- INSERT INTO compra(monto_total, vendedor_id, cliente_id) VALUES (20000, 1,1);
--- -- PRODUCTO COMPRA
--- INSERT INTO productocompra(ID, CANTIDAD, COMPRA_ID, PRODUCTO_ID) 
--- VALUES (1, 4, 1, '2984646413121');
+-- --GRUPOS
+-- INSERT INTO AUTH_GROUP(NAME, ID) VALUES('vendedor', 4);
+-- INSERT INTO AUTH_GROUP(NAME, ID) VALUES('empleado', 2);
+-- INSERT INTO AUTH_GROUP(NAME, ID) VALUES('cliente', 3);
+-- INSERT INTO AUTH_GROUP(NAME, ID) VALUES('administrador', 4);
 
 -- -- EMPLEADO
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(5, 'fgomez','fgomez@gmail.com','12345', 0, 0, 1, TO_DATE('01/01/2020', 'DD/MM/YYYY'));
 -- INSERT INTO empleado
--- VALUES (1, '18454865-5', 'Fernando Agustin', 'Gomez', 'Valenzuela', TO_DATE('10/05/1993', 'DD/MM/YYYY'), 'M', 'fgomez@gmail.com', 956213148, 'fgomez', '12345', 'EMP101', 'CASA MATRIZ', TO_DATE('01/01/2020', 'DD/MM/YYYY'), 'Despacho');
+-- VALUES (1, '18454865-5', 'Fernando Agustin', 'Gomez', 'Valenzuela', TO_DATE('10/05/1993', 'DD/MM/YYYY'), 'M', 'fgomez@gmail.com', 956213148, 'fgomez', '12345', 'EMP101', 'CASA MATRIZ', TO_DATE('01/01/2020', 'DD/MM/YYYY'), 'Despacho', 5);
+
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(6, 'cencina','clara85@gmail.com','4561', 0, 0, 1, TO_DATE('08/06/2015', 'DD/MM/YYYY'));
 -- INSERT INTO empleado
--- VALUES (2, '15451231-8', 'Clara Luisa', 'Encina', 'Carrasco', TO_DATE('05/08/1985', 'DD/MM/YYYY'), 'F', 'clara85@gmail.com', 936125489, 'cencina', '4561', 'EMP102', 'CASA MATRIZ', TO_DATE('08/06/2015', 'DD/MM/YYYY'), 'Ventas');
+-- VALUES (2, '15451231-8', 'Clara Luisa', 'Encina', 'Carrasco', TO_DATE('05/08/1985', 'DD/MM/YYYY'), 'F', 'clara85@gmail.com', 936125489, 'cencina', '4561', 'EMP102', 'CASA MATRIZ', TO_DATE('08/06/2015', 'DD/MM/YYYY'), 'Ventas',6);
+
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(7, 'jgonzalez','juantonio12@gmail.com','8888', 0, 0, 1, TO_DATE('15/09/2019', 'DD/MM/YYYY'));
 -- INSERT INTO empleado
--- VALUES (3, '16845123-5', 'Juan Antonio', 'Gonzalez', 'Soto', TO_DATE('22/08/1988', 'DD/MM/YYYY'), 'M', 'juantonio12@gmail.com', 965312487, 'jgonzalez', '8888', 'EMP103', 'CASA MATRIZ', TO_DATE('15/09/2019', 'DD/MM/YYYY'), 'Recepcion');
+-- VALUES (3, '16845123-5', 'Juan Antonio', 'Gonzalez', 'Soto', TO_DATE('22/08/1988', 'DD/MM/YYYY'), 'M', 'juantonio12@gmail.com', 965312487, 'jgonzalez', '8888', 'EMP103', 'CASA MATRIZ', TO_DATE('15/09/2019', 'DD/MM/YYYY'), 'Recepcion',7);
+
+-- --ASOCIAMOS LOS EMPELADOS A SUS GRUPOS
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(5,2);
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(6,2);
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(7,2);
 
 -- -- CLIENTE
--- INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
--- VALUES (1, '14098120-1', 'David Anthony', 'Copperfield', 'Johnson', TO_DATE('18/11/1978', 'DD/MM/YYYY'), 'M', 'davidtruquito@gmail.com', 978432164, 'david.cop', '12345', 'Los Alerces 20, Peñaflor');
--- INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
--- VALUES (2, '18347172-5', 'Ariel Bonifacio', 'Gonzalez', 'Torres', TO_DATE('10/03/1993', 'DD/MM/YYYY'), 'M', 'ariboni@gmail.com', 965448124, 'ariel1007', '1007', 'Los Puelches 928, Peñaflor');
--- INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion)
--- VALUES (3, '17512453-7', 'Cinthia Andrea', 'Gomez', 'Espinoza', TO_DATE('22/02/1988', 'DD/MM/YYYY'), 'F', 'dark1544@gmail.com', 956412316, 'cinthi10', '4800021', 'Neptuno 90, Talagante');
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(8, 'david.cop','davidtruquito@gmail.com','12345', 0, 0, 1, TO_DATE('21/07/2020', 'DD/MM/YYYY'));
+-- INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion, user_id)
+-- VALUES (1, '14098120-1', 'David Anthony', 'Copperfield', 'Johnson', TO_DATE('18/11/1978', 'DD/MM/YYYY'), 'M', 'davidtruquito@gmail.com', 978432164, 'david.cop', '12345', 'Los Alerces 20, Peñaflor', 8);
+
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(9, 'ariel1007','ariboni@gmail.com','1007', 0, 0, 1, TO_DATE('21/07/2020', 'DD/MM/YYYY'));
+-- INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion, user_id)
+-- VALUES (2, '18347172-5', 'Ariel Bonifacio', 'Gonzalez', 'Torres', TO_DATE('10/03/1993', 'DD/MM/YYYY'), 'M', 'ariboni@gmail.com', 965448124, 'ariel1007', '1007', 'Los Puelches 928, Peñaflor',9);
+
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(10, 'cinthi10','dark1544@gmail.com','4800021', 0, 0, 1, TO_DATE('21/07/2020', 'DD/MM/YYYY'));
+-- INSERT INTO cliente(usuario_id, run, nombres, appaterno, apmaterno, fecha_nacimiento, genero, email, telefono, nombre_usuario, contrasena, direccion, user_id)
+-- VALUES (3, '17512453-7', 'Cinthia Andrea', 'Gomez', 'Espinoza', TO_DATE('22/02/1988', 'DD/MM/YYYY'), 'F', 'dark1544@gmail.com', 956412316, 'cinthi10', '4800021', 'Neptuno 90, Talagante', 10);
+
+-- --ASOCIAMOS LOS CLIENTES A SUS GRUPOS
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(8,3);
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(9,3);
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(10,3);
 
 -- -- VENDEDOR
--- INSERT INTO vendedor VALUES (1, '17556484-6', 'Jose Antonio', 'Sanhueza', 'Peña', TO_DATE('26/07/1989', 'DD/MM/YYYY'), 'M', 'joje876@gmail.com', 973647321, 'jsanhueza', 'jusi21', 'VEN101', 'CASA MATRIZ', TO_DATE('15/03/2019', 'DD/MM/YYYY'));
--- INSERT INTO vendedor VALUES (2, '14320125-2', 'Josefa Belen', 'Romero', 'Veliz', TO_DATE('30/04/1980', 'DD/MM/YYYY'), 'F', 'josefa1111@gmail.com', 988974521, 'jromero', 'a1548', 'VEN102', 'CASA MATRIZ', TO_DATE('08/02/2005', 'DD/MM/YYYY'));
--- INSERT INTO vendedor VALUES (3, '17556484-6', 'Gonzalo Ivan', 'Quintanilla', 'Ramos', TO_DATE('15/06/1992', 'DD/MM/YYYY'), 'M', 'gonzalohet6@gmail.com', 988745136, 'gquintanilla', 'gonzi12', 'VEN103', 'CASA MATRIZ', TO_DATE('02/04/2019', 'DD/MM/YYYY'));
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(4, 'jsanhueza','joje876@gmail.com','jusi21', 0, 0, 1, TO_DATE('15/03/2019', 'DD/MM/YYYY'));
+-- INSERT INTO vendedor 
+-- VALUES (4, '17556484-6', 'Jose Antonio', 'Sanhueza', 'Peña', TO_DATE('26/07/1989', 'DD/MM/YYYY'), 'M', 'joje876@gmail.com', 973647321, 'jsanhueza', 'jusi21', 'VEN101', 'CASA MATRIZ', TO_DATE('15/03/2019', 'DD/MM/YYYY'), 4);
 
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(2, 'jromero','josefa1111@gmail.com','a1548', 0, 0, 1, TO_DATE('08/02/2005', 'DD/MM/YYYY'));
+-- INSERT INTO vendedor VALUES (2, '14320125-2', 'Josefa Belen', 'Romero', 'Veliz', TO_DATE('30/04/1980', 'DD/MM/YYYY'), 'F', 'josefa1111@gmail.com', 988974521, 'jromero', 'a1548', 'VEN102', 'CASA MATRIZ', TO_DATE('08/02/2005', 'DD/MM/YYYY'),2);
 
--- COMPRA
--- INSERT INTO compra(monto_total, vendedor_id, cliente_id) VALUES (20000, 1,1);
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(3, 'gquintanilla','gonzalohet6@gmail.com','gonzi12', 0, 0, 1, TO_DATE('02/04/2019', 'DD/MM/YYYY'));
+-- INSERT INTO vendedor VALUES (3, '17556484-6', 'Gonzalo Ivan', 'Quintanilla', 'Ramos', TO_DATE('15/06/1992', 'DD/MM/YYYY'), 'M', 'gonzalohet6@gmail.com', 988745136, 'gquintanilla', 'gonzi12', 'VEN103', 'CASA MATRIZ', TO_DATE('02/04/2019', 'DD/MM/YYYY'),3);
 
--- INSERT INTO compra VALUES (102, 116700, 2,2);
--- INSERT INTO compra VALUES (103, 154980, 3,3);
+-- -- TIENDA VIRTUAL
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(1, 'tienda_virtual','tienda@ferme.cl','fermetienda2020', 0, 0, 1, TO_DATE('01/03/2020', 'DD/MM/YYYY'));
+-- INSERT INTO vendedor 
+-- VALUES (1, '13371337-1', 'FERME', 'FERME', 'FERME', TO_DATE('01/03/2020', 'DD/MM/YYYY'), 'N', 'tienda@ferme.cl', 6006003279, 'tienda_virtual', 'fermetienda2020', 'VEN000', 'CASA MATRIZ', TO_DATE('01/03/2020', 'DD/MM/YYYY'),1);
 
--- --RETIRO TIENDA
--- INSERT INTO retirotienda VALUES (1, TO_DATE('15/01/2019', 'DD/MM/YYYY'), '21549330-1', 'ACEPTADO', 'CASA MATRIZ', 101, 1);
--- INSERT INTO retirotienda VALUES (2, TO_DATE('16/01/2019', 'DD/MM/YYYY'), '7888720-6', 'CANCELADO', 'CASA MATRIZ', 102, 1);
--- INSERT INTO retirotienda VALUES (3, TO_DATE('16/01/2019', 'DD/MM/YYYY'), '17643720-6', 'ENTREGADO', 'CASA MATRIZ', 103, 1);
+-- --ASOCIAMOS LOS VENDEDORES A SUS GRUPOS
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(1,1);
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(2,1);
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(3,1);
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(4,1);
+
+-- -- ADMINISTRADOR
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(11, 'gfigueroa','gustavock1@gmail.com','gfigueroa', 0, 0, 1, TO_DATE('01/03/2020', 'DD/MM/YYYY'));
+-- INSERT INTO administrador VALUES (1, '16489546-K', 'Gustavo Andres', 'Figueroa', 'Romero', TO_DATE('20/10/1987', 'DD/MM/YYYY'), 'M', 'gustavock1@gmail.com', 945461234, 'gfigueroa', 'gas23123', 'ADM101', 11);
+
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(12, 'fperez','fran.jav@gmail.com','fperez', 0, 0, 1, TO_DATE('01/03/2020', 'DD/MM/YYYY'));
+-- INSERT INTO administrador VALUES (2, '17894561-5', 'Francisca Javiera', 'Perez', 'Bustamante', TO_DATE('18/12/1990', 'DD/MM/YYYY'), 'F', 'fran.jav@gmail.com', 9458749965, 'fperez', '12548', 'ADM102', 12);
+
+-- INSERT INTO AUTH_USER(ID, USERNAME, email, PASSWORD, IS_SUPERUSER, IS_STAFF, IS_ACTIVE, DATE_JOINED)
+-- VALUES(13, 'gcampos','gloria.campos@gmail.com','gcampos', 0, 0, 1, TO_DATE('01/03/2020', 'DD/MM/YYYY'));
+-- INSERT INTO administrador VALUES (3, '12356994-4', 'Gloria Esperanza', 'Campos', 'Videla', TO_DATE('02/03/1970', 'DD/MM/YYYY'), 'F', 'gloria.campos@gmail.com', 989458754, 'gcampos', '001215', 'ADM103', 13);
+
+-- --ASOCIAMOS LOS ADMINISTRADORES A SUS GRUPOS
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(11,4);
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(12,4);
+-- INSERT INTO AUTH_USER_GROUPS(USER_ID, GROUP_ID)
+-- VALUES(13,4);
 
 --MARCA
 INSERT INTO marca VALUES (101, 'Redline');
@@ -72,32 +137,10 @@ INSERT INTO categoriaproducto VALUES (6, 102, '3489451234542');
 INSERT INTO categoriaproducto VALUES (7, 101, '3026487542121');
 INSERT INTO categoriaproducto VALUES (8, 101, '5649754621448');
 
--- -- CARRO
--- INSERT INTO carro VALUES (1, 1);
--- INSERT INTO carro VALUES (2, 3);
--- INSERT INTO carro VALUES (3, 2);
-
--- --CARRO PRODUCTO
--- INSERT INTO carroproducto VALUES (1, 2, 1, '2984646413121');
--- INSERT INTO carroproducto VALUES (2, 4, 2, '2984646234234');
--- INSERT INTO carroproducto VALUES (3, 1, 3, '2984646645334');
-
--- --PRODUCTO COMPRA
--- INSERT INTO productocompra(ID, CANTIDAD, COMPRA_ID, PRODUCTO_ID) 
--- VALUES (1, 4, 1, '2984646413121');
--- INSERT INTO productocompra VALUES (2, 30, 102, '2984646234234');
--- INSERT INTO productocompra VALUES (3, 1, 103, '2984646645334');
-
--- -- ADMINISTRADOR
--- INSERT INTO administrador VALUES (1, '16489546-K', 'Gustavo Andres', 'Figueroa', 'Romero', TO_DATE('20/10/1987', 'DD/MM/YYYY'), 'M', 'gustavock1@gmail.com', 945461234, 'gfigueroa', 'gas23123', 'ADM101');
--- INSERT INTO administrador VALUES (2, '17894561-5', 'Francisca Javiera', 'Perez', 'Bustamante', TO_DATE('18/12/1990', 'DD/MM/YYYY'), 'F', 'fran.jav@gmail.com', 9458749965, 'fperez', '12548', 'ADM102');
--- INSERT INTO administrador VALUES (3, '12356994-4', 'Gloria Esperanza', 'Campos', 'Videla', TO_DATE('02/03/1970', 'DD/MM/YYYY'), 'F', 'gloria.campos@gmail.com', 989458754, 'gcampos', '001215', 'ADM103');
-
 -- -- DESPACHO DOMICILIO
 -- INSERT INTO despachodomicilio VALUES (1, TO_DATE('10/05/2020', 'DD/MM/YYYY'), '14.098.120-1', 'ENTREGADO', 'Los Alerces 20', 978432164, 'Peñaflor', NULL, 101);
 -- INSERT INTO despachodomicilio VALUES (2, TO_DATE('12/05/2020', 'DD/MM/YYYY'), '14.098.120-1', 'ENTREGADO', 'Los Alerces 20', 978432164, 'Peñaflor', NULL, 102);
 -- INSERT INTO despachodomicilio VALUES (3, TO_DATE('28/04/2020', 'DD/MM/YYYY'), '18.347.172-5', 'ENTREGADO', 'Los Puelches 928', 965448124, 'Peñaflor', NULL, 103);
-
 
 -- ACTIVIDAD
 -- ESTO NO SE PUEDE IMPLEMENTAR DE MOMENTO: LA CLAVE FORANEA PERTENECE A UNA CLASE INTERNA DE DJANGO QUE NO ES USADA

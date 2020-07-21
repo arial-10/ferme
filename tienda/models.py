@@ -337,12 +337,14 @@ class ProveedorProducto(models.Model):
 
 @receiver(pre_save, sender=Cliente)
 def crear_usuario_cliente(sender, instance, **kwargs):
+    print('Creando grupo usuario para el cliente...')
     user = User.objects.create_user(
             instance.nombre_usuario,
             instance.email,
             instance.contrasena
         )
     instance.user = user
+    print('Agregando al grupo...')
     grupo, created = Group.objects.get_or_create(name='cliente')
     user.groups.add(grupo)
 

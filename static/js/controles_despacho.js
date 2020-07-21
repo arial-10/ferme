@@ -18,6 +18,27 @@ function validarDespacho(){
   }
 }
 
+function obtenerFecha(control){
+  console.log(control);
+  var radios = document.getElementsByName(control);
+  var valores;
+  for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked){
+      valores = radios[i].value.split(";");
+    }
+  }
+  if (Array.isArray(valores)){  
+    var fecha_despacho = valores[0];
+    var precio_despacho = valores[1];
+
+    fecha_field = document.getElementById('id_fecha_entrega');
+    estado_field = document.getElementById('id_estado');
+
+    fecha_field.value = fecha_despacho;
+    estado_field.value = "Activo"
+  }
+}
+
 function validarSucursal(valor){
  //alert(document.tipo_despacho.sucursal.value)
  document.tipo_despacho.sucursaltmp.value = valor;

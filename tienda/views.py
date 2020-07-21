@@ -151,6 +151,12 @@ def recuperar_contrasena_admin(request):
     else:
         return render(request, 'tienda/admin/recuperar_contrasena_admin.html')
 
+def calcular_total(carro_id):
+    productos = CarroProducto.objects.filter(carro=carro_id)
+    total = 0
+    for producto in productos:
+        total += precioAsInt(producto.precio)
+    return total
 
 def tipo_despacho(request, carro, seleccion_despacho=''):
     # Generadas en el código porque el manejo de estas fechas
@@ -172,48 +178,55 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
     carro_cliente = Carro.objects.get(carro_id=carro)
     usuario = carro_cliente.cliente
     cliente = Cliente.objects.get(nombre_usuario=usuario.username)
-
+    vendedor = Vendedor.objects.get(nombre_usuario='tienda_virtual')
+    compra = Compra(
+        vendedor = vendedor,
+        monto_total = calcular_total(carro),
+        cliente = cliente
+    )
     # Si estoy recibiendo un formulario con method POST
     if request.method == 'POST':
         if seleccion_despacho != '':
-            despachoForm = request.POST.get('form_despacho')
-            retiroForm = request.POST.get('form_retiro')
+            print('------------------------------')
+            compra.save()
+            request.POST.compra = compra
+            despachoForm = DespachoForm(request.POST)
+            retiroForm = RetiroForm(request.POST)
+            print(despachoForm.errors)
             if seleccion_despacho == 'envio' and despachoForm is not None:
                 if despachoForm.is_valid():
-                    #form_despacho.save()
-                    return render(request, 'tienda/pago.html')
+                    despachoForm.save()
+                    for producto in CarroProducto.objects.filter(carro=carro_cliente.carro_id):
+                        print(compra.id_compra)
+                        print(producto.producto)
+                        print(producto.cantidad)
+                        ProductoCompra.objects.create(
+                                compra = compra,
+                                producto = producto.producto,
+                                cantidad = producto.cantidad
+                            )
+                    return render(request, 'tienda/pago.html',{
+                            'despacho': despachoForm.instance
+                        })
             elif seleccion_despacho == 'retiro' and retiroForm is not None:
                 if retiroForm.is_valid():
-                    #form_retiro.save()
-                    return render(request, 'tienda/pago.html')
+                    retiroForm.save()
+                    return render(request, 'tienda/pago.html',{
+                            'despacho': retiroForm.instance
+                        })
             else:
-                despachoForm = DespachoForm({
-                        'rut_receptor': cliente.run,
-                        'direccion': cliente.direccion,
-                        'telefono_contacto': cliente.telefono
-                    })
-                retiroForm = RetiroForm({
-                        'rut_receptor': cliente.run,
-                        'empleado': 1
-                    })
-                return render(request, 'tienda/tipo_despacho.html',
-                            {
-                                'fechas_retiro': fechas_retiro,
-                                'fechas_envio': fechas_envio,
-                                'carro': carro,
-                                'usuario': usuario,
-                                'form_despacho': despachoForm,
-                                'form_retiro': retiroForm
-                            })
-        else:
+                compra.delete()
+            
             despachoForm = DespachoForm({
                     'rut_receptor': cliente.run,
                     'direccion': cliente.direccion,
-                    'telefono_contacto': cliente.telefono
+                    'telefono_contacto': cliente.telefono,
+                    'compra': compra
                 })
             retiroForm = RetiroForm({
                     'rut_receptor': cliente.run,
-                    'empleado': 1
+                    'empleado': 1,
+                    'compra': compra
                 })
             return render(request, 'tienda/tipo_despacho.html',
                         {
@@ -224,15 +237,40 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
                             'form_despacho': despachoForm,
                             'form_retiro': retiroForm
                         })
+        else:
+            seleccion_despacho = ''
+            despachoForm = DespachoForm({
+                    'rut_receptor': cliente.run,
+                    'direccion': cliente.direccion,
+                    'telefono_contacto': cliente.telefono,
+                    'compra': compra
+                })
+            retiroForm = RetiroForm({
+                    'rut_receptor': cliente.run,
+                    'empleado': 1,
+                    'compra': compra
+                })
+            return render(request, 'tienda/tipo_despacho.html',
+                        {
+                            'fechas_retiro': fechas_retiro,
+                            'fechas_envio': fechas_envio,
+                            'carro': carro,
+                            'usuario': usuario,
+                            'form_despacho': despachoForm,
+                            'form_retiro': retiroForm,
+                            'seleccion_despacho': seleccion_despacho
+                        })
     else:
         despachoForm = DespachoForm({
                 'rut_receptor': cliente.run,
                 'direccion': cliente.direccion,
-                'telefono_contacto': cliente.telefono
+                'telefono_contacto': cliente.telefono,
+                'compra': compra
             })
         retiroForm = RetiroForm({
                 'rut_receptor': cliente.run,
-                'empleado': 1
+                'empleado': 1,
+                'compra': compra
             })
         seleccion_despacho = ''
         return render(request, 'tienda/tipo_despacho.html',
@@ -247,14 +285,10 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
                     })
 
 
-def pago(request):
-    now = datetime.now()
-    id_compra = now.strftime('%m%y%I%M%S')  
-    total = 5550
-    id_usuario = 1
-    id_vendedor = 1
-
+def pago(request, despacho=''):
+    despacho = DespachoDomicilio.objects.get(id=despacho)
     if request.method == 'POST':
+<<<<<<< HEAD
         #Se recupera el carro de compra, luego iterar el carro de compra para sacar el total de los productos
         carro = request.POST.get('carro')
         #Recuperar ID del usuario
@@ -283,8 +317,19 @@ def pago(request):
             retiroTienda.vendedor_id = id_vendedor
             retiroTienda.save()
 
+=======
+        print('helo')
+>>>>>>> c68c8d493699d4713d57290eecf6b3debe54d9de
     else:
-        return render(request, 'tienda/pago.html')
+        compra = despacho.compra
+        print(compra.id_compra)
+        items = ProductoCompra.objects.filter(compra=compra.id_compra)
+        print(items)
+        return render(request, 'tienda/pago.html', {
+                'despacho': despacho,
+                'compra': compra,
+                'items': items
+            })
 
 
 def ver_mis_ordenes(request):
@@ -683,11 +728,9 @@ def ver_carro(request):
     """
     if request.method == 'POST':
         carro_usuario = Carro.objects.get(cliente=request.user)
-        # carro.delete()
         return render(request, 'tienda/tipo_despacho.html', {
                 'carro': carro_usuario.carro_id
             })
-        #return redirect(reverse('tipo_despacho', kwargs={'carro':carro.carro_id}))
     else:
         carro = Carro.objects.get(cliente=request.user)
         productos_carro = []
@@ -1892,6 +1935,7 @@ def logout_cliente(request):
     # carrito = Carro.objects.get(cliente=request.user)
     # carrito.delete()
     logout(request)
+    messages.info(request, "Cierre de sesión exitoso.")
     return redirect('home')
 
 @unauthenticated_user
@@ -1915,6 +1959,7 @@ def login_admin(request):
 
 def logout_admin(request):
     logout(request)
+    messages.info(request, "Cierre de sesión exitoso.")
     return redirect('login_admin')
 
 def registro(request):
@@ -1926,7 +1971,7 @@ def registro(request):
             form = CrearUsuarioForm(request.POST)
             if form.is_valid():
                 user = form.save()
-                nombre = form.cleaned_data.get('first_name')
+                nombre = form.cleaned_data.get('nombres')
 
                 messages.success(request, f"{nombre}, la creación de tu cuenta ha sido exitosa." +
                     " Ahora ya puedes iniciar sesión con tu nombre de usuario.")

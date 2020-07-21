@@ -1,0 +1,22 @@
+[
+  {
+    "model": "tienda.vendedor",
+    "pk": 2,
+    "fields": {
+      "usuario_id": 1,
+      "run": "13371337-1",
+      "nombres": "FERME",
+      "appaterno": "FERME",
+      "apmaterno": "FERME",
+      "fecha_nacimiento": "2020-03-01",
+      "genero": "N",
+      "email": "tienda@ferme.cl",
+      "telefono": 6006003279,
+      "nombre_usuario": "tienda_virtual",
+      "contrasena": "fermetienda2020",
+      "cod_vendedor": "VEN000",
+      "sucursal": "CASA MATRIZ",
+      "fecha_contrato": "2020-03-01"
+    }
+  }
+]
