@@ -60,7 +60,7 @@
                             style="font-size: 14pt;" href="{% url 'administrar_proveedores' %}">Proveedores</a>
                         {% endif %}
                         {% if user.groups.all.0.name == 'administrador' or user.groups.all.0.name == 'empleado' or user.groups.all.0.name == 'vendedor' %}
-                            <a class="nav-item nav-link nunito-bold {% block bolfac_active %} inactivo {% endblock %}" style="font-size: 14pt;" href="#">Boletas y Facturas</a>
+                            <a class="nav-item nav-link nunito-bold {% block bolfac_active %} {% endblock %}" style="font-size: 14pt;" href="{% url 'boleta_admin' %}">Boletas y Facturas</a>
                         {% endif %}
                         </row>
                         <row>

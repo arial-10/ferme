@@ -1,0 +1,63 @@
+{% extends 'tienda/admin/panel_admin.html' %}
+{% load static %}
+{% block oc_active %} active {% endblock %}
+{% block titulo_panel %}
+    Gestión de Boletas y Facturas
+{% endblock %}
+
+{% block custom_scripts %}
+<script>
+    $(document).ready(function(){
+        btn_agregar = document.getElementById("btn_agregar")
+        btn_agregar.style.display = "none";
+    });
+</script>
+{% endblock %}
+
+{% block filtro_1 %}
+    <div class="filtro-ordenes-admin mb-2 ml-3">
+        <h6>Fecha:</h6>
+        <input type="date" class="form-control" name="fecha_recepcion">
+    </div>
+{% endblock %}
+
+{% block filtro_2 %}
+    <div class="filtro-ordenes-admin mb-2 ml-3">
+        <h6>Clientes:</h6>
+        <select name="documento" class="form-control" >
+            <option value="">(seleccione un cliente)</option>
+            {% for cliente in clientes %}
+                <option value="{{ documento.documento }}">
+                    {{ cliente.run }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}
+
+{% block headers_tabla %}
+    <thead class="thead-light">
+        <tr>
+            <th class="header-tabla">Tipo Pago</th>
+            <th class="header-tabla">Anulada</th>
+            <th class="header-tabla">Total</th>
+            <th class="header-tabla">Cliente</th>
+            <th >Administrar</th>
+        </tr>
+    </thead>
+{% endblock %}
+
+{% block filas_tabla %}
+    <th scope="row">{{ clase_administrada.tipo_pago.upper }}</th>
+    <td >{{ clase_administrada.anulada }}</td>
+    <td >{{ clase_administrada.compra.monto_total }}</td>
+    <td >{{ clase_administrada.rut_persona }}</td>
+{% endblock %}
+
+{% block botones_administracion %}
+    <a href="" class="btn btn-danger ml-2"
+        data-toggle="tooltip"
+        data-placement="top" title="Eliminar Orden">
+        <i class="fas fa-trash"></i>
+    </a>
+{% endblock %}

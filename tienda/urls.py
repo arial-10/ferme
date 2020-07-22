@@ -143,6 +143,9 @@ urlpatterns = static(settings.STATIC_URL,
     path('registro/', views.registro, name='registro_cliente'),
     path('ferme-admin/registro-admin/', views.registro_admin, name='registro_admin'),
 
+    # Seccion Boletas
+    path('ferme-admin/boletas', views.administrar_boletas, name='boleta_admin'),
+
     # Seccion Reportes
     path('ferme-admin/reporte', views.ver_reporte, name='reporte'),
 ]

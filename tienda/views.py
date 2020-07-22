@@ -1519,6 +1519,33 @@ def cancelar_vendedor_admin(request):
     """
 
     return redirect(reverse('vendedor_admin'))
+# ---------------------- Boletas y Facturas ---------------------------- #
+@login_required(login_url='login_admin')
+def administrar_boletas(request):
+    """Muestra la página de gestión de boletas.
+
+    Args:
+        clase_administrada: nombre de la clase para ser utilizado en el código de la plantilla
+        nombre_clase: nombre de la clase que se muestra al usuario
+        coleccion: colleción de objetos para iterar
+        url_busqueda: url que se usará para filtrar la colección
+        url_agregar: url que se usará para agregar un objeto a la colección
+    Returns:
+        Una página
+    """
+    boletas = Boleta.objects.all().prefetch_related('compra')
+    clientes = Cliente.objects.all()
+    estados = ['Anulada', 'Vigente']
+    return render(request, 'tienda/admin/byf/boleta_factura.html',
+                {
+                    'clase_administrada': 'boleta',
+                    'nombre_clase': 'Boletas',
+                    'coleccion': boletas,
+                    'clientes': clientes,
+                    'estados': estados,
+                    'url_busqueda': 'buscar_ordenes',
+                    'url_agregar': 'agregar_orden'
+                })
 
 # ------------------ Ordenes de Compra ------------------
 @login_required(login_url='login_admin')
