@@ -179,16 +179,7 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
     usuario = carro_cliente.cliente
     cliente = Cliente.objects.get(nombre_usuario=usuario.username)
     vendedor = Vendedor.objects.get(nombre_usuario='tienda_virtual')
-    nueva_compra = Compra(
-        vendedor = vendedor,
-        monto_total = calcular_total(carro),
-        cliente = cliente
-    )
-    try:
-        compra = Compra.objects.latest('id_compra')
-    except Exception as e:
-        compra = 0
-    
+
     # Si estoy recibiendo un formulario con method POST
     if request.method == 'POST':
         if seleccion_despacho != '':
@@ -197,17 +188,21 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
             print(despachoForm.errors)
             if seleccion_despacho == 'envio' and despachoForm is not None:
                 if despachoForm.is_valid():
-                    compra.save()
-                    despachoForm.save()
+                    compra = Compra.objects.create(
+                            vendedor = Vendedor.objects.get(nombre_usuario='tienda_virtual'),
+                            monto_total = calcular_total(carro),
+                            cliente = cliente
+                        )
+                    despacho = despachoForm.save(commit=False)
+                    despacho.compra = compra
+                    despacho.save()
                     for producto in CarroProducto.objects.filter(carro=carro_cliente.carro_id):
                         ProductoCompra.objects.create(
                                 compra = compra,
                                 producto = producto.producto,
                                 cantidad = producto.cantidad
                             )
-                    return render(request, 'tienda/pago.html',{
-                            'despacho': despachoForm.instance
-                        })
+                    return redirect( 'pago', despacho=despacho.id)
             elif seleccion_despacho == 'retiro' and retiroForm is not None:
                 if retiroForm.is_valid():
                     retiroForm.save()
@@ -220,13 +215,11 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
             despachoForm = DespachoForm({
                     'rut_receptor': cliente.run,
                     'direccion': cliente.direccion,
-                    'telefono_contacto': cliente.telefono,
-                    'compra': compra
+                    'telefono_contacto': cliente.telefono
                 })
             retiroForm = RetiroForm({
                     'rut_receptor': cliente.run,
-                    'empleado': 1,
-                    'compra': compra
+                    'empleado': 1
                 })
             return render(request, 'tienda/tipo_despacho.html',
                         {
@@ -242,13 +235,11 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
             despachoForm = DespachoForm({
                     'rut_receptor': cliente.run,
                     'direccion': cliente.direccion,
-                    'telefono_contacto': cliente.telefono,
-                    'compra': compra
+                    'telefono_contacto': cliente.telefono
                 })
             retiroForm = RetiroForm({
                     'rut_receptor': cliente.run,
-                    'empleado': 1,
-                    'compra': compra
+                    'empleado': 1
                 })
             return render(request, 'tienda/tipo_despacho.html',
                         {
@@ -264,13 +255,11 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
         despachoForm = DespachoForm({
                 'rut_receptor': cliente.run,
                 'direccion': cliente.direccion,
-                'telefono_contacto': cliente.telefono,
-                'compra': compra
+                'telefono_contacto': cliente.telefono
             })
         retiroForm = RetiroForm({
                 'rut_receptor': cliente.run,
-                'empleado': 1,
-                'compra': compra
+                'empleado': 1
             })
         seleccion_despacho = ''
         return render(request, 'tienda/tipo_despacho.html',
@@ -284,16 +273,28 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
                         'seleccion_despacho': seleccion_despacho
                     })
 
-
 def pago(request, despacho=''):
+
     despacho = DespachoDomicilio.objects.get(id=despacho)
+    compra = Compra.objects.get(id_compra=despacho.compra.id_compra)
+    items = ProductoCompra.objects.filter(compra=compra.id_compra)
+    
     if request.method == 'POST':
-        print('something something')
+        print(request.POST)
+        forma_pago = request.POST.get('radiosPago')
+        boleta = Boleta.objects.create(
+                sucursal='tienda virtual',
+                direccion=despacho.direccion,
+                comuna=despacho.comuna,
+                fecha_compra=datetime.now(),
+                terminal=0,
+                tipo_pago=forma_pago,
+                anulada='no',
+                compra = compra,
+                rut_persona = compra.cliente.run
+            )
+        return redirect('/')
     else:
-        compra = despacho.compra
-        print(compra.id_compra)
-        items = ProductoCompra.objects.filter(compra=compra.id_compra)
-        print(items)
         return render(request, 'tienda/pago.html', {
                 'despacho': despacho,
                 'compra': compra,

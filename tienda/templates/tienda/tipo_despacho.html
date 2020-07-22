@@ -51,7 +51,7 @@
                         <td>{{ fecha }}</td>
                         <td>$ {% firstof precio 'Gratuito' %}</td>
                         <td>
-                          <input type="radio" id="fechaRetiro" name="fecha_retiro" value="{{ fecha }};{{ precio }}" onclick="obtenerFecha('fecha_envio')">
+                          <input type="radio" id="fechaRetiro" name="fecha_retiro" value="{{ fecha }};{{ precio }}" onclick="obtenerFecha('fecha_retiro')">
                         </td>
                       </tr>
                     {% endfor %}

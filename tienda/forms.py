@@ -587,6 +587,8 @@ class DespachoForm(ModelForm):
     comuna = forms.ChoiceField(
         choices=[(tag, tag.value) for tag in ComunasRM]
     )
+    compra = forms.ModelChoiceField(queryset=Compra.objects.all(), required=False, widget=forms.HiddenInput())
+
     class Meta:
         model = DespachoDomicilio
         fields = [ 'fecha_entrega','rut_receptor', 'estado', 'direccion', 'telefono_contacto', 'comuna', 'descripcion', 'compra' ]
@@ -595,8 +597,7 @@ class DespachoForm(ModelForm):
             'rut_receptor',
             'direccion',
             'telefono_contacto',
-            'comuna',
-            'compra'
+            'comuna'
         ]        
 
         labels = {
@@ -644,8 +645,7 @@ class RetiroForm(ModelForm):
             'rut_receptor',
             'estado',
             'sucursal',
-            'empleado',
-            'compra'
+            'empleado'
         ]
 
         labels = {

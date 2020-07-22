@@ -26,7 +26,7 @@ urlpatterns = static(settings.STATIC_URL,
 
     #Pago
     path('pago/', views.pago, name='pago'),
-    path('pago/<str:despacho>', views.pago, name='pago'),
+    path('pago/<str:despacho>/', views.pago, name='pago'),
 
     path('catalogo/', views.catalogo, name='catalogo'),
     path('catalogo/categoria/<str:id>', views.ver_categoria, name='categoria'),
