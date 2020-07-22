@@ -1986,7 +1986,7 @@ def ver_reporte(request):
     weekdays = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo']
     log_weekdays = []
     log_stats = {}
-    comienzo = generar_fecha(-160, "%Y-%m-%d")
+    comienzo = generar_fecha(-120, "%Y-%m-%d")
     fin = generar_fecha(0, "%Y-%m-%d")
 
     logeos = Actividad.objects.filter(fecha_hora__gte=comienzo, fecha_hora__lte=fin)
@@ -2001,9 +2001,15 @@ def ver_reporte(request):
             logeos_cliente += 1
     for day in weekdays:
         log_stats[day] = log_weekdays.count(weekdays.index(day))
+    dias = list(log_stats.keys())
+    valores = list(log_stats.values())
     return render(request, 'tienda/admin/reporte/reporte.html', 
         {
             'logeos': logeos_cliente,
-            'stats': log_stats
+            'stats': log_stats,
+            'dias': dias,
+            'valores': valores,
+            'comienzo': comienzo,
+            'fin': fin
         })
 
