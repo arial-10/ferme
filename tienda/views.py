@@ -205,10 +205,14 @@ def tipo_despacho(request, carro, seleccion_despacho=''):
                     return redirect( 'pago', despacho=despacho.id)
             elif seleccion_despacho == 'retiro' and retiroForm is not None:
                 if retiroForm.is_valid():
-                    retiroForm.save()
-                    return render(request, 'tienda/pago.html',{
-                            'despacho': retiroForm.instance
-                        })
+                    compra = Compra.objects.create(
+                            vendedor = Vendedor.objects.get(nombre_usuario='tienda_virtual'),
+                            monto_total = calcular_total(carro),
+                            cliente = cliente
+                        )
+                    despacho = retiroForm.save(commit=False)
+                    despacho.compra = compra
+                    return redirect( 'pago', despacho=despacho.id)
             else:
                 compra.delete()
             
@@ -293,6 +297,11 @@ def pago(request, despacho=''):
                 compra = compra,
                 rut_persona = compra.cliente.run
             )
+        carro = Carro.objects.get(cliente=request.user)
+        carro.delete()
+        fecha = datetime.now()
+        carro_id = fecha.strftime("%d%m%y%H%M%S") + str(request.user.id)
+        Carro.objects.create(carro_id=carro_id, cliente=request.user)
         return redirect('/')
     else:
         return render(request, 'tienda/pago.html', {
