@@ -38,11 +38,6 @@
                         <row>
                         <a class="nav-item nav-link nunito-bold {% block inicio_active %} {% endblock %}"
                         style="font-size: 14pt;" href="{% url 'admin' %}">Inicio</a>
-
-                        {% if user.groups.all.0.name == 'administrador' or user.groups.all.0.name == 'vendedor' %}
-                            <a class="nav-item nav-link nunito-bold {% block ventas_active %} inactivo {% endblock %}"
-                            style="font-size: 14pt;" href="#">Ventas</a>
-                        {% endif %}
                         </row>
                         <row>
                         {% if user.groups.all.0.name == 'administrador' or user.groups.all.0.name == 'empleado' %}
