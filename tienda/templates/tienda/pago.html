@@ -12,28 +12,44 @@
     }
 </script>
 
-<div class="d-flex flex-column justify-content-center container">    
-    <h3 class="p-2 form__radio-group-title">Elige un medio de pago</h3>
-    <div class="d-flex flex-row">        
-        <div class="resumen-compra p-2">
+<h3 class="p-2 form__radio-group-title">
+    Elige un medio de pago
+</h3>
+<div class="container">    
+    <div class="d-flex flex-wrap">        
+        <div class="resumen-compra">
             <div class="card">
               <div class="card-header">
                   <div class="logo-type">
-                      <a href="#">
-                          <span>FERME</span>
-                      </a>
+                      FERME
                   </div>
               </div>
               <div class="card-body">
                 RUT Receptor: {{ despacho.rut_receptor }} <br>
                 Dirección: {{ despacho.direccion }} <br>
-                <hr style="width:50%"> 
-                Detalle: <br>
-                {% for item in items %}
-                    {{ item.producto.nombre }} ({{ item.cantidad }}): 
-                    {{ item.cantidad|multiplicar:item.producto.precio_normal }}<br>
-                {% endfor %}
-                TOTAL: {{ compra.monto_total }}
+                <table class="table table-responsive">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Item</th>
+                      <th>Cantidad</th>
+                      <th>Precio</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in items %}
+                        <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+                          <td>{{ item.producto.nombre }} </td>
+                          <td>{{ item.cantidad }}</td>
+                          <td>${{ item.producto.precio_normal|formatear_miles }}</td>
+                          <td>${{ item.cantidad|multiplicar_y_formatear:item.producto.precio_normal }}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <h3>TOTAL: ${{ compra.monto_total|formatear_miles }}</h3>
               </div>
             </div>
         </div>

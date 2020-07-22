@@ -9,5 +9,29 @@ def actualizar_variable(value, arg):
 register.filter('actualizar_variable', actualizar_variable)
 
 @register.filter
-def multiplicar(value, arg):
-    return value * arg
+def multiplicar(multiplicando, multiplicador):
+    return multiplicando * multiplicador
+
+@register.filter
+def formatear_miles(entero):
+	"""Formatea un número entero con separadores de miles.
+
+	Args:
+	    entero (int): entero a formatear
+	Returns:
+	    String del entero con formato
+	"""
+	numero_formateado = f"{entero:,}"
+
+	resultado = format(numero_formateado).replace(',', '.')
+
+	return resultado
+
+@register.filter
+def multiplicar_y_formatear(multiplicando, multiplicador):
+	multiplicacion = multiplicando * multiplicador
+	numero_formateado = f"{multiplicacion:,}"
+
+	resultado = format(numero_formateado).replace(',', '.')
+
+	return resultado

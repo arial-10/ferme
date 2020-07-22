@@ -459,6 +459,11 @@ footer {
 }
 
 .formulario-pago{
-    width: 50%;
-    margin: auto;
+    width: 40%;
+    min-height: 50vh;
+}
+
+.resumen-compra{
+    width: 40%;
+    min-height: 50vh;
 }
