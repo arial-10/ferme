@@ -304,6 +304,7 @@ def pago(request, despacho=''):
 
 def ver_mis_ordenes(request):
     usuario = request.session.get('usuario_id')
+    cliente = Cliente.objects.get(user=usuario)
 
     fechaDespachoManana = 1
     now = datetime.now()
@@ -318,7 +319,11 @@ def ver_mis_ordenes(request):
     numOrden= now.strftime('%m%y%I%M%S') 
     numDespacho= now.strftime('%H%m%I%M%H') 
 
-    compra = Compra.objects.get(cliente_id = usuario)
+    try:
+        compra = Compra.objects.get(cliente_id = cliente.usuario_id)
+    except Exception as e:
+        messages.error(request, 'Aun no tienes ordenes pendientes')
+        return redirect('home')
     compra_id = compra.id_compra
     monto_total = compra.monto_total
 

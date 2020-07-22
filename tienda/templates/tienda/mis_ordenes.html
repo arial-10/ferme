@@ -1,57 +1,32 @@
+{% extends 'tienda/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <!--Bootstrap con Jquery -->
-        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-        <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
-        <script src="{% static 'js/popper.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <!--CSS propio-->
-        <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
-        <title>FERME</title>
-        <!-- Font awesome -->
-        <script src="{% static 'fontawesome/js/all.js' %}"></script>
-    </head>
-        <script>
-            $(function(){
-              $('[data-toggle="tooltip"]').tooltip();
-            });
+{% block custom_headers %}
+<script>
+    $(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
 
-            $(function() {
-                var current_progress = 0;
-                var interval = setInterval(function() {
-                    current_progress += 20;
-                    $("#dynamic")
-                    .css("width", current_progress + "%")
-                    .attr("aria-valuenow", current_progress)
-                    .text(current_progress + "% Complete");
-                    if (current_progress >= 60)
-                        clearInterval(interval);
-                }, 1000);
-            });
-        </script> 
-        <style>
-            .progress {
-                margin: 10px;
-                width: 600px;
-            }
-        </style>
-    <body>
-        <!-- Header -->
-        {% include "tienda/components/header.html" %}
-        
-        <div id="contenedor">
-            <div id="main">
-                {% block content %}
-
-                {% endblock content %}
-            </div>
-        </div>    
-
+    $(function() {
+        var current_progress = 0;
+        var interval = setInterval(function() {
+            current_progress += 20;
+            $("#dynamic")
+            .css("width", current_progress + "%")
+            .attr("aria-valuenow", current_progress)
+            .text(current_progress + "% Complete");
+            if (current_progress >= 60)
+                clearInterval(interval);
+        }, 1000);
+    });
+</script> 
+<style>
+    .progress {
+        margin: 10px;
+        width: 600px;
+    }
+</style>
+{% endblock %}
+{% block content %}
         <div class="sub-contenedor d-flex justify-content-center">
             <div id="carrito" class="card col-lg-6">
                 <div class="card-body">
@@ -119,9 +94,4 @@
                 </div>
             </div>
         </div>        
-                
-        
- 
-        <!---{% include "tienda/components/footer.html" %}--->
-    </body>
-</html>
+{% endblock %}
