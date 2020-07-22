@@ -1977,4 +1977,20 @@ def registro_admin(request):
 
 # ----------------------- REPORTE ------------------------------------------------
 def ver_reporte(request):
-    return render(request, 'tienda/admin/reporte/reporte.html', {})
+    logeos_cliente = 0
+    usuarios = []
+    fecha_hoy = datetime.now()
+    logeos = Actividad.objects.filter(fecha_hora__icontains=fecha_hoy.strftime("%Y-%m-%d"))
+
+    for logeo in logeos:
+        user = User.objects.get(id=logeo.usuario.id)
+        usuarios.append(user)
+
+    for usuario in usuarios:
+        if usuario.groups.all()[0].name == 'cliente':
+            logeos_cliente += 1
+
+    return render(request, 'tienda/admin/reporte/reporte.html', 
+        {
+            'logeos': logeos_cliente
+        })

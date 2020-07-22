@@ -6,7 +6,8 @@ from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from .validators import *
 from .utils import *
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, tzinfo, timezone
+import pytz
 
 
 class Administrador(models.Model):
