@@ -559,7 +559,7 @@ class CrearUsuarioForm(ModelForm):
                     'genero': forms.RadioSelect(attrs={
                         'class': 'form-control'
                     }),
-                    'email': forms.TextInput(attrs={
+                    'email': forms.EmailInput(attrs={
                         'class': 'form-control'
                     }),
                     'telefono': forms.TextInput(attrs={
@@ -576,12 +576,6 @@ class CrearUsuarioForm(ModelForm):
                         'class': 'form-control'
                     }),
         }
-    def clean_confirm(self):
-        confirm = self.cleaned_data.get('confirm')
-        contrasena = self.cleaned_data.get('contrasena')
-        if contrasena != confirm:
-            raise forms.ValidationError("WOPS")
-        return contrasena
 
 class DespachoForm(ModelForm):       
     comuna = forms.ChoiceField(
