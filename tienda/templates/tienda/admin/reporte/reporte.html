@@ -20,7 +20,22 @@
                     {% include "tienda/components/messages.html" %}
 
                     <h4>Cantidad de visitas a la tienda hoy: {{ logeos }}</h4>
-
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            {% for day in stats.keys %} 
+                                <th scope="col">{{ day }}</th>
+                            {% endfor %}
+                            </tr>
+                      </thead>
+                      <tbody>
+                            <tr>
+                            {% for value in stats.values %}
+                                <th scope="row">{{ value }}</th>
+                            {% endfor %}
+                            </tr>
+                      </tbody>
+                    </table>
 
                 </div>
             </div>

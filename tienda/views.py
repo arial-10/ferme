@@ -303,7 +303,8 @@ def pago(request, despacho=''):
 
 
 def ver_mis_ordenes(request):
-    usuario = request.session.get('usuario_id')
+    request.user
+    usuario = request.user
     cliente = Cliente.objects.get(user=usuario)
 
     fechaDespachoManana = 1
@@ -318,10 +319,11 @@ def ver_mis_ordenes(request):
 
     numOrden= now.strftime('%m%y%I%M%S') 
     numDespacho= now.strftime('%H%m%I%M%H') 
-
+    
     try:
-        compra = Compra.objects.get(cliente_id = cliente.usuario_id)
+        compra = Compra.objects.filter(cliente_id = cliente.usuario_id).first()
     except Exception as e:
+        print(e)
         messages.error(request, 'Aun no tienes ordenes pendientes')
         return redirect('home')
     compra_id = compra.id_compra
@@ -1579,7 +1581,7 @@ def actualizar_orden(request, id):
         if form.is_valid():
             for item in formset:
                 if item.is_valid():
-                    id_item = int(item['id'].value())
+                    id_item = int(0 if item['id'].value() == '' else item['id'].value())
                     cantidad = int(item['cantidad'].value())
                     if cantidad > 0:
                         item.save()
@@ -1650,7 +1652,9 @@ def agregar_orden(request):
 
             return redirect('oc_admin')
     else:
-        form = OrdenForm()
+        form = OrdenForm({
+            'fecha_recepcion': generar_fecha(7)
+            })
         return render(request, 'tienda/admin/ordenes_compra/orden_form.html',
                       {
                         'form': form
@@ -1719,13 +1723,13 @@ def eliminar_item(request, id, idOrden):
 
 @login_required(login_url='login_admin')
 def agregar_item(request, idOrden):
-    orden = ProductoOc()
     oc = OrdenDeCompra.objects.get(id=idOrden)
 
-    orden.orden_de_compra = oc
-    orden.cantidad = 0
-    orden.producto = Producto.objects.first()
-    orden.save()
+    orden = ProductoOc.objects.create(
+        orden_de_compra = oc,
+        cantidad = 0,
+        producto = Producto.objects.first()
+    )
 
     logging.warning(orden)
     return redirect(reverse('actualizar_orden', kwargs={'id':idOrden}))
@@ -1875,19 +1879,16 @@ def login_cliente(request):
 
             user = authenticate(request, username=username, password=password)
 
-            
-
             if user is not None:
-
                 cliente = Cliente.objects.filter(user=user).first()
+                if cliente is None and user.groups.all()[0].name == 'administrador':
+                    return redirect('login_admin')
             if user is not None and cliente is not None:
 
                 login(request, user)
                 messages.success(request, f"Inicio de sesión exitoso. Bienvenido/a {cliente.nombres} {cliente.appaterno}")
                 # Cada vez que un usuario logee, se creara una instancia de carrito.
                 carro = Carro.objects.filter(cliente=request.user.id).first()
-                # A una variable de seccion le asigno el id del cliente
-                request.session['usuario_id'] = request.user.id
 
                 if carro is None:
                     fecha = datetime.now()
@@ -1895,8 +1896,6 @@ def login_cliente(request):
                     Carro.objects.create(carro_id=carro_id, cliente=request.user)
 
                 return redirect('home')
-            elif user.groups.all()[0].name == 'administrador':
-                return redirect('login_admin')
             else:
                 messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
                 return redirect(reverse('login_cliente'))
@@ -1984,18 +1983,27 @@ def registro_admin(request):
 def ver_reporte(request):
     logeos_cliente = 0
     usuarios = []
-    fecha_hoy = datetime.now()
-    logeos = Actividad.objects.filter(fecha_hora__icontains=fecha_hoy.strftime("%Y-%m-%d"))
+    weekdays = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo']
+    log_weekdays = []
+    log_stats = {}
+    comienzo = generar_fecha(-160, "%Y-%m-%d")
+    fin = generar_fecha(0, "%Y-%m-%d")
+
+    logeos = Actividad.objects.filter(fecha_hora__gte=comienzo, fecha_hora__lte=fin)
 
     for logeo in logeos:
-        user = User.objects.get(id=logeo.usuario.id)
-        usuarios.append(user)
-
+        if logeo.usuario is not None:
+            user = User.objects.get(id=logeo.usuario.id)
+            usuarios.append(user)
+        log_weekdays.append(logeo.fecha_hora.weekday())
     for usuario in usuarios:
         if usuario.groups.all()[0].name == 'cliente':
             logeos_cliente += 1
-
+    for day in weekdays:
+        log_stats[day] = log_weekdays.count(weekdays.index(day))
     return render(request, 'tienda/admin/reporte/reporte.html', 
         {
-            'logeos': logeos_cliente
+            'logeos': logeos_cliente,
+            'stats': log_stats
         })
+

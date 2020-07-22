@@ -429,7 +429,7 @@ class OrdenForm(ModelForm):
             'fecha_recepcion': forms.DateInput(attrs={
                     'class': 'form-control',
                     'id': 'datepicker'
-                }
+                },
             ),
             'estado': forms.Select(attrs={
                     'class': 'form-control'
