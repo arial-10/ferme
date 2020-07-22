@@ -335,6 +335,9 @@ def ver_mis_ordenes(request):
         print(e)
         messages.error(request, 'Aun no tienes ordenes pendientes')
         return redirect('home')
+    if compra is None:
+        messages.error(request, 'Aun no tienes ordenes pendientes')
+        return redirect('home')
     compra_id = compra.id_compra
     monto_total = compra.monto_total
 
